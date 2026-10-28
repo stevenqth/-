@@ -1,0 +1,114 @@
+{
+  "model": "RandomForest(final, 2B)",
+  "n_samples": 250,
+  "n_dimensions": 50,
+  "grade_mapping": "minmax (train-fitted in joblib)",
+  "predicted_grade_range": [
+    0,
+    5
+  ],
+  "grade_distribution": {
+    "0": 0.127,
+    "1": 0.393,
+    "2": 0.279,
+    "3": 0.153,
+    "4": 0.0474,
+    "5": 0.0007,
+    "6": 0.0
+  },
+  "mean_grade_per_dim_top10": [
+    [
+      "overall",
+      3.372
+    ],
+    [
+      "alcohol",
+      3.332
+    ],
+    [
+      "co2",
+      3.3
+    ],
+    [
+      "body",
+      3.124
+    ],
+    [
+      "aftertaste",
+      3.116
+    ],
+    [
+      "A_esters_all",
+      3.088
+    ],
+    [
+      "F_malt_grain",
+      2.888
+    ],
+    [
+      "bitternes",
+      2.52
+    ],
+    [
+      "F_malt_all",
+      2.452
+    ],
+    [
+      "F_esters_all",
+      2.348
+    ]
+  ],
+  "mean_grade_per_dim_bottom10": [
+    [
+      "clove",
+      0.044
+    ],
+    [
+      "coriander",
+      0.108
+    ],
+    [
+      "orange",
+      0.168
+    ],
+    [
+      "acetic",
+      0.328
+    ],
+    [
+      "lactic",
+      0.404
+    ],
+    [
+      "A_malt_burn",
+      0.508
+    ],
+    [
+      "barnyard",
+      0.64
+    ],
+    [
+      "stale_hops",
+      0.704
+    ],
+    [
+      "F_hops_tropical",
+      0.948
+    ],
+    [
+      "F_malt_burn",
+      0.952
+    ]
+  ],
+  "dim_grade_sd_range": [
+    0.22374986033515196,
+    0.863008690570379
+  ],
+  "files": [
+    "03_q1_答案_预测z分数.csv",
+    "03_q1_答案_0-6分级.csv",
+    "03_q1_答案_OOF_0-6分级.csv",
+    "03_q1_答案_0-6分级.xlsx"
+  ],
+  "note": "全样本预测为最终模型（在全部250样品上训练）的样本内预测；评估请用 OOF 版本。0-6 为 min-max 映射假设下的等级，非原始品评整数。"
+}
