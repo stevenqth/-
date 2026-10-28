@@ -24,9 +24,9 @@ import numpy as np
 import pandas as pd
 
 ROOT = r"D:\github mama"
-MAT = os.path.join(ROOT, "资料", "01_赛题原始材料", "附件")
-PDF = os.path.join(ROOT, "资料", "01_赛题原始材料", "2026年MathorCup大数据挑战赛-赛道A初赛.pdf")
-REF = os.path.join(ROOT, "资料", "02_参考文献", "s41467-024-46346-0.pdf")
+MAT = os.path.join(ROOT, "资料", "附件")
+PDF = os.path.join(ROOT, "资料", "2026年MathorCup大数据挑战赛-赛道A初赛.pdf")
+REF = os.path.join(ROOT, "资料", "s41467-024-46346-0.pdf")
 OUT = os.path.join(ROOT, "成果", "results")
 os.makedirs(OUT, exist_ok=True)
 

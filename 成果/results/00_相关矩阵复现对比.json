@@ -2,18 +2,18 @@
   "2.csv_spearman": {
     "matrix": "2.csv",
     "n_pairs": 26565,
-    "mean_abs_diff": 0.004568961698927831,
-    "median_abs_diff": 1.1102230246251565e-16,
+    "mean_abs_diff": 0.0022932286636565373,
+    "median_abs_diff": 8.413408858487514e-17,
     "max_abs_diff": 1.078096157516375,
-    "frac_lt_0p01": 0.97519292301901
+    "frac_lt_0p01": 0.9915678524374176
   },
   "2.csv_pearson": {
     "matrix": "2.csv",
     "n_pairs": 26565,
-    "mean_abs_diff": 0.08984393134088609,
-    "median_abs_diff": 0.06327993674187692,
+    "mean_abs_diff": 0.0888633777364641,
+    "median_abs_diff": 0.06237978341179182,
     "max_abs_diff": 1.1234263749065518,
-    "frac_lt_0p01": 0.0922266139657444
+    "frac_lt_0p01": 0.09425936382458122
   },
   "5.csv_spearman": {
     "matrix": "5.csv",

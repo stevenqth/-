@@ -27,7 +27,7 @@ $env:PYTHONPATH = "D:\github mama\.work\pylibs"
 | --- | --- | --- |
 | `00_data_audit.py` | 阶段 0 数据审计：材料 SHA256、逐列变换核验、缺失模式、相关矩阵复现、变量映射、感官维度映射、缺陷阈值基线 | `成果/results/00_*.json|csv` |
 | `01_extract_problem_text.py` | 从官方题面 PDF 提取纯文本（自实现 PDF 对象/CMap 解析，无第三方 PDF 库） | `成果/00_材料清点/题面文本.txt` |
-| `02_extract_reference_paper.py` | 从参考论文 PDF（Springer/iText）提取全文（Type1 字体宽度 + WinAnsi + 坐标重组，无第三方 PDF 库） | `资料/02_参考文献/参考论文_文本提取.txt` |
+| `02_extract_reference_paper.py` | 从参考论文 PDF（Springer/iText）提取全文（Type1 字体宽度 + WinAnsi + 坐标重组，无第三方 PDF 库） | `资料/参考论文_文本提取.txt` |
 | `02_data_prep.py` | 待编写：统一数据视图（缺失处理、分层划分、分级映射） | `成果/results/02_*` |
 | `03_q1_regression.py` | 待编写：问题一多输出回归、分级校准、交叉验证与不确定度 | `成果/results/03_*`、`成果/figures/fig_q1_*` |
 | `04_q2_top3.py` | 待编写：问题二共表达图、多方法重要性、Bootstrap 稳定性 | `成果/results/04_*`、`成果/figures/fig_q2_*` |

@@ -8,13 +8,13 @@
 运行：
     D:\\miniconda\\python.exe 成果\\code\\02_extract_reference_paper.py
 输出：
-    资料\\02_参考文献\\参考论文_文本提取.txt
+    资料\\参考论文_文本提取.txt
 """
 import re, zlib, sys, os
 
 ROOT = r"D:\github mama"
-PDF = os.path.join(ROOT, "资料", "02_参考文献", "s41467-024-46346-0.pdf")
-OUT = os.path.join(ROOT, "资料", "02_参考文献", "参考论文_文本提取.txt")
+PDF = os.path.join(ROOT, "资料", "s41467-024-46346-0.pdf")
+OUT = os.path.join(ROOT, "资料", "参考论文_文本提取.txt")
 
 data = open(PDF, 'rb').read()
 objs = {}
@@ -314,7 +314,7 @@ header = (
     "# 参考论文文本提取说明\n"
     "# 论文：Predicting and improving complex beer flavor through machine learning\n"
     "#      Michiel Schreurs 等, Nature Communications (2024) 15:2368, doi:10.1038/s41467-024-46346-0\n"
-    "# 来源：资料/02_参考文献/s41467-024-46346-0.pdf\n"
+    "# 来源：资料/s41467-024-46346-0.pdf\n"
     "# 方法：自写 PDF 解析器（对象表 -> 页面树 -> 内容流 FlateDecode -> Type1 字体宽度与 WinAnsi 解码 -> 按坐标重组行）\n"
     "# 注意：部分连字/词间空格在原文中以字形间隙表示，提取可能缺失；精确引用请对照 PDF 原页。\n"
     "# ============================================================\n"

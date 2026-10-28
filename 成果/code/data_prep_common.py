@@ -12,7 +12,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.model_selection import StratifiedKFold
 
 ROOT = r"D:\github mama"
-MAT = os.path.join(ROOT, "资料", "01_赛题原始材料", "附件")
+MAT = os.path.join(ROOT, "资料", "附件")
 OUT = os.path.join(ROOT, "成果", "results")
 FIG = os.path.join(ROOT, "成果", "figures")
 os.makedirs(OUT, exist_ok=True)

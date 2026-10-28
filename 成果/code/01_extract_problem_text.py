@@ -15,7 +15,7 @@ import re
 import zlib
 
 ROOT = r"D:\github mama"
-PDF = os.path.join(ROOT, "资料", "01_赛题原始材料", "2026年MathorCup大数据挑战赛-赛道A初赛.pdf")
+PDF = os.path.join(ROOT, "资料", "2026年MathorCup大数据挑战赛-赛道A初赛.pdf")
 OUT = os.path.join(ROOT, "成果", "00_材料清点", "题面文本.txt")
 
 data = open(PDF, "rb").read()

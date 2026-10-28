@@ -71,7 +71,7 @@
 2.csv,Methyl heptenone,X6.methyl.5.hepten.2.one,fuzzy
 2.csv,2-pentyl furan,X2.pentyl.furan,fuzzy
 2.csv,Ethyl 3-hexanoate,ethyl.hex..3E..enoate,bridge
-2.csv,α-phellandrene,beta.phellandrene,bridge
+2.csv,α-phellandrene,alpha.phellandrene,bridge
 2.csv,Dehydroxy-cis-linalool oxide,dehydroxy.cis.linalool.oxide,exact
 2.csv,Hexyl acetate,hexyl.acetate,exact
 2.csv,Isopentyl butanoate,isopentyl.butanoate,exact
@@ -156,7 +156,7 @@
 2.csv,Caryophyllene,E.caryophyllene,bridge
 2.csv,E-α-ionone,X.E..alpha.ionone,manual
 2.csv,Perillyl acetate,perillyl.acetate,exact
-2.csv,β-humulene,alpha.humulene,bridge
+2.csv,β-humulene,beta.humulene,bridge
 2.csv,2-phenyl ethyl butyrate,X2.phenyl.ethyl.butyrate,fuzzy
 2.csv,Z-β-farnesene,X.Z..beta.farnesene,manual
 2.csv,Pentyl octanoate,pentyl.octanoate,exact

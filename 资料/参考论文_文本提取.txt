@@ -1,7 +1,7 @@
 # 参考论文文本提取说明
 # 论文：Predicting and improving complex beer flavor through machine learning
 #      Michiel Schreurs 等, Nature Communications (2024) 15:2368, doi:10.1038/s41467-024-46346-0
-# 来源：资料/02_参考文献/s41467-024-46346-0.pdf
+# 来源：资料/s41467-024-46346-0.pdf
 # 方法：自写 PDF 解析器（对象表 -> 页面树 -> 内容流 FlateDecode -> Type1 字体宽度与 WinAnsi 解码 -> 按坐标重组行）
 # 注意：部分连字/词间空格在原文中以字形间隙表示，提取可能缺失；精确引用请对照 PDF 原页。
 # ============================================================

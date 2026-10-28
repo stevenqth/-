@@ -32,6 +32,10 @@ import json
 import time
 import warnings
 
+import os as _os
+for _k in ["OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS"]:
+    _os.environ.setdefault(_k, "1")
+
 import numpy as np
 import pandas as pd
 import matplotlib
@@ -116,39 +120,39 @@ def make_models():
     models = {}
     models["Linear Regression"] = (LinearRegression(), {})
     models["Lasso"] = (
-        MultiOutputRegressor(Lasso(max_iter=5000, random_state=RANDOM_SEED), n_jobs=-1),
+        MultiOutputRegressor(Lasso(max_iter=5000, random_state=RANDOM_SEED), n_jobs=1),
         {"estimator__alpha": [0.01, 0.1]},
     )
     models["PLSR"] = (PLSRegression(), {"n_components": [2, 5, 10]})
     models["AdaBoost"] = (
-        MultiOutputRegressor(AdaBoostRegressor(random_state=RANDOM_SEED), n_jobs=-1),
-        {"estimator__n_estimators": [100], "estimator__learning_rate": [0.05, 0.1]},
+        MultiOutputRegressor(AdaBoostRegressor(random_state=RANDOM_SEED), n_jobs=1),
+        {"estimator__n_estimators": [150], "estimator__learning_rate": [0.05]},
     )
     models["Extra Trees"] = (
         ExtraTreesRegressor(n_estimators=300, max_features="sqrt",
-                            n_jobs=-1, random_state=RANDOM_SEED),
+                            n_jobs=8, random_state=RANDOM_SEED),
         {"min_samples_leaf": [1, 3]},
     )
     models["Gradient Boosting"] = (
-        MultiOutputRegressor(GradientBoostingRegressor(random_state=RANDOM_SEED), n_jobs=-1),
-        {"estimator__n_estimators": [100, 200], "estimator__learning_rate": [0.05]},
+        MultiOutputRegressor(GradientBoostingRegressor(random_state=RANDOM_SEED), n_jobs=1),
+        {"estimator__n_estimators": [150], "estimator__learning_rate": [0.05]},
     )
     models["Random Forest"] = (
         RandomForestRegressor(n_estimators=300, max_features="sqrt",
-                              n_jobs=-1, random_state=RANDOM_SEED),
+                              n_jobs=8, random_state=RANDOM_SEED),
         {"min_samples_leaf": [1, 3]},
     )
     models["HistGBDT (替代 XGBoost)"] = (
-        MultiOutputRegressor(HistGradientBoostingRegressor(random_state=RANDOM_SEED), n_jobs=-1),
+        MultiOutputRegressor(HistGradientBoostingRegressor(random_state=RANDOM_SEED), n_jobs=1),
         {"estimator__max_iter": [200], "estimator__learning_rate": [0.05, 0.1]},
     )
     models["SVR"] = (
-        MultiOutputRegressor(SVR(), n_jobs=-1),
+        MultiOutputRegressor(SVR(), n_jobs=1),
         {"estimator__C": [1, 10]},
     )
     models["ANN (MLP)"] = (
-        MLPRegressor(max_iter=3000, random_state=RANDOM_SEED),
-        {"hidden_layer_sizes": [(64,), (128, 64)], "alpha": [1e-3]},
+        MLPRegressor(max_iter=1500, alpha=0.01, early_stopping=True, n_iter_no_change=25, random_state=RANDOM_SEED),
+        {"hidden_layer_sizes": [(64,), (128, 64)]},
     )
     return models
 
@@ -183,7 +187,7 @@ def main():
         Xtr = X_train_i if use_inter else X_train_s
         Xte = X_test_i if use_inter else X_test_s
         if grid:
-            gs = GridSearchCV(est, grid, cv=cv, scoring="r2", n_jobs=-1)
+            gs = GridSearchCV(est, grid, cv=cv, scoring="r2", n_jobs=8)
             gs.fit(Xtr, Y_train)
             best = gs.best_estimator_
             best_params = gs.best_params_
@@ -219,7 +223,7 @@ def main():
     res = pd.DataFrame(rows)
     # 平均排名（逐维 R²，1=最好）
     R = pd.DataFrame(per_dim)  # index=target, columns=model
-    ranks = R.rank(axis=0, ascending=False, method="average")
+    ranks = R.rank(axis=1, ascending=False, method="average")
     res["avg_rank"] = [float(ranks[m].mean()) for m in res["model"]]
     res["paper_panel_r2"] = res["model"].map(PAPER_R2)
     res["paper_panel_rank"] = res["model"].map(PAPER_RANK)
