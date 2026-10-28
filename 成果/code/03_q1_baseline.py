@@ -245,19 +245,21 @@ def main():
     plt.close(fig)
 
     # 论文对照图：本文 test R² vs 论文 panel R²
-    fig, ax = plt.subplots(figsize=(8, 5))
-    sub = res.dropna(subset=["paper_panel_r2"])
-    ax.scatter(sub["paper_panel_r2"], sub["test_r2_mean"], s=40, color="#C44E52")
-    for _, r in sub.iterrows():
-        ax.annotate(r["model"], (r["paper_panel_r2"], r["test_r2_mean"]), fontsize=7,
-                    xytext=(3, 3), textcoords="offset points")
+    fig, ax = plt.subplots(figsize=(9, 5.6))
+    sub = res.dropna(subset=["paper_panel_r2"]).sort_values("paper_panel_r2").reset_index(drop=True)
+    ax.scatter(sub["paper_panel_r2"], sub["test_r2_mean"], s=45, color="#C44E52", zorder=3)
+    for i, (_, r) in enumerate(sub.iterrows()):
+        dx, dy = (8, 6) if i % 2 == 0 else (-52, -12)
+        ax.annotate(r["model"], (r["paper_panel_r2"], r["test_r2_mean"]), fontsize=8,
+                    xytext=(dx, dy), textcoords="offset points")
     lim = [-4.5, 0.5]
-    ax.plot(lim, lim, "--", color="gray", lw=0.8)
+    ax.plot(lim, lim, "--", color="gray", lw=0.8, label="y = x（完全一致）")
+    ax.axhline(0, color="gray", lw=0.5); ax.axvline(0, color="gray", lw=0.5)
     ax.set_xlim(lim); ax.set_ylim(-1.2, 0.5)
     ax.set_xlabel("论文 Table 1：品评组多输出 R²")
     ax.set_ylabel("本文：测试集多输出 R²")
-    ax.set_title("基线复现与论文 Table 1 对照")
-    ax.grid(alpha=0.3)
+    ax.set_title("基线复现与论文 Table 1 对照（XGBoost→HistGBDT、ANN 为简化配置）")
+    ax.legend(loc="lower right"); ax.grid(alpha=0.3)
     fig.tight_layout()
     fig.savefig(os.path.join(FIG, "fig_q1_baseline_vs_paper.png"), dpi=200)
     plt.close(fig)

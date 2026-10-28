@@ -1,0 +1,511 @@
+{
+  "config": {
+    "repeats": [
+      42,
+      1024,
+      2024
+    ],
+    "n_splits": 5,
+    "imputation_primary": "fold-internal median + missing indicator",
+    "grade_methods": [
+      "minmax",
+      "quantile"
+    ],
+    "best_model": "ExtraTrees",
+    "ridge_note": "Ridge 在标准化后裁剪 ±5（少量近常量特征会造成极端 z 值与外推爆炸）",
+    "postprocess_note": "本文件由 03b_q1_postprocess.py 在缓存的主 CV 结果上补算 Ridge/解释/图表"
+  },
+  "model_comparison": [
+    {
+      "model": "ExtraTrees",
+      "r2_mean": 0.2125,
+      "r2_std": 0.023,
+      "mae_mean": 0.3477,
+      "mae_std": 0.0088,
+      "spearman_mean": 0.4401,
+      "spearman_std": 0.0233,
+      "grade_exact_minmax_mean": 0.464,
+      "grade_exact_minmax_std": 0.0121,
+      "grade_pm1_minmax_mean": 0.9024,
+      "grade_pm1_minmax_std": 0.0082,
+      "kappa_minmax_mean": 0.2893,
+      "kappa_minmax_std": 0.0258,
+      "grade_exact_quantile_mean": 0.1915,
+      "grade_exact_quantile_std": 0.0105,
+      "grade_pm1_quantile_mean": 0.5371,
+      "grade_pm1_quantile_std": 0.0166,
+      "kappa_quantile_mean": 0.2768,
+      "kappa_quantile_std": 0.0199
+    },
+    {
+      "model": "HistGBDT",
+      "r2_mean": 0.1532,
+      "r2_std": 0.0316,
+      "mae_mean": 0.3541,
+      "mae_std": 0.0088,
+      "spearman_mean": 0.3953,
+      "spearman_std": 0.0155,
+      "grade_exact_minmax_mean": 0.4588,
+      "grade_exact_minmax_std": 0.0133,
+      "grade_pm1_minmax_mean": 0.8875,
+      "grade_pm1_minmax_std": 0.0089,
+      "kappa_minmax_mean": 0.3626,
+      "kappa_minmax_std": 0.0192,
+      "grade_exact_quantile_mean": 0.222,
+      "grade_exact_quantile_std": 0.0108,
+      "grade_pm1_quantile_mean": 0.5471,
+      "grade_pm1_quantile_std": 0.0107,
+      "kappa_quantile_mean": 0.3467,
+      "kappa_quantile_std": 0.016
+    },
+    {
+      "model": "RandomForest",
+      "r2_mean": 0.2093,
+      "r2_std": 0.016,
+      "mae_mean": 0.3489,
+      "mae_std": 0.0081,
+      "spearman_mean": 0.4439,
+      "spearman_std": 0.0206,
+      "grade_exact_minmax_mean": 0.464,
+      "grade_exact_minmax_std": 0.0138,
+      "grade_pm1_minmax_mean": 0.9018,
+      "grade_pm1_minmax_std": 0.0072,
+      "kappa_minmax_mean": 0.2755,
+      "kappa_minmax_std": 0.018,
+      "grade_exact_quantile_mean": 0.1941,
+      "grade_exact_quantile_std": 0.0088,
+      "grade_pm1_quantile_mean": 0.5345,
+      "grade_pm1_quantile_std": 0.0141,
+      "kappa_quantile_mean": 0.2703,
+      "kappa_quantile_std": 0.0145
+    },
+    {
+      "model": "Ridge",
+      "r2_mean": -0.5177,
+      "r2_std": 0.0723,
+      "mae_mean": 0.4872,
+      "mae_std": 0.0143,
+      "spearman_mean": 0.3038,
+      "spearman_std": 0.0266,
+      "grade_exact_minmax_mean": 0.3766,
+      "grade_exact_minmax_std": 0.0109,
+      "grade_pm1_minmax_mean": 0.8112,
+      "grade_pm1_minmax_std": 0.0114,
+      "kappa_minmax_mean": 0.306,
+      "kappa_minmax_std": 0.0309,
+      "grade_exact_quantile_mean": 0.2063,
+      "grade_exact_quantile_std": 0.0086,
+      "grade_pm1_quantile_mean": 0.4805,
+      "grade_pm1_quantile_std": 0.0116,
+      "kappa_quantile_mean": 0.2804,
+      "kappa_quantile_std": 0.0249
+    }
+  ],
+  "missing_strategies": [
+    {
+      "model": "RandomForest",
+      "strategy": "mean",
+      "r2_mean": 0.2129555934641992,
+      "r2_sd": 0.0127697691336718,
+      "mae_mean": 0.3480570061948994
+    },
+    {
+      "model": "RandomForest",
+      "strategy": "median",
+      "r2_mean": 0.2129728997937056,
+      "r2_sd": 0.0130729582188179,
+      "mae_mean": 0.3480577255628425
+    },
+    {
+      "model": "RandomForest",
+      "strategy": "median_indicator",
+      "r2_mean": 0.2117592962257174,
+      "r2_sd": 0.0109590868019335,
+      "mae_mean": 0.3483952779854922
+    },
+    {
+      "model": "RandomForest",
+      "strategy": "iterative",
+      "r2_mean": 0.2129607333228649,
+      "r2_sd": 0.0129356558307818,
+      "mae_mean": 0.3480056356402952
+    },
+    {
+      "model": "HistGBDT",
+      "strategy": "mean",
+      "r2_mean": 0.1542535446962799,
+      "r2_sd": 0.0338910025657049,
+      "mae_mean": 0.3519949729339748
+    },
+    {
+      "model": "HistGBDT",
+      "strategy": "median",
+      "r2_mean": 0.1544606070301271,
+      "r2_sd": 0.0351875407118943,
+      "mae_mean": 0.3518592799240712
+    },
+    {
+      "model": "HistGBDT",
+      "strategy": "median_indicator",
+      "r2_mean": 0.15445477273188,
+      "r2_sd": 0.0350497745947302,
+      "mae_mean": 0.3518509121237513
+    },
+    {
+      "model": "HistGBDT",
+      "strategy": "iterative",
+      "r2_mean": 0.1528922160781455,
+      "r2_sd": 0.0342730557297428,
+      "mae_mean": 0.3522419003481619
+    },
+    {
+      "model": "HistGBDT",
+      "strategy": "native_nan",
+      "r2_mean": 0.1542412088034491,
+      "r2_sd": 0.0358049770711212,
+      "mae_mean": 0.352014767918994
+    }
+  ],
+  "per_target_summary": {
+    "best_targets": [
+      {
+        "target": "acidity",
+        "r2": 0.6753417405917344,
+        "spearman": 0.5020284707701526
+      },
+      {
+        "target": "lactic",
+        "r2": 0.642171506983754,
+        "spearman": 0.5067643438320205
+      },
+      {
+        "target": "alcohol",
+        "r2": 0.6319517655203104,
+        "spearman": 0.825087596652139
+      },
+      {
+        "target": "acetic",
+        "r2": 0.6008443664059855,
+        "spearman": 0.3997451976234573
+      },
+      {
+        "target": "bitternes",
+        "r2": 0.5595036139252423,
+        "spearman": 0.7806787965318609
+      },
+      {
+        "target": "F_hops_all",
+        "r2": 0.4708462395295977,
+        "spearman": 0.7122675417914571
+      },
+      {
+        "target": "body",
+        "r2": 0.4606332070466539,
+        "spearman": 0.721578573972947
+      },
+      {
+        "target": "aftertaste",
+        "r2": 0.4474506037514411,
+        "spearman": 0.6885571929150865
+      }
+    ],
+    "worst_targets": [
+      {
+        "target": "stale_hops",
+        "r2": 0.0672237880517832,
+        "spearman": 0.2925917510526504
+      },
+      {
+        "target": "F_malt_grain",
+        "r2": 0.0671115927589378,
+        "spearman": 0.277809298288163
+      },
+      {
+        "target": "A_esters_isoaa",
+        "r2": 0.066570807293635,
+        "spearman": 0.3193777713265637
+      },
+      {
+        "target": "A_esters_fruity",
+        "r2": 0.0546017755377956,
+        "spearman": 0.120422253967013
+      },
+      {
+        "target": "clove",
+        "r2": 0.0531272790662654,
+        "spearman": 0.2967168423792081
+      },
+      {
+        "target": "dms",
+        "r2": 0.0512486390879136,
+        "spearman": 0.2741379475946838
+      },
+      {
+        "target": "A_esters_flower",
+        "r2": 0.0429136523980846,
+        "spearman": 0.2125215047474083
+      },
+      {
+        "target": "F_esters_flower",
+        "r2": 0.0199129200621931,
+        "spearman": 0.1440568081414528
+      }
+    ]
+  },
+  "per_style_summary": [
+    {
+      "style": "Brut",
+      "mean": 0.5464702355623999,
+      "median": 0.5599526257144416,
+      "count": 4
+    },
+    {
+      "style": "Fruitbeer",
+      "mean": 0.41033995296247094,
+      "median": 0.4115640389531918,
+      "count": 8
+    },
+    {
+      "style": "Christmas",
+      "mean": 0.4024239825766278,
+      "median": 0.40633996715776677,
+      "count": 9
+    },
+    {
+      "style": "Faro",
+      "mean": 0.39360728922475,
+      "median": 0.4181647737471834,
+      "count": 3
+    },
+    {
+      "style": "Scotch",
+      "mean": 0.39022111514290336,
+      "median": 0.3700125274486667,
+      "count": 5
+    },
+    {
+      "style": "Stout/Porter",
+      "mean": 0.38878124977209877,
+      "median": 0.35173743313921674,
+      "count": 13
+    }
+  ],
+  "uncertainty": {
+    "spearman_unc_vs_error": 0.6933749339989439,
+    "mean_sample_unc": 0.31055792064595755,
+    "mean_sample_mae": 0.34668475876630395
+  },
+  "importance": {
+    "top20": [
+      {
+        "feature": "protein.g.L.",
+        "importance_mean": 0.028851365206539692,
+        "importance_sd": 0.00036670997112459025
+      },
+      {
+        "feature": "ethanol..v.v.",
+        "importance_mean": 0.026460464762410874,
+        "importance_sd": 0.0007029367250341312
+      },
+      {
+        "feature": "color.EBC.",
+        "importance_mean": 0.024243047241336912,
+        "importance_sd": 0.00028278382020524573
+      },
+      {
+        "feature": "kcalperc",
+        "importance_mean": 0.0222128918803004,
+        "importance_sd": 0.0007630605590985828
+      },
+      {
+        "feature": "pH",
+        "importance_mean": 0.019033857447898317,
+        "importance_sd": 0.00041057177479808526
+      },
+      {
+        "feature": "ethyl_octanoate",
+        "importance_mean": 0.018209560627727772,
+        "importance_sd": 8.165240667118434e-05
+      },
+      {
+        "feature": "bitterness",
+        "importance_mean": 0.01782023752590217,
+        "importance_sd": 6.9319834645587e-05
+      },
+      {
+        "feature": "glycerol",
+        "importance_mean": 0.01628023968072312,
+        "importance_sd": 0.0001561555197023834
+      },
+      {
+        "feature": "lactic_acid.mg.L.",
+        "importance_mean": 0.015024189058782222,
+        "importance_sd": 0.0006578612113543603
+      },
+      {
+        "feature": "acids_sum",
+        "importance_mean": 0.01348684496797109,
+        "importance_sd": 0.00045007548381864604
+      },
+      {
+        "feature": "ethyl_acetate",
+        "importance_mean": 0.01325738921521491,
+        "importance_sd": 0.00028444133028571184
+      },
+      {
+        "feature": "n.hexanol",
+        "importance_mean": 0.01207308437269844,
+        "importance_sd": 0.0009280050918502591
+      },
+      {
+        "feature": "ethyl_decanoate",
+        "importance_mean": 0.01202176841781738,
+        "importance_sd": 0.00012366486906584262
+      },
+      {
+        "feature": "ethyl_isovalerate",
+        "importance_mean": 0.011427731698635035,
+        "importance_sd": 0.0006015651618705431
+      },
+      {
+        "feature": "acetaldehyde",
+        "importance_mean": 0.010945465794869713,
+        "importance_sd": 0.00013478319086629442
+      },
+      {
+        "feature": "esters_sum",
+        "importance_mean": 0.010820757553806626,
+        "importance_sd": 0.0007256771304946508
+      },
+      {
+        "feature": "butyl.acetate",
+        "importance_mean": 0.009017004370612147,
+        "importance_sd": 6.636847773044963e-05
+      },
+      {
+        "feature": "X.E..2.nonenal",
+        "importance_mean": 0.008939090363147939,
+        "importance_sd": 0.0002960110648352887
+      },
+      {
+        "feature": "isobutanol",
+        "importance_mean": 0.008611179094636767,
+        "importance_sd": 0.0004915882669957461
+      },
+      {
+        "feature": "X4.ethyl.phenol",
+        "importance_mean": 0.00857659151288892,
+        "importance_sd": 0.0005671702841253401
+      }
+    ],
+    "paper_mdi_rank_corr": 0.3172920033489749,
+    "note": "8.xlsx 的 MDI 来自参考论文 RateBeer 喜好模型，与本题 50 维品评目标不同源，仅作外部对照"
+  },
+  "runtime_seconds": 59.4,
+  "env": {
+    "python": "3.11.13",
+    "numpy": "2.3.2",
+    "pandas": "2.3.1"
+  },
+  "per_target_summary_foldwise": {
+    "best_targets": [
+      {
+        "target": "acidity",
+        "r2": 0.670653202612811,
+        "spearman": 0.5036314867029453
+      },
+      {
+        "target": "lactic",
+        "r2": 0.6416240300865306,
+        "spearman": 0.5053058288272101
+      },
+      {
+        "target": "alcohol",
+        "r2": 0.6283208464735371,
+        "spearman": 0.8169777795699957
+      },
+      {
+        "target": "acetic",
+        "r2": 0.6024879064620567,
+        "spearman": 0.3944292007711129
+      },
+      {
+        "target": "bitternes",
+        "r2": 0.556875689115348,
+        "spearman": 0.7731041263066327
+      },
+      {
+        "target": "F_hops_all",
+        "r2": 0.4603787290003681,
+        "spearman": 0.7082939114058772
+      },
+      {
+        "target": "body",
+        "r2": 0.4547576455113829,
+        "spearman": 0.7226903255966061
+      },
+      {
+        "target": "aftertaste",
+        "r2": 0.4331103190293491,
+        "spearman": 0.6897959183673469
+      }
+    ],
+    "worst_targets": [
+      {
+        "target": "stale_hops",
+        "r2": 0.05406453355597109,
+        "spearman": 0.3032731778564605
+      },
+      {
+        "target": "A_hops_woody",
+        "r2": 0.0462705063461342,
+        "spearman": 0.2522508901980622
+      },
+      {
+        "target": "F_malt_grain",
+        "r2": 0.038789081561472954,
+        "spearman": 0.2880928371348539
+      },
+      {
+        "target": "A_esters_isoaa",
+        "r2": 0.03505920572220145,
+        "spearman": 0.32280510113213695
+      },
+      {
+        "target": "dms",
+        "r2": 0.03442979353592589,
+        "spearman": 0.27125223615758404
+      },
+      {
+        "target": "A_esters_fruity",
+        "r2": 0.02962671016715067,
+        "spearman": 0.1481619605163458
+      },
+      {
+        "target": "A_esters_flower",
+        "r2": 0.014477350194438736,
+        "spearman": 0.22248797562644046
+      },
+      {
+        "target": "F_esters_flower",
+        "r2": -0.005758114109100884,
+        "spearman": 0.14142261743655588
+      }
+    ],
+    "macro": {
+      "r2": 0.2125135821518952,
+      "mae": 0.3476728796962576,
+      "spearman": 0.4401010938077297,
+      "grade_exact": 0.4640266666666667,
+      "grade_pm1": 0.9024266666666666,
+      "kappa": 0.28932755376675184
+    },
+    "note": "逐折口径：15 折（5 折×3 次重复）逐折训练/验证、折内 min–max 映射；与主表宏观指标口径一致。"
+  },
+  "grade_confusion_foldwise": {
+    "exact": 0.46448,
+    "pm1": 0.90272,
+    "kappa_macro": 0.30208083139515657,
+    "note": "seed=42 的 5 折验证预测拼接（每样品一次），折内映射"
+  }
+}
