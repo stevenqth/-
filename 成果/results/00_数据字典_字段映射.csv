@@ -1,0 +1,378 @@
+﻿source,label,target,method
+2.csv,Acetaldehyde,acetaldehyde,exact
+2.csv,Carbon disulfide,CS2,bridge
+2.csv,Diethyl sulfide,DES,bridge
+2.csv,Dimethyl sulfide,DMS,bridge
+2.csv,Ethyl 2-methylbutyrate,ethyl_2.methyl_butyrate,exact
+2.csv,Ethyl acetate,ethyl_acetate,exact
+2.csv,Ethyl decanoate,ethyl_decanoate,exact
+2.csv,Ethyl hexanoate,ethyl_hexanoate,exact
+2.csv,Ethyl 3-methylbutyrate,ethyl_isovalerate,bridge
+2.csv,Ethyl octanoate,ethyl_octanoate,exact
+2.csv,Ethyl propionate,ethyl_propionate,exact
+2.csv,Hydrogen sulfide,H2S,bridge
+2.csv,Isoamyl alcohol,isoamyl_alcohol,exact
+2.csv,Isobutanol,isobutanol,exact
+2.csv,Isobutyl acetate,isobutyl_acetate,exact
+2.csv,Isoamyl acetate,isopentyl_acetate,bridge
+2.csv,Methanethiol,MeSH,bridge
+2.csv,Octyl acetate,octyl_acetate,exact
+2.csv,Phenethyl acetate,phenethyl_acetate,exact
+2.csv,Phenethyl alcohol,phenethyl_alcohol,exact
+2.csv,4-vinylguaiacol,X4VG,bridge
+2.csv,Sulfur dioxide,SO2.mg.L.,bridge
+2.csv,Acetic acid,acetic_acid.g.L.,bridge
+2.csv,Ammonia,ammonia.mg.L.,manual
+2.csv,Color,color.EBC.,bridge
+2.csv,Betaglucan,betaglucan.mg.L.,fuzzy
+2.csv,Lactic acid,lactic_acid.mg.L.,fuzzy
+2.csv,Glycerol,glycerol,exact
+2.csv,Iron,iron,exact
+2.csv,pH,pH,exact
+2.csv,Protein,protein.g.L.,bridge
+2.csv,Iso-alpha acids,bitterness,bridge
+2.csv,Sugars,GFS,bridge
+2.csv,Ethanol,ethanol..v.v.,bridge
+2.csv,Carbon dioxide,CO2.PSI.,bridge
+2.csv,Unfermentables,unfermentables,exact
+2.csv,Caloric value,kcalperc,bridge
+2.csv,1-propanol,X1.propanol,fuzzy
+2.csv,Diacetyl,X2.3.butanedione,manual
+2.csv,3-methylbutanal,X3.methylbutanal,fuzzy
+2.csv,Propylene glycol,propylene.glycol,exact
+2.csv,N-propyl acetate,propyl.acetate,bridge
+2.csv,N-pentanol,n.pentanol,exact
+2.csv,2-methyl-1-butanol,X2.methyl.1.butanol,fuzzy
+2.csv,Isopentyl formate,isopentyl.formate,exact
+2.csv,Ethyl isobutyrate,ethyl.isobutyrate,exact
+2.csv,3-methyl-2-butenal,X3.methyl.2.butenal,fuzzy
+2.csv,2-methyltetrahydrofuran-3-one,X2.methyltetrahydrofuran.3.one,fuzzy
+2.csv,Ethyl butyrate,ethyl.butyrate,exact
+2.csv,Butyl acetate,butyl.acetate,exact
+2.csv,Methylpyrazine,methylpyrazine,exact
+2.csv,Furfural,furfural,exact
+2.csv,Ethyl lactate,ethyl.lactate,exact
+2.csv,Cis-3-hexenol,X3Z.hexenol,manual
+2.csv,N-hexanol,n.hexanol,exact
+2.csv,Styrene,styrene,exact
+2.csv,Furfuryl alcohol,X2.furanmethanol,manual
+2.csv,3-methyl-2-hexanol,X3.methyl.2.hexanol,fuzzy
+2.csv,3-furanmethanol,X3.furanmethanol,fuzzy
+2.csv,2-acetylfuran,X2.acetylfuran,fuzzy
+2.csv,"2,6-dimethylpyrazine",X2.6.dimethyl.pyrazine,fuzzy
+2.csv,Amyl acetate,amyl.acetate,exact
+2.csv,Ethyl tiglate,ethyl.tiglate,exact
+2.csv,Benzaldehyde,benzaldehyde,exact
+2.csv,5-methylfurfural,X5.methylfurfural,fuzzy
+2.csv,N-heptanol,n.heptanol,exact
+2.csv,1-octen-3-ol,X1.octen.3.ol,fuzzy
+2.csv,Methionol,X3.methylthio.propanol,manual
+2.csv,Isomaltol,isomaltol,exact
+2.csv,Methyl heptenone,X6.methyl.5.hepten.2.one,fuzzy
+2.csv,2-pentyl furan,X2.pentyl.furan,fuzzy
+2.csv,Ethyl 3-hexanoate,ethyl.hex..3E..enoate,bridge
+2.csv,α-phellandrene,beta.phellandrene,bridge
+2.csv,Dehydroxy-cis-linalool oxide,dehydroxy.cis.linalool.oxide,exact
+2.csv,Hexyl acetate,hexyl.acetate,exact
+2.csv,Isopentyl butanoate,isopentyl.butanoate,exact
+2.csv,2-ethyl-1-hexanol,X2.ethyl.1.hexanol,fuzzy
+2.csv,Beta-phellandrene,beta.phellandrene,exact
+2.csv,Limonene,limonene,exact
+2.csv,Eucalyptol,eucalyptol,exact
+2.csv,Benzyl alcohol,benzyl.alcohol,exact
+2.csv,Ethyl 2-hexenoate,ethyl.hex..2E..enoate,bridge
+2.csv,Phenylacetaldehyde,phenylacetaldehyde,exact
+2.csv,E-β-ocimene,E.ocimenone,fuzzy
+2.csv,Prenyl isobutyrate,prenyl.isobutyrate,exact
+2.csv,Ethyl furoate,ethyl.furoate,exact
+2.csv,O-cresol,ortho.cresol,bridge
+2.csv,Ethyl 5-methylhexanoate,ethyl.5.methylhexanoate,exact
+2.csv,2-acetylpyrrole,X2.acetylpyrrole,fuzzy
+2.csv,Isoamyl lactate,isoamyl.lactate,exact
+2.csv,N-octanol,n.octanol,exact
+2.csv,Cis-linalool oxide,cis.linalool.oxide,exact
+2.csv,Meta-cymenene,meta.cymenene,exact
+2.csv,Terpinolene,terpinolene,exact
+2.csv,Linalool,linalool,exact
+2.csv,2-nonanol,nonan.2.ol,bridge
+2.csv,N-nonanal,n.nonanal,exact
+2.csv,2-methyl-benzofuran,X2.methyl.benzofuran,fuzzy
+2.csv,Heptyl acetate,heptyl.acetate,exact
+2.csv,4-methyl-1-pentanol,X4.methyl.1.pentanol,fuzzy
+2.csv,Neo-allo-ocimene,neo.allo.ocimene,exact
+2.csv,X-methyl-1-octanol,x.methyl.1.octanol,exact
+2.csv,Trans-dihydro-β-terpineol,trans.dihydro.beta.terpineol,bridge
+2.csv,Cis-β-terpineol,cis.beta.terpineol,bridge
+2.csv,Y-methyl-1-octanol,y.methyl.1.octanol,exact
+2.csv,Camphor,camphor,exact
+2.csv,Isobutyl hexanoate,isobutyl.hexanoate,exact
+2.csv,Nerol oxide,nerol.oxide,exact
+2.csv,E-2-nonenal,X.E..2.nonenal,fuzzy
+2.csv,Cis-dihydro-β-terpineol,cis.dihydro.beta.terpineol,bridge
+2.csv,4-ethyl-phenol,X4.ethyl.phenol,fuzzy
+2.csv,Isoborneol,isoborneol,exact
+2.csv,Ethyl benzoate,ethyl.benzoate,exact
+2.csv,N-nonanol,n.nonanol,exact
+2.csv,Terpinen-4-ol,terpinen.4.ol,exact
+2.csv,Diethyl succinate,diethyl.succinate,exact
+2.csv,Vinyl caprylate,vinyl.caprylate,exact
+2.csv,Alpha-terpineol,X1.alpha.terpineol,fuzzy
+2.csv,Ethyl linalool,ethyl..E..linalool,bridge
+2.csv,Ethyl nicotinate,ethyl.nicotinate,exact
+2.csv,Citronellol,citronellol,exact
+2.csv,Nerol,nerol,exact
+2.csv,5-hydroxymethylfurfural,hydroxy.methyl.furfural,bridge
+2.csv,Ocimenone,E.ocimenone,bridge
+2.csv,Cumin aldehyde,cumin.aldehyde,exact
+2.csv,Ethyl phenylacetate,ethyl.phenylacetate,exact
+2.csv,Isopentyl hexanoate,isopentyl.hexanoate,exact
+2.csv,Geraniol,geraniol,exact
+2.csv,β-cyclohomocitral,beta.cyclohomocitral,bridge
+2.csv,Cinnamaldehyde,E.cinnamaldehyde,bridge
+2.csv,N-decanol,n.decanol,exact
+2.csv,Neryl formate,neryl.formate,exact
+2.csv,4-ethyl-guaiacol,X4.ethyl.guaiacol,fuzzy
+2.csv,2-undecanone,X2.undecanone,fuzzy
+2.csv,Trans-dihydro-α-terpinyl acetate,trans.dihydro.alpha.terpinyl.acetate,bridge
+2.csv,Terpinen-4-ol acetate,terpinen.4.ol.acetate,exact
+2.csv,2-undecanol,X2.undecanol,fuzzy
+2.csv,Terpiryl acetate,delta.terpinyl.acetate,bridge
+2.csv,"E,E-2,4-decadienal",X.E.E..2.4.decadienal,fuzzy
+2.csv,Methyl geranate,methyl.geranate,exact
+2.csv,Car-3-en-2-one,car.3.en.2.one,exact
+2.csv,Dimethoxy-E-citral,dimethoxy..E..citral,exact
+2.csv,2-butyl octanoate,X2.butyloctanoate,fuzzy
+2.csv,4-methoxysalicylaldehyde,X4.methoxysalicylaldehyde,fuzzy
+2.csv,Ethyl hydrocinnamate,ethyl.hydrocinnamate,exact
+2.csv,Eugenol,eugenol,exact
+2.csv,Gamma-nonalactone,gamma.nonalactone,exact
+2.csv,Methyl para-anisate,methyl.para.anisate,exact
+2.csv,E-β-damascenone,X.E..beta.damascenone,manual
+2.csv,Ethyl 9-decenoate,ethyl..9..decenoate,exact
+2.csv,Vanillin,vanillin,exact
+2.csv,Geosmin,geosmin,exact
+2.csv,Dodecanal,dodecanal,exact
+2.csv,"4,8-α-epoxy-caryophyllane",X4.8.alpha.epoxy.caryophyllane,fuzzy
+2.csv,Caryophyllene,E.caryophyllene,bridge
+2.csv,E-α-ionone,X.E..alpha.ionone,manual
+2.csv,Perillyl acetate,perillyl.acetate,exact
+2.csv,β-humulene,alpha.humulene,bridge
+2.csv,2-phenyl ethyl butyrate,X2.phenyl.ethyl.butyrate,fuzzy
+2.csv,Z-β-farnesene,X.Z..beta.farnesene,manual
+2.csv,Pentyl octanoate,pentyl.octanoate,exact
+2.csv,E-β-farnesene,X.E..beta.farnesene,manual
+2.csv,2-methylbutyl octanoate,X2.methylbutyl.octanoate,fuzzy
+2.csv,Alpha-humulene,alpha.humulene,exact
+2.csv,Neryl propanoate,neryl.propanoate,exact
+2.csv,9-epi-E-caryophyllene,X9.epi..E..caryophyllene,fuzzy
+2.csv,Ethyl cinnamate,ethyl..E..cinnamate,bridge
+2.csv,Linalool isovalerate,linalool.isovalerate,exact
+2.csv,α-terpinyl isobutanoate,alpha.terpinyl.isobutanoate,bridge
+2.csv,N-dodecanol,n.dodecanol,exact
+2.csv,Germacrene D,germacrene.D,exact
+2.csv,E-β-ionone,X.E..beta.ionone,manual
+2.csv,Valencene,valencene,exact
+2.csv,Neryl isobutanoate,neryl.isobutanoate,exact
+2.csv,Methyl isoeugenol,E.methyl.isoeugenol,bridge
+2.csv,Z-dihydro-apofarnesal,X.Z..dihydro.apofarnesal,fuzzy
+2.csv,Butylated hydroxytoluene,butylated.hydroxytoluene,exact
+2.csv,E-dihydro-apofarnesal,X.E..dihydro.apofarnesal,fuzzy
+2.csv,Z-nerolidol,Z.nerolidol,exact
+2.csv,E-ortho-methoxy cinnamaldehyde,X.E..ortho.methoxy.cinnamaldehyde,fuzzy
+2.csv,α-calacorene,alpha.calacorene,bridge
+2.csv,E-nerolidol,E.nerolidol,exact
+2.csv,Tobacarol,dihydroisocaryophyllene.epoxide,bridge
+2.csv,Caryophyllene alcohol,caryophyllene.alcohol,exact
+2.csv,Neryl isovalerate,neryl.isovalerate,exact
+2.csv,Spathulenol,spathulenol,exact
+2.csv,Caryophyllene oxide,caryophyllene.oxide,exact
+2.csv,Humulene epoxide II,humulene.epoxide.II,exact
+2.csv,Allo-aromadendrene epoxide,alloaromadendrene.epoxide,exact
+2.csv,Epicubenol,X1.10.di.epi.cubenol,manual
+2.csv,Isopropyl laurate,isopropyl.laurate,exact
+2.csv,"Caryophylla-4,8-dien-5-ol",caryophylla.4.12..8.13..dien.5.alpha.ol,bridge
+2.csv,Gamma-eudesmol,gamma.eudesmol,exact
+2.csv,α-muurolol,alpha.muurolol,bridge
+2.csv,"1,2-dihydro-8-hydroxy-2E-linalool",X1.2.dihydro.8.hydroxy..2E..linalool,fuzzy
+2.csv,Tau-cadinol,tau.cadinol,exact
+2.csv,Kongol,selin.11.en.4.alpha.ol,bridge
+2.csv,α-eudesmol,alpha.eudesmol,bridge
+2.csv,14-hydroxy-9-epi-(E)-caryophyllene,X14.hydroxy.9.epi..E..caryophyllene,fuzzy
+2.csv,Tau-muurolol,tau.muurolol,exact
+2.csv,N-tetradecanol,n.tetradecanol,exact
+2.csv,Eoeniculin,foeniculin,bridge
+2.csv,Cadalene,cadalene,exact
+2.csv,"2,3-dihydro-farnesol",X2.3.dihydro.farnesol,fuzzy
+2.csv,"E,Z-farnesal",X2E.6Z.farnesal,fuzzy
+2.csv,Caryophyllene acetate,caryophyllene.acetate,exact
+2.csv,14-hydroxy-α-humulene,X14.hydroxy.alpha.humulene,fuzzy
+2.csv,"Z,E-farnesal",X2Z.6E.farnesal,fuzzy
+2.csv,"Z,Z-farnesol",X2Z.6Z.farnesol,fuzzy
+2.csv,"Z,E-farnesol",X2Z.6E.farnesol,fuzzy
+2.csv,Ambroxide,ambroxide,exact
+2.csv,Benzyl benzoate,benzyl.benzoate,exact
+2.csv,"2E,6E-methyl farnesoate",X2E.6E.methyl.farnesoate,fuzzy
+2.csv,Ethyl tetradecanoate,ethyl.tetradecanoate,exact
+2.csv,2-ethylhexyl acrylate,X2.ethylhexylsalicylate,fuzzy
+2.csv,Isopropyl tetradecanoate,isopropyl.tetradecanoate,exact
+2.csv,Ethyl pentadecanoate,ethyl.pentadecanoate,exact
+2.csv,Methyl hexadecanoate,methyl.hexadecanoate,exact
+2.csv,"Z,Z-geranyl linalool",Z.Z.geranyl.linalool,exact
+2.csv,Ethyl hexadecanoate,ethyl.hexadecanoate,exact
+2.csv,Manool oxide,manool.oxide,exact
+2.csv,13-epi manool oxide,X13.epi.manool.oxide,fuzzy
+2.csv,Isopropyl hexadecanoate,isopropyl.hexadecanoate,exact
+2.csv,Manool,manool,exact
+2.csv,Ethyl octadecanoate,ethyl.octadecanoate,exact
+2.csv,Ethyl pentanoate,ethyl.pentanoate,exact
+2.csv,2-ethyl-3-methylpyrazine,X2.ethyl.3.methylpyrazine,fuzzy
+2.csv,Total ester compounds,esters_sum,bridge
+2.csv,Total hop aroma compounds,aroma_hops_sum,bridge
+2.csv,Total acids,acids_sum,bridge
+2.csv,Total sulfur compounds,sulfur_sum,bridge
+5.csv,Malt aroma - overall,A_malt_all,names_sheet
+5.csv,Malt aroma - grain,A_malt_grain,names_sheet
+5.csv,Malt aroma - bread,A_malt_bread,names_sheet
+5.csv,Malt aroma - caramel,A_malt_cara,names_sheet
+5.csv,Malt aroma - smoked,A_malt_burn,names_sheet
+5.csv,Hops aroma - overall,A_hops_all,names_sheet
+5.csv,Hops aroma - citrus,A_hops_citrus,names_sheet
+5.csv,Hops aroma - tropical fruit,A_hops_tropical,names_sheet
+5.csv,Hops aroma - grassy,A_hops_noble,names_sheet
+5.csv,Hops aroma - woody,A_hops_woody,names_sheet
+5.csv,Esters aroma - overall,A_esters_all,names_sheet
+5.csv,Esters aroma - nail polish,A_esters_ethac,names_sheet
+5.csv,Esters aroma - banana,A_esters_isoaa,names_sheet
+5.csv,Esters aroma - floral,A_esters_flower,names_sheet
+5.csv,Esters aroma - fruity,A_esters_fruity,names_sheet
+5.csv,Malt taste - overall,F_malt_all,names_sheet
+5.csv,Malt taste - grain,F_malt_grain,names_sheet
+5.csv,Malt taste - bread,F_malt_bread,names_sheet
+5.csv,Malt taste - caramel,F_malt_cara,names_sheet
+5.csv,Malt taste - smoked,F_malt_burn,names_sheet
+5.csv,Hops taste - overall,F_hops_all,names_sheet
+5.csv,Hops taste - citrus,F_hops_citrus,names_sheet
+5.csv,Hops taste - tropical fruit,F_hops_tropical,names_sheet
+5.csv,Hops taste - grassy,F_hops_noble,names_sheet
+5.csv,Hops taste - woody,F_hops_woody,names_sheet
+5.csv,Esters taste - overall,F_esters_all,names_sheet
+5.csv,Esters taste - nail polish,F_esters_ethac,names_sheet
+5.csv,Esters taste - banana,F_esters_isoaa,names_sheet
+5.csv,Esters taste - floral,F_esters_flower,names_sheet
+5.csv,Esters taste - fruity,F_esters_fruity,names_sheet
+5.csv,Acidity,acidity,names_sheet
+5.csv,Bitterness,bitternes,names_sheet
+5.csv,Sweetness,sweetness,names_sheet
+5.csv,4-vinyl guaiacol,X4vg,names_sheet
+5.csv,Diacetyl,diacetyl,names_sheet
+5.csv,Dimethyl sulfide,dms,names_sheet
+5.csv,Metallic,metallic,names_sheet
+5.csv,Stale hops,stale_hops,names_sheet
+5.csv,Trans-2-nonenal,t2n,names_sheet
+5.csv,Orange,orange,names_sheet
+5.csv,Coriander,coriander,names_sheet
+5.csv,Clove,clove,names_sheet
+5.csv,Lactic acid,lactic,names_sheet
+5.csv,Acetic acid,acetic,names_sheet
+5.csv,Barnyard,barnyard,names_sheet
+5.csv,Alcohol,alcohol,names_sheet
+5.csv,Carbonation,co2,names_sheet
+5.csv,Aftertaste,aftertaste,names_sheet
+5.csv,Body,body,names_sheet
+5.csv,"Overall appreciation
+(Trained panel)",overall,manual
+6.csv,Ethyl acetate,ethyl_acetate,exact
+6.csv,Ethyl decanoate,ethyl_decanoate,exact
+6.csv,Ethyl hexanoate,ethyl_hexanoate,exact
+6.csv,Ethyl octanoate,ethyl_octanoate,exact
+6.csv,Ethyl propionate,ethyl_propionate,exact
+6.csv,Isobutyl acetate,isobutyl_acetate,exact
+6.csv,Isoamyl acetate,isopentyl_acetate,bridge
+6.csv,Octyl acetate,octyl_acetate,exact
+6.csv,Phenethyl acetate,phenethyl_acetate,exact
+6.csv,Ethyl 2-methylbutyrate,ethyl_2.methyl_butyrate,exact
+6.csv,Ethyl 3-methylbutyrate,ethyl_isovalerate,bridge
+6.csv,Ethanol,ethanol..v.v.,bridge
+6.csv,Isoamyl alcohol,isoamyl_alcohol,exact
+6.csv,Isobutanol,isobutanol,exact
+6.csv,Phenethyl alcohol,phenethyl_alcohol,exact
+6.csv,Glycerol,glycerol,exact
+6.csv,Iso-alpha acids,bitterness,bridge
+6.csv,Alpha-humulene,alpha.humulene,exact
+6.csv,Caryophyllene,E.caryophyllene,bridge
+6.csv,Alpha-terpineol,X1.alpha.terpineol,fuzzy
+6.csv,Citronellol,citronellol,exact
+6.csv,Geraniol,geraniol,exact
+6.csv,Linalool,linalool,exact
+6.csv,Z-nerolidol,Z.nerolidol,exact
+6.csv,Acetic acid,acetic_acid.g.L.,bridge
+6.csv,Lactic acid,lactic_acid.mg.L.,fuzzy
+6.csv,Diacetyl,X2.3.butanedione,manual
+6.csv,4-vinylguaiacol,X4VG,bridge
+6.csv,Acetaldehyde,acetaldehyde,exact
+6.csv,Carbon disulfide,CS2,bridge
+6.csv,Dimethyl sulfide,DMS,bridge
+6.csv,Diethyl sulfide,DES,bridge
+6.csv,Hydrogen sulfide,H2S,bridge
+6.csv,Methanethiol,MeSH,bridge
+6.csv,Sulfur dioxide,SO2.mg.L.,bridge
+6.csv,Carbon dioxide,CO2.PSI.,bridge
+6.csv,pH,pH,exact
+6.csv,Ammonia,ammonia.mg.L.,manual
+6.csv,Betaglucan,betaglucan.mg.L.,fuzzy
+6.csv,Color,color.EBC.,bridge
+6.csv,Iron,iron,exact
+6.csv,Protein,protein.g.L.,bridge
+6.csv,Sugars,GFS,bridge
+6.csv,Caloric value,kcalperc,bridge
+6.csv,Malt aroma - overall,A_malt_all,names_sheet
+6.csv,Malt aroma - grain,A_malt_grain,names_sheet
+6.csv,Malt aroma - bread,A_malt_bread,names_sheet
+6.csv,Malt aroma - caramel,A_malt_cara,names_sheet
+6.csv,Malt aroma - smoked,A_malt_burn,names_sheet
+6.csv,Hops aroma - overall,A_hops_all,names_sheet
+6.csv,Hops aroma - citrus,A_hops_citrus,names_sheet
+6.csv,Hops aroma - tropical fruit,A_hops_tropical,names_sheet
+6.csv,Hops aroma - grassy,A_hops_noble,names_sheet
+6.csv,Hops aroma - woody,A_hops_woody,names_sheet
+6.csv,Esters aroma - overall,A_esters_all,names_sheet
+6.csv,Esters aroma - nail polish,A_esters_ethac,names_sheet
+6.csv,Esters aroma - banana,A_esters_isoaa,names_sheet
+6.csv,Esters aroma - floral,A_esters_flower,names_sheet
+6.csv,Esters aroma - fruity,A_esters_fruity,names_sheet
+6.csv,Malt taste - overall,F_malt_all,names_sheet
+6.csv,Malt taste - grain,F_malt_grain,names_sheet
+6.csv,Malt taste - bread,F_malt_bread,names_sheet
+6.csv,Malt taste - caramel,F_malt_cara,names_sheet
+6.csv,Malt taste - smoked,F_malt_burn,names_sheet
+6.csv,Hops taste - overall,F_hops_all,names_sheet
+6.csv,Hops taste - citrus,F_hops_citrus,names_sheet
+6.csv,Hops taste - tropical fruit,F_hops_tropical,names_sheet
+6.csv,Hops taste - grassy,F_hops_noble,names_sheet
+6.csv,Hops taste - woody,F_hops_woody,names_sheet
+6.csv,Esters taste - overall,F_esters_all,names_sheet
+6.csv,Esters taste - nail polish,F_esters_ethac,names_sheet
+6.csv,Esters taste - banana,F_esters_isoaa,names_sheet
+6.csv,Esters taste - floral,F_esters_flower,names_sheet
+6.csv,Esters taste - fruity,F_esters_fruity,names_sheet
+6.csv,Acidity,acidity,names_sheet
+6.csv,Bitterness,bitternes,names_sheet
+6.csv,Sweetness,sweetness,names_sheet
+6.csv,4-vinyl guaiacol,X4vg,names_sheet
+6.csv,Diacetyl,diacetyl,names_sheet
+6.csv,Dimethyl sulfide,dms,names_sheet
+6.csv,Metallic,metallic,names_sheet
+6.csv,Stale hops,stale_hops,names_sheet
+6.csv,Trans-2-nonenal,t2n,names_sheet
+6.csv,Orange,orange,names_sheet
+6.csv,Coriander,coriander,names_sheet
+6.csv,Clove,clove,names_sheet
+6.csv,Lactic acid,lactic,names_sheet
+6.csv,Acetic acid,acetic,names_sheet
+6.csv,Barnyard,barnyard,names_sheet
+6.csv,Alcohol,alcohol,names_sheet
+6.csv,Carbonation,co2,names_sheet
+6.csv,Aftertaste,aftertaste,names_sheet
+6.csv,Body,body,names_sheet
+6.csv,"Overall appreciation
+(Trained panel)",overall,manual

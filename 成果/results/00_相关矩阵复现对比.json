@@ -1,0 +1,50 @@
+{
+  "2.csv_spearman": {
+    "matrix": "2.csv",
+    "n_pairs": 26565,
+    "mean_abs_diff": 0.004568961698927831,
+    "median_abs_diff": 1.1102230246251565e-16,
+    "max_abs_diff": 1.078096157516375,
+    "frac_lt_0p01": 0.97519292301901
+  },
+  "2.csv_pearson": {
+    "matrix": "2.csv",
+    "n_pairs": 26565,
+    "mean_abs_diff": 0.08984393134088609,
+    "median_abs_diff": 0.06327993674187692,
+    "max_abs_diff": 1.1234263749065518,
+    "frac_lt_0p01": 0.0922266139657444
+  },
+  "5.csv_spearman": {
+    "matrix": "5.csv",
+    "n_pairs": 1225,
+    "mean_abs_diff": 1.5951284634858077e-16,
+    "median_abs_diff": 7.524363077049401e-17,
+    "max_abs_diff": 5.551115123125783e-16,
+    "frac_lt_0p01": 1.0
+  },
+  "5.csv_pearson": {
+    "matrix": "5.csv",
+    "n_pairs": 1225,
+    "mean_abs_diff": 0.05133156597582106,
+    "median_abs_diff": 0.039990247228592,
+    "max_abs_diff": 0.5406449806734213,
+    "frac_lt_0p01": 0.12163265306122449
+  },
+  "6.csv_spearman": {
+    "matrix": "6.csv",
+    "n_pairs": 2200,
+    "mean_abs_diff": 1.5106922861790827e-16,
+    "median_abs_diff": 5.551115123125783e-17,
+    "max_abs_diff": 6.661338147750939e-16,
+    "frac_lt_0p01": 1.0
+  },
+  "6.csv_pearson": {
+    "matrix": "6.csv",
+    "n_pairs": 2200,
+    "mean_abs_diff": 0.057935472693968884,
+    "median_abs_diff": 0.04071487233814344,
+    "max_abs_diff": 0.46180164391213097,
+    "frac_lt_0p01": 0.1440909090909091
+  }
+}

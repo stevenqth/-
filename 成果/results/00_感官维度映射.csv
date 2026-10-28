@@ -1,0 +1,59 @@
+﻿side,group,item,target,target_exists
+Aroma,Malt,"Cereals, flour, grains",A_malt_grain,True
+Aroma,Malt,Bread crust,A_malt_bread,True
+Aroma,Malt,Caramel,A_malt_cara,True
+Aroma,Malt,"Smoked, burnt toast",A_malt_burn,True
+Aroma,Malt,Malt (overall),A_malt_all,True
+Aroma,Hops,Citrus,A_hops_citrus,True
+Aroma,Hops,Tropical fruit,A_hops_tropical,True
+Aroma,Hops,"Noble hops (dried herbs, dried grass, hay)",A_hops_noble,True
+Aroma,Hops,"Pine, woody, resinous",A_hops_woody,True
+Aroma,Hops,Hops (overall),A_hops_all,True
+Aroma,Esters,"Ethyl acetate, solvent, nail polish",A_esters_ethac,True
+Aroma,Esters,"Banana, pear, candy",A_esters_isoaa,True
+Aroma,Esters,"Flowers, roses",A_esters_flower,True
+Aroma,Esters,"Sweet, fruity, apples",A_esters_fruity,True
+Aroma,Esters,Esters (overall),A_esters_all,True
+Aroma,Others,"Acetaldehyde (green apples, peel)",,False
+Aroma,Others,Body,body,True
+Aroma,Others,Bitterness,bitternes,True
+Aroma,Others,Carbonation,co2,True
+Aroma,Others,Aftertaste,aftertaste,True
+Aroma,Others,"DMS (cooked cabbage, corn)",dms,True
+Aroma,Others,"Trans-2-nonenal (wet cardboard, old attic, papery)",t2n,True
+Aroma,Others,Metallic,metallic,True
+Aroma,Others,"Diacetyl (buttery, caramel/butterscotch)",diacetyl,True
+Aroma,Others,"4VG (smoky, clove, medicinal, dentist)",X4vg,True
+Aroma,Others,"Stale hops (cheesy, roquefort)",stale_hops,True
+Aroma,Others,Orange,orange,True
+Aroma,Others,Coriander,coriander,True
+Aroma,Others,Clove/anise,clove,True
+Aroma,Others,Overall,overall,True
+Flavour,Malt,"Cereals, flour, grains",F_malt_grain,True
+Flavour,Malt,Bread crust,F_malt_bread,True
+Flavour,Malt,Caramel,F_malt_cara,True
+Flavour,Malt,"Smoked, burnt toast",F_malt_burn,True
+Flavour,Malt,Malt (overall),F_malt_all,True
+Flavour,Hops,Citrus,F_hops_citrus,True
+Flavour,Hops,Tropical fruit,F_hops_tropical,True
+Flavour,Hops,"Noble hops (dried herbs, dried grass, hay)",F_hops_noble,True
+Flavour,Hops,"Pine, woody, resinous",F_hops_woody,True
+Flavour,Hops,Hops (overall),F_hops_all,True
+Flavour,Esters,"Ethyl acetate, solvent, nail polish",F_esters_ethac,True
+Flavour,Esters,"Banana, pear, candy",F_esters_isoaa,True
+Flavour,Esters,"Flowers, roses",F_esters_flower,True
+Flavour,Esters,"Sweet, fruity, apples",F_esters_fruity,True
+Flavour,Esters,Esters (overall),F_esters_all,True
+Flavour,Others,"Acetaldehyde (green apples, peel)",,False
+Flavour,Others,Alcohol,alcohol,True
+Flavour,Others,Sweetness,sweetness,True
+Flavour,Others,Acidity/sourness,acidity,True
+Flavour,Others,"DMS (cooked cabbage, corn)",dms,True
+Flavour,Others,"Trans-2-nonenal (wet cardboard, old attic, papery)",t2n,True
+Flavour,Others,Metallic,metallic,True
+Flavour,Others,"Diacetyl (buttery, caramel/butterscotch)",diacetyl,True
+Flavour,Others,"4VG (smoky, clove, medicinal, dentist)",X4vg,True
+Flavour,Others,"Stale hops (cheesy, roquefort)",stale_hops,True
+Flavour,Others,Lactic acid,lactic,True
+Flavour,Others,Acetic acid,acetic,True
+Flavour,Others,Barnyard/horsey,barnyard,True

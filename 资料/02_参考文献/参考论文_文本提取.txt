@@ -1,0 +1,1101 @@
+# 参考论文文本提取说明
+# 论文：Predicting and improving complex beer flavor through machine learning
+#      Michiel Schreurs 等, Nature Communications (2024) 15:2368, doi:10.1038/s41467-024-46346-0
+# 来源：资料/02_参考文献/s41467-024-46346-0.pdf
+# 方法：自写 PDF 解析器（对象表 -> 页面树 -> 内容流 FlateDecode -> Type1 字体宽度与 WinAnsi 解码 -> 按坐标重组行）
+# 注意：部分连字/词间空格在原文中以字形间隙表示，提取可能缺失；精确引用请对照 PDF 原页。
+# ============================================================
+
+===== PAGE 1 =====
+Article https://doi.org/10.1038/s41467-024-46346-0
+Predicting and improving complex beer
+ﬂavor through machine learning
+1,2,3,7 1,2,3,7 1,2,3,7
+Received: 30 October 2023 Michiel Schreurs , Supinya Piampongsant , Miguel Roncoroni ,
+1,2,3,4 1,2,3 4
+Lloyd Cool , Beatriz Herrera-Malaver ,ChristopheVanderaa ,
+Accepted: 21 February 2024 1,2,3 5 5
+Florian A. Theßeling , ukasz Kreft ,AlexanderBotzki ,
+6 6 4
+Philippe Malcorps , Luk Daenen , Tom Wenseleers &
+1,2,3
+Kevin J. Verstrepen
+Check for updates
+The perception and appreciation of food ﬂavor depends on many interacting
+chemical compounds and external factors, and therefore proves challenging
+1234567890():,; 1234567890():,; to understand and predict. Here, we combine extensive chemical and sensory
+analyses of 250 different beers to train machine learning models that allow
+predictingﬂavor and consumer appreciation. For each beer, we measure over
+200 chemical properties, perform quantitative descriptive sensory analysis
+with a trained tasting panel and map data from over 180,000 consumer
+reviews to train 10 different machine learning models. The best-performing
+algorithm, Gradient Boosting, yields models that signiﬁcantly outperform
+predictions based on conventional statistics and accurately predict complex
+food features and consumer appreciation from chemical proﬁles. Model dis-
+section allows identifying speciﬁc and unexpected compounds as drivers of
+beer ﬂavor and appreciation. Adding these compounds results in variants of
+commercial alcoholic and non-alcoholic beers with improved consumer
+appreciation. Together, our study reveals how big data and machine learning
+uncover complex links between food chemistry, ﬂavor and consumer per-
+ception, and lays the foundation to develop novel, tailored foods with superior
+ﬂavors.
+Predicting andunderstandingfood perceptionandappreciationisone also facilitate and standardize existing food assessment methods and
+of the major challenges in food science. Accurate modeling of food could supplement or replace assessments by trained and consumer
+79
+ﬂavor and appreciation could yield important opportunities for both tasting panels, which are variable, expensive and time-consuming .
+producers and consumers, including quality control, product ﬁnger- Lastly, apart from providing objective, quantitative, accurate and
+printing, counterfeit detection, spoilage detection, and the develop- contextualinformationthatcanhelpproducers,modelscanalsoguide
+16 10
+ment of new products and product combinations (food pairing) . consumers in understanding their personal preferences .
+Accurate models for ﬂavor and consumer appreciation would con- Despite the myriad of applications, predicting food ﬂavor and
+tributegreatly to our scientiﬁcunderstandingofhow humans perceive appreciation from its chemical properties remains a largely elusive
+11,12
+and appreciate ﬂavor. Moreover, accurate predictive models would goal in sensory science, especially for complex food and beverages .
+1 2
+VIBKU Leuven Center for Microbiology, Gaston Geenslaan 1, B-3001 Leuven, Belgium. CMPG Laboratory of Genetics and Genomics, KU Leuven, Gaston
+3 4
+Geenslaan 1, B-3001 Leuven, Belgium. Leuven Institute for Beer Research (LIBR), Gaston Geenslaan 1, B-3001 Leuven, Belgium. Laboratory of Socioecology
+5 6
+and Social Evolution, KU Leuven, Naamsestraat 59, B-3000 Leuven, Belgium. VIB Bioinformatics Core, VIB, Rijvisschestraat 120, B-9052 Ghent, Belgium. AB
+7
+InBev SA/NV, Brouwerijplein 1, B-3000 Leuven, Belgium. These authors contributed equally: Michiel Schreurs, Supinya Piampongsant, Miguel Roncoroni.
+e-mail: kevin.verstrepen@kuleuven.be
+Nature Communications| (2024) 15:2368 1
+
+===== PAGE 2 =====
+Article https://doi.org/10.1038/s41467-024-46346-0
+A key obstacle is the immense number of ﬂavor-active chemicals importance of these compounds and ultimately allow us to sig-
+underlying foodﬂavor. Flavor compounds can vary widely in chemical niﬁcantly improve the ﬂavor and appreciation of selected commercial
+structure and concentration, making them technically challenging and beers. Together, our study represents a signiﬁcant step towards
+labor-intensive to quantify, even in the face of innovations in meta- understanding complex ﬂavors and reinforces the value of machine
+13,14
+bolomics, such as non-targeted metabolic ﬁngerprinting .More- learning to develop and reﬁnecomplex foods. In this way, it represents
+over, sensory analysis is perhaps even more complicated. Flavor a stepping stone for further computer-aided food engineering
+46
+perception is highly complex, resulting from hundreds of different applications .
+molecules interacting at the physiochemical and sensorial level. Sen-
+sory perception is often non-linear, characterized by complex and Results
+1521
+concentration-dependent synergistic and antagonistic effects that To generate a comprehensive dataset on beer ﬂavor, we selected 250
+are further convoluted by the genetics, environment, culture and commercial Belgian beers across 22 different beer styles (Supple-
+2224
+psychology of consumers .Perceivedﬂavor is therefore difﬁcult to mentary Fig. S1). Beers with ≤ 4.2% alcohol by volume (ABV) were
+measure, with problems of sensitivity, accuracy, and reproducibility classiﬁed as non-alcoholic and low-alcoholic. Blonds and Tripels con-
+25
+that can only be resolved by gathering sufﬁciently large datasets . stitute a signiﬁcant portion of the dataset (12.4% and 11.2%, respec-
+Trained tasting panels are considered the prime source of quality tively) reﬂecting their presence on the Belgian beer market and the
+sensory data, but require meticulous training, are low throughput and heterogeneity of beers within these styles. By contrast, lager beers are
+high cost. Public databases containing consumer reviews of food less diverse and dominated by a handful of brands. Rare styles such as
+products could provide a valuable alternative, especially for studying Brut or Faro make up only a small fraction of the dataset (2% and 1%,
+25
+appreciation scores, which do not require formal training . Public respectively) because fewer of these beers are produced and because
+databases offer the advantage of amassing large amounts of data, they are dominated by distinct characteristics in terms of ﬂavor and
+increasing the statistical power to identify potential drivers of appre- chemical composition.
+ciation. However, public datasets suffer from biases,including a biasin
+the volunteers that contribute to the database, as well as confounding Extensive analysis identiﬁes relationships between chemical
+factorssuchas price,cultstatus andpsychologicalconformitytowards compounds in beer
+previous ratings of the product. For each beer, we measured 226 different chemical properties,
+Classical multivariate statistics and machine learning methods including common brewing parameters such as alcohol content, iso-
+47
+have been used to predict ﬂavor of speciﬁc compounds by, for alpha acids, pH, sugar concentration , and over 200 ﬂavor com-
+example, linking structural properties of a compound to its potential pounds (Methods, Supplementary Table S1). A large portion (37.2%)
+biological activities or linking concentrations of speciﬁccompoundsto are terpenoids arising from hopping, responsible for herbal and fruity
+1,26 16,48
+sensory proﬁles . Importantly, most previous studies focused on ﬂavors . A second major category are yeast metabolites, such as
+4850
+predicting organoleptic properties of single compounds (often based esters and alcohols, that result in fruity and solvent notes .Other
+2733
+on their chemical structure) , thus ignoring the fact that these measured compounds are primarily derived from malt, or other
+compounds are present in a complex matrix in food or beverages and microbes such as non-Saccharomycesyeasts and bacteria (wildﬂora).
+excluding complex interactions between compounds. Moreover, the CompoundsthatarisefromspicesorstalingarelabeledunderOthers.
+3439
+classical statistics commonly used in sensory science require a Fiveattributes(caloricvalue,total acids andtotal ester,hoparomaand
+largesamplesizeandsufﬁcient variance amongst predictors to create sulfurcompounds)arecalculatedfrommultipleindividuallymeasured
+accurate models. They are not ﬁt for studying an extensive set of compounds.
+hundreds of interacting ﬂavor compounds, since they are sensitive to As a ﬁrst step in identifying relationships between chemical
+outliers, have a high tendency to overﬁt and are less suited for non- properties, we determined correlations between the concentrations of
+40
+linear and discontinuous relationships . the compounds (Fig. 1, upper panel, Supplementary Data 1 and 2, and
+In this study, we combine extensive chemical analyses and sen- Supplementary Fig. S2. For the sake of clarity, only a subset of the
+sory data of a set of different commercial beers with machine learning measured compounds is shown in Fig. 1). Compounds of the same
+approaches to develop models thatpredict taste, smell, mouthfeel and origin typically show a positive correlation, while absence of correla-
+appreciation from compound concentrations. Beer is particularly sui- tion hints at parameters varying independently. For example, the hop
+ted to model the relationship between chemistry, ﬂavor and appre- aroma compounds citronellol, and alpha-terpineol show moderate
+ciation. First, beer is a complex product, consisting of thousands of correlations with each other (Spearmans rho=0.39 and 0.57), but not
+4143
+ﬂavor compounds that partake in complex sensory interactions . with the bittering hop component iso-alpha acids (Spearmans
+Thischemicaldiversityarisesfromtherawmaterials(malt,yeast,hops, rho=0.16 and −0.07). This illustrates how brewers can independently
+water and spices) and biochemical conversions during the brewing modify hop aroma and bitterness by selecting hop varieties and
+process (kilning, mashing, boiling, fermentation, maturation and dosage time. If hops are added early in the boiling phase, chemical
+44,45
+aging) . Second, the advent of the internet saw beer consumers conversions increase bitterness while aromas evaporate, conversely,
+51
+embrace online review platforms, such as RateBeer (ZX Ventures, late addition of hops preserves aroma but limits bitterness . Similarly,
+Anheuser-Busch InBev SA/NV) and BeerAdvocate (Next Glass, inc.). In hop-derived iso-alpha acids show a strong anti-correlation with lactic
+this way, the beer community provides massive data sets of beerﬂavor acid and acetic acid, likely reﬂecting growth inhibition of lactic acid
+and appreciation scores, creating extraordinarily large sensory data- and acetic acid bacteria, or the consequent use of fewer hops in sour
+bases to complement the analyses of our professional sensory panel. beer styles, such as West Flanders ales and Fruit beers, that rely on
+52
+Speciﬁcally, we characterize over 200 chemical properties of 250 these bacteria for their distinct ﬂavors . Finally, yeast-derived esters
+commercial beers, spread across 22 beer styles, and link these to the (ethyl acetate, ethyl decanoate, ethyl hexanoate, ethyl octanoate) and
+descriptive sensory proﬁling data of a 16-person in-house trained alcohols (ethanol, isoamyl alcohol, isobutanol, and glycerol), correlate
+tasting panel and data acquired from over 180,000 public consumer with Spearman coefﬁcients above0.5,suggestingthatthesesecondary
+reviews. These unique and extensive datasets enable us to train a suite metabolites are correlated with the yeast genetic background and/or
+of machine learning models to predictﬂavor and appreciation from a fermentationparameters andmaybedifﬁcult to inﬂuence individually,
+53
+beers chemical proﬁle. Dissection of the best-performing models although the choice of yeast strain may offer some control .
+allows us to pinpoint speciﬁccompoundsaspotentialdriversofbeer Interestingly, different beer styles show distinct patterns for
+ﬂavor and appreciation. Follow-up experiments conﬁrm the someﬂavor compounds (Supplementary Fig. S3). These observations
+Nature Communications| (2024) 15:2368 2
+
+===== PAGE 3 =====
+Article https://doi.org/10.1038/s41467-024-46346-0
+Chemical parameter
+Spearman's Rho
+Chemical category
+Off-flavors
+-1 -0.5 0 0.5 1 Ethyl acetateEthyl decanoateEthyl hexanoateEthyl octanoateEthyl propionateIsobutyl acetateIsoamyl acetateOctyl acetatePhenethyl acetateEthyl 2-methylbutyrateEthyl 3-methylbutyrateEthanol Isoamyl alcoholIsobutanol Phenethyl alcoholGlycerol Iso-alpha acidsAlpha-humuleneCaryophylleneAlpha-terpineolCitronellol Geraniol Ninalool Z-nerolidol Acetic acid Nactic acid Diacetyl 4-vinylguaiacolAcetaldehydeCarbon disulfideDimethyl sulfideDiethyl sulfideHydrogen sulfideOethanethiolUulfur dioxide Carbon dioxidepH Ammonia Betaglucan Color Iron Protein Uugars Caloric value
+Oalt - overall Ethyl acetate
+Oalt - grain Ethyl decanoate
+Oalt - bread Ethyl hexanoate
+Oalt - caramel Ethyl octanoate
+Oalt - smoked Ethyl propionate
+Isobutyl acetate
+Hops - overall Isoamyl acetate
+Hops - citrus Octyl acetate
+Hops - tropical fruit Phenethyl acetate
+Hops - grassy Ethyl 2-methylbutyrate
+Hops - woody Ethyl 3-methylbutyrate
+Esters - overall Ethanol
+Esters - nail polish Isoamyl alcohol
+Esters - banana Isobutanol
+Esters - floral Phenethyl alcohol
+Esters - fruity Glycerol
+Oalt - overall Iso-alpha acids
+Oalt - grain Alpha-humulene
+Oalt - bread Caryophyllene
+Oalt - caramel Alpha-terpineol
+Oalt - smoked Citronellol
+Geraniol
+Hops - overall Ninalool
+Hops - citrus Z-nerolidol
+Hops - tropical fruit
+Hops - grassy Acetic acid
+Hops - woody Nactic acid
+Esters - overall Diacetyl
+Esters - nail polish 4-vinylguaiacol Chemical parameter
+Esters - banana Acetaldehyde
+Esters - floral Carbon disulfide
+Esters - fruity Dimethyl sulfide
+Diethyl sulfide
+Sensory descriptor Acidity Hydrogen sulfide
+Bitterness Oethanethiol
+Uweetness Uulfur dioxide
+4-vinyl guaiacol Carbon dioxide
+Diacetyl pH
+Dimethyl sulfide Ammonia
+Oetallic Betaglucan
+Utale hops Color
+Trans-2-nonenal Iron
+Orange Protein
+Coriander Uugars
+Clove Caloric value
+Nactic acid
+Acetic acid
+Barnyard
+Source
+Alcohol
+Carbonation Oalt
+Aftertaste
+Body Hops
+Overall appreciation Yeast
+Others
+Wild flora
+Sensory category
+Aroma Clove Body
+Acidity Oetallic Orange Alcohol
+Diacetyl
+Taste Bitterness Coriander Barnyard Aftertaste
+Oalt - grain Oalt - grain Uweetness Utale hops Nactic acid Acetic acid
+Oalt - overall Oalt - bread Hops - citrus Oalt - overall Oalt - bread Hops - citrus Carbonation
+Palate Oalt - caramelOalt - smoked Hops - overall Hops - grassyHops - woody Esters - floralEsters - fruity Oalt - caramelOalt - smoked Hops - overall Hops - grassyHops - woody Esters - floralEsters - fruity
+Esters - overall Esters - banana Esters - overall Esters - banana 4-vinyl guaiacol Dimethyl sulfide
+Overall Trans-2-nonenal
+Hops - tropical fruit Esters - nail polish Hops - tropical fruit Esters - nail polish
+Overall appreciation
+Sensory descriptor
+Fig. 1 | Correlations between selected chemical parameters (upper right panel) each source. For more details, see the main text and Methods section. Chemical
+and sensory descriptors used by the tasting panel (bottom left panel).Spear- data can be found in Supplementary Data 1, correlations between all chemical
+manrank correlationsare shown.Descriptorsaregrouped according to theirorigin compounds are depicted in Supplementary Fig. S2 and correlation values can be
+(malt (blue), hops (green), yeast (red), wild ﬂora (yellow), Others (black)), and found in Supplementary Data 2. See Supplementary Data 4 for sensory panel
+sensory aspect (aroma, taste, palate, and overall appreciation). Please note that for assessments and Supplementary Data 5 for correlation values between all sensory
+the chemical compounds, for the sake of clarity, only a subset of the total number descriptors.
+of measured compounds is shown, with an emphasis on the key compounds for
+agree with expectations for key beer styles, and serve as a control for concentrations of glycerol and esters. This is in line with the pro-
+our measurements. For instance, Stouts generally show high values duction process for most of the low/no-alcohol beers in our dataset,
+for color (darker), while hoppy beers contain elevated levels of iso- which are produced through limiting fermentation or by stripping
+alpha acids, compounds associated with bitter hop taste. Acetic and away alcohol via evaporation or dialysis, with both methods having
+lactic acid are not prevalent in most beers, with notable exceptions the unintended side-effect of reducing the amount of ﬂavor com-
+56,57
+such as Kriek, Lambic, Faro, West Flanders ales and Flanders Old pounds in the ﬁnal beer .
+Brown, which use acid-producing bacteria (Lactobacillus and Pedio- Besides expected associations, our data also reveals less trivial
+54,55
+coccus) or unconventional yeast (Brettanomyces) . Glycerol, etha- associations between beer styles and speciﬁc parameters. For example,
+nol and esters show similar distributions across all beer styles, geraniol and citronellol, two monoterpenoids responsible for citrus,
+reﬂecting their common origin as products of yeast metabolism ﬂoral and rose ﬂavors and characteristic of Citra hops, are found in
+45,53
+during fermentation . Finally, low/no-alcohol beers contain low relatively high amounts in Christmas, Saison, and Brett/co-fermented
+Nature Communications| (2024) 15:2368 3
+
+===== PAGE 4 =====
+Article https://doi.org/10.1038/s41467-024-46346-0
+beers, where they may originate from terpenoid-rich spices such as correlated with iso-alpha acids. This could be a sign of metal chela-
+58 61
+coriander seeds instead of hops . tion of hopacids ,giventhatouranalysesmeasureunboundhopacids
+and total iron content, or could result from the higher iron content in
+Tasting panel assessments reveal sensorial relationships in beer dark and Fruit beers, which typically have less hoppy and bitter
+62
+To assess the sensory proﬁle of each beer, a trained tasting panel ﬂavors .
+evaluated each of the 250 beers for 50 sensory attributes, including
+different hop, malt and yeast ﬂavors, off-ﬂavors and spices. Panelists Public consumer reviews complement expert panel data
+used a tasting sheet (Supplementary Data 3) to score the different To complement and expand the sensory data of our trained tasting
+attributes. Panel consistency was evaluated by repeating 12 samples panel, we collected 180,000 reviews of our 250 beers from the online
+across different sessions and performing ANOVA. In 95% of cases no consumer review platform RateBeer. This provided numerical scores
+signiﬁcant difference was found across sessions (p>0.05), indicating for beer appearance, aroma, taste, palate, overall quality as well as the
+good panel consistency (Supplementary Table S2). average overall score.
+Aroma and taste perception reported by the trained panel are Public datasets are knownto suffer from biases, suchas price, cult
+often linked (Fig.1, bottom left panel and Supplementary Data 4and 5), status and psychological conformity towards previous ratings of a
+with high correlations between hops aroma and taste (Spearmans product. For example, prices correlate with appreciation scores for
+rho=0.83).Bittertastewasfoundtocorrelatewithhoparomaandtaste these online consumer reviews (rho=0.49, SupplementaryFig. S6),but
+in general (Spearmans rho=0.80 and 0.69), and particularly with not for our trained tasting panel (rho=0.19). This suggests that prices
+63
+grassy noble hops (Spearmans rho=0.75). Barnyard ﬂavor, most affectconsumerappreciation,whichhasbeenreportedinwine ,while
+often associated with sour beers, is identiﬁed together with stale hops blind tastings are unaffected. Moreover, we observe that some beer
+(Spearmans rho=0.97) that are used in these beers. Lactic and acetic styles, like lagers and non-alcoholic beers, generally receive lower
+acid, which often co-occur, are correlated (Spearmans rho=0.66). scores, reﬂecting that online reviewers are mostly beer aﬁcionados
+Interestingly,sweetnessandbitternessareanti-correlated(Spearmans with a preference for specialty beers over lager beers. In general, we
+59,60
+rho =−0.48), conﬁrming the hypothesis that they mask each other . ﬁnd a modest correlation between our trained panelsoverallappre-
+Beer body is highly correlated with alcohol (Spearmansrho=0.79), ciation score and the online consumer appreciation scores (Fig. 3,
+and overall appreciation is found to correlate with multiple aspects rho=0.29). Apart from the aforementioned biases in the online data-
+that describe beer mouthfeel (alcohol, carbonation; Spearmansrho= sets, serving temperature, sample freshness and surroundings, which
+0.32, 0.39), as well as with hop and ester aroma intensity (Spearmans are all tightly controlled during the tasting panel sessions, can vary
+rho=0.39 and 0.35). tremendously across online consumers and can further contribute to
+Similar to the chemical analyses, sensorial analyses conﬁrmed (among others, appreciation) differences between the two categories
+typical features of speciﬁc beer styles (Supplementary Fig. S4). For of tasters. Importantly, in contrast to the overall appreciation scores,
+example, sour beers (Faro, Flanders Old Brown, Fruit beer, Kriek, for many sensory aspects the results from the professional panel
+Lambic, West Flanders ale) were rated acidic, with ﬂavors of both correlated well with results obtained from RateBeer reviews. Correla-
+aceticand lactic acid. Hoppy beers werefoundto bebitter and showed tions were highest for features that are relatively easy to recognize
+hop-associated aromas like citrus and tropical fruit. Malt taste is most even for untrained tasters, like bitterness, sweetness, alcohol and malt
+detected among scotch, stout/porters, and strong ales, while low/no- aroma (Fig. 3 and below).
+alcohol beers, which often have a reputation for being worty (remi- Besides collecting consumer appreciation from these online
+niscent of unfermented, sweet malt extract) appear in the middle. reviews, we developed automated text analysis tools to gather addi-
+Unsurprisingly, hop aromas are most strongly detected among hoppy tional data from review texts (Supplementary Data 7). Processing
+beers. Like its chemical counterpart (Supplementary Fig. S3), acidity review texts on the RateBeer database yielded comparable results to
+shows a right-skewed distribution, with the most acidic beers being the scores given by the trained panel for many common sensory
+Krieks, Lambics, and West Flanders ales. aspects, including acidity, bitterness, sweetness, alcohol, malt, and
+hop tastes (Fig. 3). This is in line with what would be expected, since
+Tasting panel assessments of speciﬁc ﬂavors correlate with these attributes require less training for accurate assessment and are
+chemical composition less inﬂuenced by environmental factors such as temperature, serving
+We ﬁnd that the concentrations of several chemical compounds glass and odors in the environment. Consumer reviews also correlate
+strongly correlate with speciﬁc aroma or taste, as evaluated by the well with our trained panel for 4-vinyl guaiacol, a compound asso-
+tasting panel (Fig.2, Supplementary Fig. S5, Supplementary Data 6). In ciated with a very characteristic aroma. By contrast, correlations for
+some cases, these correlations conﬁrm expectations and serve as a more speciﬁc aromas like ester, coriander or diacetyl are under-
+useful control for data quality. For example, iso-alpha acids, the bit- represented in the online reviews, underscoring the importance of
+tering compounds in hops, strongly correlate with bitterness (Spear- using a trained tasting panel and standardized tasting sheets with
+mans rho=0.68), while ethanol and glycerol correlate with tasters explicit factors to be scored for evaluating speciﬁcaspectsofabeer.
+perceptions of alcohol and body, the mouthfeel sensation of fullness Takentogether,ourresultssuggestthatpublicreviewsaretrustworthy
+(Spearmans rho=0.82/0.62 and 0.72/0.57 respectively) and darker for some, but not all,ﬂavorfeatures and can complement or substitute
+color from roasted malts is a good indication of malt perception taste panel data for these sensory aspects.
+(Spearmans rho=0.54).
+Interestingly, for some relationships between chemical com- Models can predict beer sensory proﬁles from chemical data
+pounds and perceived ﬂavor, correlations are weaker than expected. The rich datasets of chemical analyses, tasting panel assessments and
+For example, the rose-smelling phenethyl acetate only weakly corre- public reviews gathered intheﬁrstpartofthis studyprovideduswitha
+lates with ﬂoral aroma. This hints at more complex relationships and unique opportunity to develop predictive models that link chemical
+interactions between compounds and suggests a need for a more data to sensorial features. Given the complexity of beer ﬂavor, basic
+complex model than simple correlations. Lastly, we uncovered unex- statistical tools such as correlations or linear regression may not
+pected correlations. For instance, the esters ethyl decanoate and ethyl always be the most suitable for making accurate predictions. Instead,
+octanoate appear to correlate slightly with hop perception and bit- we applied different machine learning models that can model both
+terness, possibly due to their fruity ﬂavor. Iron is anti-correlated with simple linear and complex interactive relationships. Speciﬁcally, we
+hop aromas and bitterness, most likely because it is also anti- constructed a set of regression models to predict (a) trained panel
+Nature Communications| (2024) 15:2368 4
+
+===== PAGE 5 =====
+Article https://doi.org/10.1038/s41467-024-46346-0
+Oalt - overall Spearman's
+Oalt - grain
+Oalt - bread Rho
+Oalt - caramel
+Oalt - smoked 0.85
+Hops - overall
+Hops - citrus
+0.50
+Hops - tropical fruit
+Hops - grassy
+Hops - woody
+Esters - overall
+Esters - nail polish 0.00
+Esters - banana
+Esters - floral
+Esters - fruity
+Oalt - overall -0.50
+Oalt - grain
+Oalt - bread
+Oalt - caramel -0.85
+Oalt - smoked
+Hops - overall
+Hops - citrus
+Hops - tropical fruit
+Hops - grassy
+Hops - woody
+Chemical category
+Esters - overall Off-flavors
+Esters - nail polish
+Esters - banana
+Esters - floral
+Esters - fruity
+Sensory descriptor
+Acidity
+Bitterness
+Uweetness Source
+4-vinyl guaiacol Oalt
+Diacetyl Hops
+Dimethyl sulfide
+Yeast
+Oetallic
+Utale hops Others
+Trans-2-nonenal Wild flora
+Orange
+Coriander
+Clove
+Nactic acid
+Acetic acid
+Barnyard Sensory category
+Alcohol Aroma
+Carbonation
+Taste
+Aftertaste
+Body Palate
+Overall appreciation Overall
+pH Iron
+Color
+Ethanol Ninalool Diacetyl Protein Uugars
+Glycerol Geraniol
+Isobutanol Citronellol Ammonia
+Z-nerolidol Acetic acid Nactic acid Betaglucan
+Ethyl acetate Octyl acetate Acetaldehyde Oethanethiol Uulfur dioxide Caloric value
+Caryophyllene 4-vinylguaiacol Diethyl sulfide
+Ethyl decanoateEthyl hexanoateEthyl octanoate Isobutyl acetateIsoamyl acetate Isoamyl alcohol Iso-alpha acids Alpha-terpineol Dimethyl sulfide Carbon dioxide
+Ethyl propionate Alpha-humulene Carbon disulfide Hydrogen sulfide
+Phenethyl acetate Phenethyl alcohol
+Ethyl 2-methylbutyrateEthyl 3-methylbutyrate
+Chemical parameter
+Fig. 2 | Pairwise Spearman Rank correlations between chemical data and sen- overall), chemical categories and chemical sources in beer (malt (blue), hops
+sorial data from the trained panel.Heatmap colors indicate SpearmansRho. (green), yeast (red), wildﬂora (yellow), Others (black)). See Supplementary Data 6
+Axes are organized according to sensory categories (aroma, taste, mouthfeel, for all correlation values.
+scores for beer ﬂavor and quality and (b) public reviewsappreciation performance agreed in general. Performance of the different models
+scores from beer chemical proﬁles. We trained and tested 10 different varied (Table 1). It should be noted that all models perform better at
+models (Methods), 3 linear regression-based models (simple linear predictingRateBeer results thanresults from our trainedtastingpanel.
+regression withﬁrst-order interactions (LR),lasso regression withﬁrst- One reason could be that sensory data is inherently variable, and this
+order interactions (Lasso), partial least squares regressor (PLSR)), 5 variability is averaged out with the large number of public reviews
+decision tree models (AdaBoost regressor (ABR), extra trees (ET), from RateBeer. Additionally, all tree-based models perform better at
+gradient boosting regressor (GBR), random forest (RF) and XGBoost predicting taste than aroma. Linear models (LR) performed particu-
+2
+regressor (XGBR)), 1 support vector regression (SVR), and 1 artiﬁcial larly poorly, with negative R values, due to severe overﬁtting (training
+2
+neural network (ANN) model. set R =1).Overﬁtting is a common issue in linear models with many
+Tocomparetheperformanceofourmachinelearningmodels,the parameters and limited samples, especially with interaction terms
+datasetwasrandomlysplitintoatrainingandtestset,stratiﬁed by beer further amplifying the number of parameters.L1 regularization(Lasso)
+style. After a model was trained on data in the training set, its perfor- successfully overcomes this overﬁtting, out-competing multiple tree-
+mance was evaluated on its ability to predict the test dataset obtained based models on the RateBeer dataset. Similarly, the dimensionality
+from multi-output models (based on the coefﬁcient of determination, reduction of PLSR avoids overﬁtting and improves performance, to
+see Methods). Additionally, individual-attribute models were ranked some extent. Still, tree-based models (ABR, ET, GBR, RF and XGBR)
+per descriptor and the average rank was calculated, as proposed by show the best performance, out-competing the linear models (LR,
+64 65
+Korneva et al. . Importantly, both ways of evaluating the models Lasso, PLSR) commonly used in sensory science .
+Nature Communications| (2024) 15:2368 5
+
+===== PAGE 6 =====
+Article https://doi.org/10.1038/s41467-024-46346-0
+ρ = 0.29* ρ = 0.46* ρ = 0.64* ρ = 0.52* ρ = 0.70* ρ = 0.24*
+Appreciation Taste: sour Taste: bitter Taste: sweet
+Taste: alcohol Palate: carbon.
+Appreciation Acidity Bitterness Uweetness Alcohol Carbonation
+ρ = 0.45* ρ = 0.51* ρ = 0.28* ρ = 0.45* ρ = 0.12 ρ = 0.06 Source
+Oalt
+Hops
+Yeast
+Aroma: malt Taste: malt Taste: hoppy Taste: estery Others
+Aroma: hoppy Aroma: estery
+Wild flora
+Ratebeer scores
+Oalt aroma Oalt taste Hops aroma Hops taste Esters aroma Esters taste
+ρ = 0.52* ρ = 0.26* ρ = 0.20* ρ = 0.49* ρ = 0.12 ρ = 0.16*
+Taste: caramel Aroma: clove Aroma: buttery
+Aroma: tropical Aroma: banana
+Aroma: coriander
+Oalt taste - caramel Hops aroma - tropical fruit Esters aroma - banana 4-vinyl guaiacol Coriander Diacetyl
+Blind taste panel scores
+Fig. 3 | Correlations between online reviews and trained tasting panel scores. correlations (p< 0.05, two-sided). All p values were smaller than 0.001, except for
+RateBeer text mining results can be found in Supplementary Data 7. Rho values Esters aroma (0.0553), Esters taste (0.3275), Esters aromabanana (0.0019), Cor-
+shown are Spearman correlation values, with asterisks indicating signiﬁcant iander (0.0508) and Diacetyl (0.0134).
+Table 1 | Performance of various models when trained to predict either trained tasting panel descriptors or RateBeer
+review scores
+2 2
+Model Trained panel R Trained panel rank RateBeer R RateBeer rank
+AdaBoost 0.21 2.88 0.61 5.67
+Artiﬁcial Neural Network 0.14 5.60 0.46 4.00
+Extra Trees 0.22 3.02 0.61 4.67
+Gradient boosting 0.21 3.42 0.69 1.50
+Lasso regression 0.05 4.94 0.64 4.33
+Linear regression 4.13 7.88 11.02 8.00
+Partial Least Squares Regression 0.25 7.56 0.57 5.33
+Random Forest 0.22 2.86 0.62 3.50
+Support Vector Regression 0.18 6.50 0.59 6.50
+XGBoost 0.22 4.12 0.62 2.00
+The performance metric is the coefﬁcient of determination (R2) for predictions on the test dataset, obtained from multi-output models (Methods). The average rank is the mean after ranking the
+individual-attribute models per descriptor, with the lowest value indicating the best model. The highest scores per evaluation metric are indicated in bold. Note that some models result in negative
+R-squared values, implying the average of the outcome variable would have worked as a better predictor than the models predictions. Values for all descriptors can be found in Supplementary
+Table S3 (tasting panel) and Supplementary Table S4 (RateBeer).
+GBR models showed the best overall performance in predicting Additionally, the requirement for a large number of representative
+2
+sensory responses from chemical information, with R values up to evaluators makes consumer trials one of the more costly and time-
+0.75 depending on the predicted sensory feature (Supplementary consuming aspects of product development. Hence, a model for pre-
+Table S4). The GBR models predict consumer appreciation (RateBeer) dicting chemical drivers of overall appreciation would be a welcome
+2
+better than our trained panels appreciation (R valueof0.67com- addition to the available toolbox for food development and
+2
+pared to R value of 0.09) (Supplementary Table S3 and Supplemen- optimization.
+tary Table S4). ANN models showed intermediate performance, likely Since GBR models on our RateBeer dataset showed the best
+66
+because neural networks typically perform best with larger datasets . overall performance, we focused on these models. Speciﬁcally, we
+The SVR shows intermediate performance, mostly due to the weak used two approaches to identify important contributors. First, rank-
+predictions of speciﬁc attributes that lower the overall performance ings of the most important predictors for each sensorial trait in the
+(Supplementary Table S4). GBR models were obtained based on impurity-based feature impor-
+tance (mean decrease in impurity). High-ranked parameters were
+Model dissection identiﬁes speciﬁc, unexpected compounds as hypothesized to be either the true causal chemical properties under-
+drivers of consumer appreciation lying the trait, to correlate with the actual causal properties, or to take
+67
+Next, we leveraged our models to infer important contributors to part in sensory interactions affecting the trait (Fig. 4A). In a second
+68
+sensoryperception and consumer appreciation. Consumer preference approach, we used SHAP todeterminewhichparameterscontributed
+is a crucial sensory aspects, because a product that shows low con- most to the model for making predictions of consumer appreciation
+25
+sumer appreciation scores often does not succeed commercially . (Fig. 4B). SHAP calculates parameter contributions to model
+Nature Communications| (2024) 15:2368 6
+
+===== PAGE 7 =====
+Article https://doi.org/10.1038/s41467-024-46346-0
+AB
+Ethyl acetate 0.22 Ethyl acetate
+Ethanol 0.07 Ethanol
+Ethyl octanoate 0.05 Protein
+Ethyl phenylacetate 0.05 Nactic acid
+Nactic acid 0.04 Ethyl octanoate
+Protein 0.02 Ethyl phenylacetate
+Oethanethiol 0.02 Oethanethiol
+Utyrene 0.02 Isopentyl hexanoate
+Total acids 0.02 2-ethyl-3-methylpyrazine
+Isopentyl hexanoate 0.02 Caloric value
+Isobutanol 0.02 Total acids
+Caloric value 0.01 Utyrene Concentration
+Ethyl hexanoate 0.01 Isobutanol
+2-ethyl-3-methylpyrazine 0.01 Ethyl benzoate low high
+Ethyl benzoate 0.01 2-nonanol
+0.0 0.1 0.2 -0.6 -0.4 -0.2 0.0
+Feature importance *ODI+ UHAP value *impact on model output+
+C
+1
+0
+-1
+-2
+-3 ρ = 0.56 | 2 ρ = 0.53 | 3 ρ = 0.31 | 35 ρ = 0.3 | 40 ρ = 0.56 | 1
+0 50 100 0369 0102030 0 2000 4000 6000 0.0 0.5 1.0 1.5 2.0
+Ethyl acetate *mg/N+ Ethanol *v/v+ Protein *g/N+ Nactic acid *mg/N+ Ethyl octanoate *mg/N+
+1
+0
+-1
+-2
+-3 ρ = 0.29 | 44 ρ = 0.42 | 9 ρ = 0.49 | 5 ρ = 0.29 | 42 ρ = 0.48 | 6
+Overall appreciation *TateBeer+
+0e+00 1e+07 2e+07 3e+07 01230e+00 2e+06 4e+06 6e+06 0.00.30.60.9 25 50 75
+Ethyl phenylacetate *A.U.+ Oethanethiol *ug/N+ Isopentyl hexanoate *A.U.+ 2-ethyl-3-methylpyrazine *A.U.+ Caloric value *kcal%+
+1
+0
+-1
+-2
+-3 ρ = 0.25 | 54 ρ = 0.34 | 30 ρ = 0.34 | 28 ρ = 0.26 | 52 ρ = 0.31 | 39
+01020 012301020300e+00 1e+08 2e+08 0.0e+00 1.0e+07 2.0e+07
+Total acids *A.U.+ Utyrene *mg/N+ Isobutanol *mg/N+ Ethyl benzoate *A.U.+ 2-nonanol *A.U.+
+Fig. 4 | Most important chemical parameters. A The impurity-based feature representinghighervalues.Greaterabsolutevaluesonthehorizontalaxisindicatea
+importance (mean deviance in impurity, MDI) calculated from the Gradient higher impact of the parameter on the prediction of the model. C Spearman cor-
+Boosting Regression (GBR) model predicting RateBeer appreciation scores. The relationsbetweenthe15most importantchemical propertiesand consumeroverall
+top 15 highest ranked chemicalproperties are shown.BSHAPsummary plot forthe appreciation. Numbers indicate the Spearman Rho correlation coefﬁcient, and the
+top 15 parameters contributing to our GBR model. Each point on the graph rank of this correlation compared to all other correlations. The top 15 important
+represents a sample from our dataset. The color represents the concentration of compounds were determined using SHAP (panel B).
+that parameter, with bluer colors representing low values and redder colors
+predictions on a per-sample basis, which can be aggregated into an abundant ester in beer with a typical fruity, solvent and alcoholic
+importance score. ﬂavor, but is often considered less important than other esters like
+Both approaches identiﬁed ethyl acetate as the most predictive isoamyl acetate. The second most important parameter identiﬁed
+parameter for beer appreciation (Fig. 4). Ethyl acetate is the most by SHAP is ethanol, the most abundant beer compound after water.
+Nature Communications| (2024) 15:2368 7
+
+===== PAGE 8 =====
+Article https://doi.org/10.1038/s41467-024-46346-0
+Apart from directly contributing to beerﬂavor and mouthfeel, ethanol acetate) remain unchanged, although their rank in importance chan-
+drastically inﬂuences the physical properties of beer, dictating how ges (Supplementary Fig. S8).
+easily volatilecompounds escapethebeer matrixtocontributeto beer Next, we investigated if a combination of RateBeer and trained
+69
+aroma . Importantly, it should also be noted that the importance of panel data into one consolidated dataset would lead to stronger
+ethanol for appreciation is likely inﬂated by the very low appreciation models, under the hypothesis that such a model would suffer less from
+scores of non-alcoholic beers (Supplementary Fig. S4). Despite not bias in the datasets. A GBR model was trained to predict appreciation
+often being considered a driver of beer appreciation, protein level also on the combined dataset. This model underperformed compared to
+ranks highly in both approaches, possibly due to its effect on mouth- the RateBeer model, both in the native case and when including a
+70 2
+feel and body . Lactic acid, which contributes to the tart taste of sour dataset identiﬁer (R = 0.67, 0.26 and 0.42 respectively). For the latter,
+beers, is the fourth most important parameter identiﬁed by SHAP, the dataset identiﬁer is the most important feature (Supplementary
+possibly due to the generally high appreciation of sour beers in our Fig. S9), while most of the feature importance remains unchanged,
+dataset. with ethyl acetate and ethanol ranking highest, like in the original
+Interestingly, some of the most important predictive parameters model trained only on RateBeer data. It seems that the large variation
+for our model are not well-established as beer ﬂavors or are even in the panel dataset introduces noise, weakening the models perfor-
+commonly regarded as being negative for beer quality. For example, mances and reliability. In addition, it seems reasonable to assume that
+our models identify methanethiol and ethyl phenyl acetate, an ester both datasets are fundamentally different, with the panel dataset
+71
+commonly linked to beer staling , as a key factor contributing to beer obtained by blind tastings by a trained professional panel.
+appreciation. Although there is no doubt that high concentrations of Lastly, we evaluated whether beer style identiﬁers would further
+these compounds are considered unpleasant, the positive effects of enhance the models performance. A GBR model was trained with
+72,73
+modest concentrations are not yet known . parameters that explicitly encoded the styles of the samples. This did
+To compareour approachto conventionalstatistics,we evaluated not improve model performance (R2 =0.66 with style information vs
+how well the 15 most important SHAP-derived parameters correlate R2 =0.67). The most important chemical features are consistent with
+with consumer appreciation (Fig. 4C). Interestingly, only 6 of the the model trained without style information (eg. ethanol and ethyl
+properties derived by SHAP rank amongst the top 15 most correlated acetate), and with the exception of the most preferred (strong ale) and
+parameters. For some chemical compounds, the correlations are so least preferred (low/no-alcohol) styles, none of the styles were among
+low that they would have likely been considered unimportant. For the most important features (Supplementary Fig. S9, Supplementary
+example, lactic acid, the fourth most important parameter, shows a Table S5 and S6). This is likely due to a combination of style-speciﬁc
+bimodal distribution for appreciation, with sour beers forming a chemical signatures, such as iso-alpha acids and lactic acid, that
+separate cluster, that is missed entirely by the Spearman correlation. implicitly convey style information to the original models, as well as
+Additionally, the correlation plots reveal outliers, emphasizing the the low number of samples belonging to some styles, making it difﬁ-
+need for robust analysis tools. Together, this highlights the need for cult for the model to learn style-speciﬁc patterns. Moreover, beer
+alternative models,likethe Gradient Boosting model, thatbetter grasp styles are not rigorously deﬁned, with some styles overlapping in
+the complexity of (beer) ﬂavor. features and some beers being misattributed to a speciﬁcstyle,allof
+Finally, to observe the relationships between these chemical which leads to more noise in models that use style parameters.
+properties and their predicted targets, partial dependence plots were
+constructed for the six most important predictors of consumer Model validation
+7476
+appreciation (SupplementaryFig.S7).One-waypartialdependence To test if our predictive models give insight into beer appreciation, we
+plots show how a change in concentration affects the predicted set up experiments aimed atimproving existing commercial beers. We
+appreciation. These plots reveal an important limitation ofour models: speciﬁcally selected overall appreciation as the trait to be examined
+appreciation predictions remain constant at ever-increasing con- because of its complexity and commercial relevance. Beer ﬂavor
+53
+centrations. This implies that once a threshold concentration is comprises a complex bouquet rather than single aromas and tastes .
+reached, further increasing the concentration does not affect appre- Hence, adding a single compound to the extent that a difference is
+ciation. This is false, as it is well-documented that certain compounds noticeable may lead to an unbalanced, artiﬁcial ﬂavor. Therefore, we
+become unpleasant at high concentrations, including ethyl acetate evaluated the effect of combinations of compounds. Because Blond
+77 78
+(nail polish) and methanethiol (sulfuryandrotten cabbage) .The beers represent the most extensive style in our dataset, we selected a
+inability of our models to grasp that ﬂavor compounds have optimal beerfromthisstyleasthestartingmaterialfortheseexperiments(Beer
+levels, above which they become negative, is a consequence of work- 64 in Supplementary Data 1).
+ingwithcommercial beer brands where(off-)ﬂavorsarerarely toohigh In the ﬁrst set of experiments, we adjusted the concentrations of
+to negatively impact the product. The two-way partial dependence compounds that made up the most important predictors of overall
+plots show how changing the concentration of two compounds inﬂu- appreciation (ethyl acetate, ethanol, lactic acid, ethyl phenyl acetate)
+ences predicted appreciation, visualizing their interactions (Supple- together with correlated compounds (ethyl hexanoate, isoamyl acet-
+th
+mentary Fig. S7). In our case, the top 5 parameters are dominated by ate, glycerol), bringing them up to 95 percentile ethanol-normalized
+additive or synergistic interactions, with high concentrations for both concentrations (Methods) within the Blond group (Spiked con-
+compounds resulting in the highest predicted appreciation. centration in Fig. 5A). Compared to controls, the spiked beers were
+To assess the robustness of our best-performing models and found to have signiﬁcantly improved overall appreciation among
+model predictions, we performed 100 iterations of the GBR, RF and ET trained panelists, with panelist noting increased intensity of ester ﬂa-
+models. In general, all iterations of the models yielded similar perfor- vors,sweetness,alcohol,andbodyfullness(Fig.5B).Todisentanglethe
+mance (Supplementary Fig. S8). Moreover, the main predictors contribution of ethanol to these results, a second experiment was
+(including the top predictors ethanol and ethyl acetate) remained performed without the addition of ethanol. This resulted in a similar
+virtually the same, especially for GBR and RF. For the iterations of the outcome, including increased perception of alcohol and overall
+ETmodel,wedidobservemorevariationinthetoppredictors,whichis appreciation.
+likely a consequence of the models inherent random architecture in In a last experiment, we tested whether using the models pre-
+combination with co-correlations between certain predictors. How- dictionscan boostthe appreciation of a non-alcoholic beer (beer 223 in
+ever, even in this case, several of the top predictors (ethanol and ethyl Supplementary Data 1). Again, the addition of a mixture of predicted
+Nature Communications| (2024) 15:2368 8
+
+===== PAGE 9 =====
+Article https://doi.org/10.1038/s41467-024-46346-0
+A B
+Blond: Best predictors
+Blond: Best predictors (n = 20)
+Compound Control Spiked Threshold 1.0 0.003 <0.001
+0.012 0.041 0.041
+Ethyl acetate *mg/l+ 15.59 33.12 23.00
+0.5
+Ethyl hexanoate *mg/l+ 0.10 0.32 0.22
+Isoamyl acetate *mg/l+ 2.59 3.46 0.60 0.0
+Phenylethyl acetate *mg/l+ 0.36 0.39 NA
+-0.5
+Ethanol *v/v%+ 4.71 8.59 1.74
+Glycerol *g/l+ 1.51 3.21 2.00 -1.0
+Nactic acid *mg/l+ 148.00 194.00 400.00
+Blond: Best predictors - no ethanol
+Blond: Best predictors - no ethanol (n = 13)
+Compound Control Spiked Threshold 1.0 0.022 0.022 0.022 0.022
+Ethyl acetate *mg/l+ 15.59 33.12 23.00
+0.5
+Ethyl hexanoate *mg/l+ 0.10 0.32 0.22
+Isoamyl acetate *mg/l+ 2.59 3.46 0.60 0.0
+Phenylethyl acetate *mg/l+ 0.36 0.39 NA
+-0.5
+Glycerol *g/l+ 1.51 3.21 2.00
+Nactic acid *mg/l+ 148.00 194.00 400.00 Proportion of tasters-1.0
+Non/low-alcohol: Best predictors - no ethanol
+NABLAB: Best predictors - no ethanol (n = 13)
+Compound Control Spiked Threshold
+1.0 0.003 0.022 0.003 0.022
+Ethyl acetate *mg/l+ 4.27 8.43 23.00
+Ethyl hexanoate *mg/l+ 0.11 0.11 0.22
+0.5
+Isoamyl acetate *mg/l+ 1.69 2.58 0.60
+Phenylethyl acetate *mg/l+ 0.07 0.33 NA 0.0
+Glycerol *g/l+ 1.63 17.59 2.00
+-0.5
+Nactic acid *mg/l+ 88.00 820.00 400.00
+-1.0
+or s s on
+cohol nes
+ter flavor etness itternes Al
+Oalt flavor Hop flav Es Uwe B ppreciati
+Body full
+erall a
+Ov
+Selected sample Sensory attribute
+Control Upiked
+Fig. 5 | Model validation by a beer supplemented with the top predicted che- to 95th-percentile ethanol-normalized concentrations within each style.BFor each
+mical compounds. Adding the top chemical compounds, identiﬁed as best pre- sensory attribute, tasters indicated the more intense sample and selected the
+dictors of appreciation by our model, into poorly appreciated beers results in sampletheypreferred.Thenumbersabovethebarscorrespondtothepvalues that
+increased appreciation from our trained panel. Results of sensory tests between indicate signiﬁcant changes in perceived ﬂavor (two-sided binomial test: alpha
+base beers and those spiked with compounds identiﬁed as the best predictors by 0.05, n= 20 or 13).
+the model. A Blond and Non/Low-alcohol (0.0% ABV) base beers were brought up
+compounds (omitting ethanol, in this case) resulted in a signiﬁcant and can successfully predict ﬂavor appreciation from chemical com-
+increase in appreciation, body, ester ﬂavor and sweetness. position. This could be attributed to the natural incorporation of
+interactions and non-linear or discontinuous effects in machine
+Discussion learning models, which are not easily grasped by the linear model
+Predicting ﬂavor and consumer appreciation from chemical compo- architecture. While linear models and partial least squares regression
+sition is one of the ultimate goals of sensory science. A reliable, sys- represent the most widespread statistical approaches in sensory sci-
+65,81,82
+tematic and unbiased way to link chemical proﬁles to ﬂavor and food ence, in part because they allow interpretation , modern machine
+appreciation would be a signiﬁcant asset to the food and beverage learning methods allow for building better predictive models while
+industry. Such tools would substantially aid in quality control and preserving the possibility to dissect and exploit the underlying pat-
+recipe development, offer an efﬁcient and cost-effective alternative to terns. Of the 10 different models we trained, tree-based models, such
+pilot studies and consumer trials and would ultimately allow food as our best performing GBR, showed the best overall performance in
+manufacturers to produce superior, tailor-made products that better predicting sensory responses from chemical information, out-
+meet the demands of speciﬁc consumer groups more efﬁciently. competing artiﬁcialneural networks. This agrees with previous reports
+83
+Alimitedsetofstudieshavepreviouslytried,tovaryingdegreesof for models trained on tabular data . Our results are in line with the
+success, to predict beerﬂavor and beer popularity based on (a limited ﬁndings of Colantonio et al. who also identiﬁed the gradient boosting
+79,80
+set of) chemical compounds and ﬂavors . Current sensitive, high- architecture as performing best at predicting appreciation and ﬂavor
+26
+throughput technologies allow measuring an unprecedented number (of tomatoes and blueberries, in their speciﬁcstudy) . Importantly,
+of chemical compounds and properties in a large set of samples, besides our larger experimental scale, we were able to directlyconﬁrm
+yielding a dataset that can train models that help close the gaps our models predictions in vivo.
+between chemistry andﬂavor, even for a complex natural product like Our study conﬁrms thatﬂavor compound concentration does not
+beer. To our knowledge, no previous research gathered data at this always correlate with perception, suggesting complex interactions
+scale (250 samples, 226 chemical parameters, 50 sensory attributes that are often missed by more conventional statistics and simple
+and 5 consumer scores) to disentangle and validate the chemical models. Speciﬁcally, we ﬁnd that tree-based algorithms may perform
+aspects driving beer preference using various machine-learning tech- best in developing models that link complex food chemistry with
+niques. We ﬁnd that modern machine learning models outperform aroma. Furthermore, we show that massive datasets of untrained
+conventional statistical tools, such as correlations and linear models, consumer reviews provide a valuable source of data, that can
+Nature Communications| (2024) 15:2368 9
+
+===== PAGE 10 =====
+Article https://doi.org/10.1038/s41467-024-46346-0
+complement or even replace trained tasting panels, especially for still larger than the subset we were able to measure in this study. For
+appreciation and basic ﬂavors, such as sweetness and bitterness. This example, hop-derived thiols, that inﬂuence ﬂavor at very low con-
+holds despite biases that are known to occur in such datasets, such as centrations, are notoriously difﬁcult to measure in a high-throughput
+price or conformity bias. Moreover, GBR models predict taste better experiment. Moreover, consumer perception remains subjective and
+than aroma. This is likely because taste (e.g. bitterness) often directly prone to biases that are difﬁcult to avoid. It is also important to stress
+relates to the corresponding chemical measurements (e.g., iso-alpha that the models are still immature and that more extensive datasets
+acids), whereas such a link is less clear for aromas, which often result will be crucial for developing more complete models in the future.
+from the interplay between multiple volatile compounds. We alsoﬁnd Besides more samples and parameters, our dataset does not include
+that our models are best at predicting acidity and alcohol, likely any demographic information about the tasters. Including such data
+because there is a direct relation between the measured chemical could lead to better models that grasp external factors like age and
+compounds (acids and ethanol) and the corresponding perceived culture. Another limitation is that our set of beers consists of high-
+sensorial attribute (acidity and alcohol), and because even untrained quality end-products and lacks beers that are unﬁt for sale, which
+consumers are generally able to recognize these ﬂavors and aromas. limits the current model in accurately predicting products that are
+The predictions of our ﬁnal models, trained on review data, hold appreciated very badly. Finally, while models could be readily
+even for blind tastings with small groups of trained tasters, as applied in quality control, their use in sensory science and product
+demonstrated by our ability to validate speciﬁc compounds as drivers development is restrained by their inability to discern causal rela-
+of beerﬂavor andappreciation. Sinceaddingasinglecompoundtothe tionships. Given that the models cannot distinguish compounds that
+extent of a noticeable difference may result in an unbalanced ﬂavor genuinely drive consumer perception from those that merely cor-
+proﬁle, we speciﬁcally tested our identiﬁed key drivers as a combina- relate, validation experiments are essential to identify true causative
+tionofcompounds.Whilethisapproachdoesnotallowustovalidateif compounds.
+a particular single compound would affectﬂavor and/or appreciation, Despitetheinherentlimitations,dissectionofourmodelsenabled
+our experiments do show that this combination of compounds us to pinpoint speciﬁc molecules as potential drivers of beer aroma
+increases consumer appreciation. and consumer appreciation, including compounds that were unex-
+It is important to stress that, while it represents an important step pectedandwouldnothavebeenidentiﬁed using standardapproaches.
+forward, our approach still has several major limitations. A key weak- Important drivers of beer appreciation uncovered by our models
+ness of the GBR model architecture is that amongst co-correlating include protein levels, ethyl acetate, ethyl phenyl acetate and lactic
+variables, the largest main effect is consistently preferred for model acid. Currently, many brewers already use lactic acid to acidify their
+building. As a result, co-correlating variables often have artiﬁcially low brewingwaterandensureoptimalpHfor enzymaticactivityduringthe
+importance scores, both for impurity and SHAP-based methods, like mashing process. Our results suggest that adding lactic acid can also
+we observed in the comparison to the more randomized Extra Trees improve beer appreciation,although its individualeffectremains to be
+models. This implies that chemicals identiﬁed as key drivers of a spe- tested. Interestingly, ethanol appears to be unnecessary to improve
+ciﬁc sensory feature by GBR might not be the true causative com- beer appreciation, both for blond beer and alcohol-free beer. Given the
+pounds, but rather co-correlate with the actual causative chemical. For growing consumer interest in alcohol-free beer, with a predicted
+84
+example, the high importance of ethyl acetate could be (partially) annual market growth of >7% , it is relevant for brewers to know what
+attributed to the total ester content, ethanol or ethyl hexanoate compounds can further increase consumer appreciation of these
+(rho=0.77, rho=0.72 and rho=0.68), while ethyl phenylacetate could beers. Hence, our model may readily provide avenues to further
+hide the importance of prenyl isobutyrate and ethyl benzoate improve the ﬂavor and consumer appreciation of both alcoholic and
+(rho=0.77 and rho=0.76). Expanding our GBR model to include beer non-alcoholic beers, which is generally considered one of the key
+style as a parameter did not yield additional power or insight. This is challenges for future beer production.
+likely due to style-speciﬁc chemical signatures, such as iso-alpha acids Whereas we see a direct implementation of our results for the
+and lactic acid, that implicitly convey style information to the original development of superior alcohol-free beverages and other food pro-
+model, as well as the smaller sample size per style, limiting the power ducts, our study can also serve as a stepping stone for the develop-
+to uncover style-speciﬁc patterns. This can be partly attributed to the ment of novel alcohol-containing beverages. We want to echo the
+curse of dimensionality, where the high number of parameters results growing body of scientiﬁc evidence for the negative effects of alcohol
+in the models mainly incorporating single parameter effects, rather consumption, both on the individual level by the mutagenic, terato-
+67 85,86
+than complex interactions such as style-dependent effects . A larger genic and carcinogenic effects of ethanol ,aswellastheburdenon
+number of samples may overcome some of these limitations and offer society caused by alcohol abuse and addiction. We encourage the use
+more insight into style-speciﬁc effects. On the other hand, beer style is of our results for the production of healthier, tastier products,
+not a rigid scientiﬁc classiﬁcation, and beers within one style often including novel and improved beverages with lower alcohol contents.
+differ a lot, which further complicates the analysis of style as a model Furthermore, we strongly discourage the use of these technologies to
+factor. improve the appreciation or addictive properties of harmful
+Our study is limited to beers from Belgian breweries. Although substances.
+these beers cover a large portion of the beer styles available globally, The present work demonstrates that despite some important
+some beer styles and consumer patterns may be missing, while other remaining hurdles, combining the latest developments in chemical
+features might be overrepresented. For example, many Belgian ales analyses, sensory analysis and modern machine learning methods
+exhibit yeast-driven ﬂavor proﬁles, which is reﬂected in the chemical offers exciting avenues for food chemistry and engineering. Soon,
+drivers of appreciation discovered by this study. In future work, these tools may provide solutions in quality control and recipe
+expanding the scope to include diverse markets and beer styles could development, as well as new approaches to sensory science andﬂavor
+lead to the identiﬁcation of even more drivers of appreciation and research.
+better models for special niche products that were not present in our
+beer set. Methods
+In addition to inherent limitations of GBR models, there are also Beer selection
+some limitations associated with studying food aroma. Even if our 250 commercial Belgian beers were selected to cover the broad
+chemical analyses measured most of the known aroma compounds, diversity of beer styles and corresponding diversity in chemical com-
+the total number of ﬂavor compounds in complex foods like beer is position and aroma. See Supplementary Fig. S1.
+Nature Communications| (2024) 15:2368 10
+
+===== PAGE 11 =====
+Article https://doi.org/10.1038/s41467-024-46346-0
+Chemical dataset ﬂow was used whereby the helium gas ﬂow was set at 2.7mL/min for
+Sample preparation. Beers within their expiration date were pur- 0.1 min, followed by a decrease in ﬂow of 20 ml/min to the normal
+chased from commercial retailers. Samples were prepared in biologi- 0.9mL/min. The temperaturewasﬁrst heldat30°Cfor 3 min and then
+cal duplicates at room temperature, unless explicitly stated otherwise. allowed to rise to 80°C at a rate of 7°C/min, followed by a second
+Bottle pressure was measured with a manual pressure device (Stein- ramp of 2°C/min till 125°C and a ﬁnal ramp of 8 °C/min with a ﬁnal
+furth Mess-Systeme GmbH) and used to calculate CO2 concentration. temperature of 270°C.
+The beer was poured through two ﬁlter papers (Macherey-Nagel, Massacquisition range was 33 to 550 amu at a scan rate of 5 scans/s.
+500713032 MN 713 ¼) to remove carbon dioxide and prevent spon- Electron impact ionization energy was 70 eV. The interface and ion
+taneous foaming. Samples were then prepared for measurements by source were kept at 275 °C and 250 °C, respectively. A mix of linear
+targeted Headspace-Gas Chromatography-Flame Ionization Detector/ n-alkanes (from C7 to C40, Supelco Co.) was injected into the GC-MS
+Flame Photometric Detector (HS-GC-FID/FPD), Headspace-Solid Phase under identical conditions to serve as external retention index markers.
+Microextraction-Gas Chromatography-Mass Spectrometry (HS-SPME- Identiﬁcation and quantiﬁcation of the compounds were performed
+GC-MS), colorimetric analysis, enzymatic analysis, Near-Infrared (NIR) using an in-house developed R script as described in Goelen et al. and
+87,88
+analysis, as described in the sections below. The mean values of bio- Reher et al. (for package information, see Supplementary Table S8).
+89
+logical duplicates are reported for each compound. Brieﬂy, chromatograms were analyzed using AMDIS (v2.71) to separate
+overlapping peaks and obtain pure compound spectra. The NIST MS
+HS-GC-FID/FPD. HS-GC-FID/FPD (Shimadzu GC 2010 Plus) was used Search software (v2.0 g) in combination with the NIST2017, FFNSC3 and
+to measure higher alcohols, acetaldehyde, esters, 4-vinyl guaicol, and Adams4 libraries were used to manually identify the empirical spectra,
+sulfur compounds. Each measurement comprised 5ml of sample taking into account the expected retention time. After background
+pipetted into a 20 ml glass vial containing 1.75 g NaCl (VWR, subtraction and correcting for retention time shifts between samples
+27810.295). 100µlof2-heptanol(Sigma-Aldrich,H3003)(internal run on different days based on alkane ladders, compound elution pro-
+standard) solution in ethanol (Fisher Chemical, E/0650DF/C17) was ﬁles were extracted and integrated using a ﬁle with 284 target com-
+added for a ﬁnal concentration of 2.44 mg/L. Samples were ﬂushed pounds of interest, which were either recovered in our identiﬁed AMDIS
+with nitrogen for 10 s, sealed with a silicone septum, stored at −80 °C list of spectra or were known to occur in beer. Compound elution
+and analyzed in batches of 20. proﬁles were estimated for every peak in every chromatogram over a
+The GC was equipped with a DB-WAXetr column (length, 30 m; time-restricted window using weighted non-negative least square ana-
+87,88
+internal diameter, 0.32mm; layer thickness, 0.50µm; Agilent Tech- lysis after which peak areas were integrated . Batch effect correction
+nologies, Santa Clara, CA, USA) to the FID and an HP-5 column (length, was performed by normalizing against the most stable internal standard
+30 m; internal diameter, 0.25 mm; layer thickness, 0.25µm; Agilent compound, 4-ﬂuorobenzaldehyde. Out of all 284 target compounds
+Technologies, Santa Clara, CA, USA) to the FPD. N2 was used as the that were analyzed, 167 were visually judged to have reliable elution
+carrier gas. Samples were incubated for 20 min at 70 °C in the head- proﬁles and were used for ﬁnal analysis.
+space autosampler (Flow rate, 35 cm/s; Injection volume, 1000µL;
+Injection mode, split; Combi PAL autosampler, CTC analytics, Swit- Discrete photometric and enzymatic analysis. Discrete photometric
+TM TM
+zerland). The injector, FID and FPD temperatures were kept at 250 °C. and enzymatic analysis (Thermo Scientiﬁc Gallery Plus Beermaster
+The GC oven temperature was ﬁrstheldat50°Cfor5minandthen Discrete Analyzer) was used to measure acetic acid, ammonia, beta-
+allowed to rise to 80 °C ata rate of 5 °C/min, followed by a second ramp glucan, iso-alpha acids, color, sugars, glycerol, iron, pH, protein, and
+of 4 °C/min until 200 °C kept for 3 min and a ﬁnal ramp of (4 °C/min) sulﬁte. 2 ml of sample volume was used for the analyses. Information
+until 230 °C for 1 min. Results were analyzed with the GCSolution regarding the reagents and standard solutions used for analyses and
+software version 2.4 (Shimadzu, Kyoto, Japan). The GC was calibrated calibrations is included in Supplementary Table S7andSupplementary
+with a 5% EtOH solution (VWR International) containing the volatiles Table S9.
+under study (Supplementary Table S7).
+NIR analyses. NIR analysis (Anton Paar Alcolyzer Beer ME System) was
+HS-SPME-GC-MS. HS-SPME-GC-MS (Shimadzu GCMS-QP-2010 Ultra) used to measure ethanol. Measurements comprised 50ml of sample,
+was used to measure additional volatile compounds, mainly compris- and a 10% EtOH solution was used for calibration.
+ing terpenoids and esters. Samples were analyzed by HS-SPME using a
+triphase DVB/Carboxen/PDMS 50/30 μmSPMEﬁber (Supelco Co., Correlation calculations. Pairwise Spearman Rank correlations were
+Bellefonte, PA, USA) followed by gas chromatography (Thermo Fisher calculated between all chemical properties.
+Scientiﬁc Trace 1300 series, USA) coupled to a mass spectrometer
+(Thermo Fisher Scientiﬁc ISQ series MS) equipped with a TriPlus RSH Sensory dataset
+autosampler. 5 ml of degassed beer sample was placed in 20 ml vials Trained panel. Our trained tasting panel consisted of volunteers who
+containing1.75gNaCl (VWR, 27810.295). 5µl internalstandard mix was gave prior verbal informed consent. All compounds used for the vali-
+added, containing 2-heptanol (1g/L) (Sigma-Aldrich, H3003), dation experiment were of food-grade quality. The tasting sessions
+4-ﬂuorobenzaldehyde (1 g/L) (Sigma-Aldrich, 128376), 2,3-hex- were approved by the Social and Societal Ethics Committee of the KU
+anedione (1g/L) (Sigma-Aldrich, 144169) and guaiacol (1g/L) (Sigma- Leuven (G-2022-5677-R2(MAR)). All online reviewers agreed to the
+Aldrich, W253200) in ethanol (Fisher Chemical, E/0650DF/C17). Each Terms and Conditions of the RateBeer website.
+sample was incubated at 60 °C in the autosampler oven with constant Sensory analysis was performed according to the American
+90
+agitation. After 5min equilibration, the SPMEﬁber was exposed to the Society of Brewing Chemists (ASBC) Sensory Analysis Methods .30
+sample headspace for 30 min. The compounds trapped on the ﬁber volunteerswerescreenedthroughaseriesoftriangletests.Thesixteen
+werethermallydesorbedintheinjectionportofthechromatographby most sensitive and consistent tasters were retained as taste panel
+heating the ﬁber for 15min at 270°C. members. The resulting panel was diversein age [2242,mean:29],sex
+The GC-MS was equipped with a low polarity RXi-5Sil MS column [56% male] and nationality [7 different countries]. The panel developed
+(length, 20m; internal diameter, 0.18 mm; layer thickness, 0.18µm; a consensus vocabulary to describe beer aroma, taste and mouthfeel.
+Restek,Bellefonte,PA,USA).Injectionwasperformedinsplitless mode Panelists were trained to identify and score 50 different attributes,
+at 320 °C, a splitﬂow of 9 ml/min, a purgeﬂowof5ml/minandanopen using a 7-point scale to rate attributes intensity. The scoring sheet is
+valve time of 3min. To obtain a pulsed injection, a programmed gas included as Supplementary Data 3. Sensory assessments took place
+Nature Communications| (2024) 15:2368 11
+
+===== PAGE 12 =====
+Article https://doi.org/10.1038/s41467-024-46346-0
+between 1012a.m.Thebeerswereservedinblack-coloredglasses.Per Chemical properties with log-normal distributions (Shapiro-Wilk test,
+session,between5and12beersofthesamestyleweretastedat12 °Cto p<0.05) were log-transformed. Missing chemical measurements (0.1%
+16°C. Two reference beers were added to each set and indicated as of all data) were replaced with mean values per attribute. Observations
+Reference 1 & 2,allowingpanelmemberstocalibratetheirratings.Not from 250 beers were randomly separated into a training set (70%, 175
+all panelists were present at every tasting. Scores were scaled by beers) and a test set (30%, 75 beers), stratiﬁed per beer style. Chemical
+standard deviation and mean-centered per taster. Values are repre- measurements (p = 231) were normalized based on the training set
+sented as z-scores and clustered by Euclidean distance. Pairwise average and standard deviation. In total, three linear regression-based
+Spearman correlations were calculated between taste and aroma models: linear regression withﬁrst-order interaction terms (LR), lasso
+sensory attributes. Panel consistency was evaluated by repeating regression with ﬁrst-order interaction terms (Lasso) and partial least
+samples on different sessions and performing ANOVA to identify dif- squares regression (PLSR); ﬁve decision tree models, Adaboost
+ferences, using the stats package (v4.2.2) in R (for package informa- regressor (ABR), Extra Trees (ET), Gradient Boosting regressor (GBR),
+tion, see Supplementary Table S8). Random Forest (RF) and XGBoost regressor (XGBR); one support
+vector machine model (SVR) and one artiﬁcial neural network model
+Online reviews from a public database.Thescrapy package in (ANN) were trained. The models were implemented using the scikit-
+Python (v3.6) (for package information, see Supplementary Table S8). learn package (v1.2.2) and xgboost package (v1.7.3) in Python
+was used to collect 232,288 online reviews (mean=922, min=6, (v3.9.16). Models were trained, and hyperparameters optimized, using
+max=5343) from RateBeer, an online beer review database. Each review ﬁve-fold cross-validated grid search with the coefﬁcient of determi-
+2
+entry comprised 5 numerical scores (appearance, aroma, taste, palate nation (R ) as the evaluation metric. The ANN (scikit-learns MLPRe-
+and overall quality) and an optional review text. The total number of gressor) was optimized using Bayesian Tree-Structured Parzen
+reviews per reviewer was collected separately. Numerical scores were Estimator optimization with the Optuna Python package (v3.2.0).
+scaled and centered per rater, and mean scores were calculated per beer. Individualmodelsweretrainedperattribute,andamulti-outputmodel
+For the review texts, the language was estimated using the was trained on all attributes simultaneously.
+packages langdetect and langid in Python. Reviews that were clas-
+siﬁed as English by both packages were kept. Reviewers with fewer Model dissection. GBR was found to outperform other methods,
+2
+than 100 entries overall were discarded. 181,025 reviews from >6000 resultinginmodelswiththehighestaverageR values in both trained
+reviewers from >40 countries remained. Text processing was done panel and public review data sets. Impurity-based rankings of the most
+using the nltkpackage in Python. Texts were corrected for slang and important predictors for each predicted sensorial trait were obtained
+misspellings;propernounsandrarewordsthatarerelevanttothebeer using the scikit-learn package. To observe the relationships between
+context were speciﬁed and kept as-is (Chimay,Lambic,etc.).Adic- these chemical properties and their predicted targets, partial depen-
+tionary of semantically similar sensorial terms, for exampleﬂoraland dence plots (PDP) were constructed for the six most important pre-
+74,75
+ﬂower,wascreatedandcollapsedtogetherintooneterm.Wordswere dictors of consumer appreciation .
+stemmed and lemmatized to avoid identifying words suchasacidand The SHAP package in Python (v0.41.0) was implemented to
+acidity as separate terms. Numbers and punctuation were removed. provideanalternativerankingofpredictorimportanceandtovisualize
+68
+Sentences from up to 50 randomly chosen reviews per beer were the predictors effects as a function of their concentration .
+manually categorized according to the aspect of beer they describe
+(appearance, aroma, taste, palate, overall qualitynot to be confused Validation of causal chemical properties. To validate the effects of
+with the 5 numerical scores described above) orﬂagged as irrelevant if the most important model features on predicted sensory attributes,
+they contained no useful information. If a beer contained fewer than beers were spiked with the chemical compounds identiﬁed by the
+50 reviews, all reviews were manually classiﬁed. This labeled data set models anddescriptive sensoryanalyses werecarriedout accordingto
+90
+wasusedto traina model thatclassiﬁed the restof the sentences for all the American Society of Brewing Chemists (ASBC) protocol .
+91
+beers . Sentences describing taste and aroma were extracted, and Compound spiking was done 30 min before tasting. Compounds
+term frequencyinverse document frequency (TFIDF) was imple- were spiked into fresh beer bottles, that were immediately resealed
+mented to calculate enrichment scores for sensorial words per beer. and inverted three times. Fresh bottles of beer were opened for the
+The sex of the tasting subject was not considered when building same duration, resealed, and inverted thrice, to serve ascontrols. Pairs
+our sensory database. Instead, results from different panelists were of spiked samples and controls were served simultaneously, chilled
+averaged, both for our trained panel (56% male, 44% female) and the and in dark glasses as outlined in the Trained panel section above.
+RateBeer reviews (70% male, 30% female for RateBeer as a whole). Tasters were instructed to select the glass with the higher ﬂavor
+92
+intensity for each attribute (directional difference test ) and to select
+Beer price collection and processing. Beer prices were collected the glass they prefer.
+from the following stores: Colruyt, Delhaize, Total Wine, BeerHawk, Theﬁnal concentration after spiking was equal to the within-style
+The Belgian Beer Shop, The Belgian Shop, and Beer of Belgium. Where average, after normalizing by ethanol concentration. This was done to
+applicable, prices were converted to Euros and normalized per liter. ensure balanced ﬂavor proﬁles in the ﬁnal spiked beer. The same
+Spearmancorrelationswerecalculatedbetweenthesepricesandmean methods were applied to improve a non-alcoholic beer. Compounds
+overall appreciation scores from RateBeer and the taste panel, were the following: ethyl acetate (Merck KGaA, W241415), ethyl hex-
+respectively. anoate (Merck KGaA, W243906), isoamyl acetate (Merck KGaA,
+W205508), phenethyl acetate (Merck KGaA, W285706), ethanol (96%,
+Correlation calculations. Pairwise Spearman Rank correlations were Colruyt), glycerol (Merck KGaA, W252506), lactic acid (Merck KGaA,
+calculated between all sensory properties. 261106).
+Signiﬁcant differences in preference or perceived intensity were
+Machine learning models determined by performing the two-sided binomial test on each
+Predictive modeling of sensory proﬁles from chemical data. attribute.
+Regression models were constructed to predict (a) trained panel
+scores for beerﬂavors and quality from beer chemical proﬁles and (b) Reporting summary
+public reviews appreciation scores from beer chemical proﬁles. Further information on research design is available in the Nature
+Z-scores were used to represent sensory attributes in both data sets. Portfolio Reporting Summary linked to this article.
+Nature Communications| (2024) 15:2368 12
+
+===== PAGE 13 =====
+Article https://doi.org/10.1038/s41467-024-46346-0
+Data availability 20. Smith,B.Perspective:Complexitiesofﬂavour. Nature 486,
+The data that support the ﬁndings of this work are available in the S6S6 (2012).
+Supplementary Data ﬁles and have been deposited to Zenodo under 21. Pﬁster, P. et al. Odorant receptor inhibition is fundamental to odor
+93
+accession code 10653704 . The RateBeer scores data are under encoding. Curr. Biol. 30,25742587 (2020).
+restrictedaccess,theyarenot publiclyavailableastheyarepropertyof 22. Moskowitz,H.W.,Kumaraiah,V.,Sharma,K.N.,Jacobs,H.L.&
+RateBeer (ZX Ventures, USA). Accesscanbe obtained from the authors Sharma, S. D. Cross-cultural differences in simple taste pre-
+upon reasonable request and with permission of RateBeer (ZX Ven- ferences. Science 190,12171218 (1975).
+tures, USA). Source data are provided with this paper. 23. Eriksson, N. et al. A genetic variant near olfactory receptor genes
+inﬂuences cilantro preference. Flavour 1,22(2012).
+Code availability 24. Ferdenzi, C. et al. Variability of affective responses to odors: Cul-
+The code for training the machine learning models, analyzing the ture, gender, and olfactory knowledge. Chem. Senses 38,
+models, and generating the ﬁgures has been deposited to Zenodo 175186 (2013).
+93
+under accession code 10653704 . 25. Lawless, H. T. & Heymann, H. Sensory evaluation of food: Principles
+and practices. (Springer, New York, NY). https://doi.org/10.1007/
+References 978-1-4419-6488-5 (2010).
+1. Tieman, D. et al. A chemical genetic roadmap to improved tomato 26. Colantonio, V. et al. Metabolomic selection for enhanced fruit ﬂa-
+ﬂavor. Science 355,391394 (2017). vor. Proc. Natl. Acad. Sci. 119, e2115865119 (2022).
+2. Plutowska, B. & Wardencki, W. Application of gas 27. Fritz, F., Preissner,R.& Banerjee, P. VirtualTaste: a web server for the
+chromatographyolfactometry (GCO) in analysis and quality prediction of organoleptic properties of chemical compounds.
+assessment of alcoholic beverages  Areview.Food Chem. 107, Nucleic Acids Res 49, W679W684 (2021).
+449463 (2008). 28. Tuwani, R., Wadhwa, S. & Bagler, G. BitterSweet: Building machine
+3. Legin, A., Rudnitskaya, A., Seleznev, B. & Vlasov, Y. Electronic ton- learning models for predicting the bitter and sweet taste of small
+gue for quality assessment of ethanol, vodka and eau-de-vie. Anal. molecules. Sci. Rep. 9,113 (2019).
+Chim. Acta 534,129135 (2005). 29. Dagan-Wiener, A. et al. Bitter or not? BitterPredict, a tool for
+4. Loutﬁ,A.,Coradeschi,S.,Mani,G.K.,Shankar,P.&Rayappan,J.B.B. predicting taste from chemical structure. Sci. Rep. 7,113
+Electronic noses for food quality: A review. J. Food Eng. 144, (2017).
+103111 (2015). 30. Pallante, L. et al. Toward a general and interpretable umami taste
+5. Ahn,Y.-Y.,Ahnert,S.E.,Bagrow,J.P.&Barabási,A.-L.Flavornet- predictor using a multi-objective machine learning approach. Sci.
+work and the principles of food pairing. Sci. Rep. 1, 196 (2011). Rep. 12,111 (2022).
+6. Bartoshuk, L. M. & Klee, H. J. Better fruits and vegetables through 31. Malavolta, M. et al. A survey on computational taste predictors.Eur.
+sensory analysis. Curr. Biol. 23,R374R378 (2013). Food Res. Technol. 248, 22152235 (2022).
+7. Piggott, J. R. Design questions in sensory and consumer science. 32. Lee,B. K. et al.A principal odor map uniﬁesdiverse tasksinolfactory
+Food Qual. Prefer. 3293,217220 (1995). perception. Science 381, 9991006 (2023).
+8. Kermit, M. & Lengard, V. Assessing the performance of a sensory 33. Mayhew, E. J. et al. Transport features predict if a molecule is
+panel-panellist monitoring and tracking. J. Chemom. 19, odorous. Proc. Natl. Acad. Sci. 119, e2116576119 (2022).
+154161 (2005). 34. Niu, Y. et al. Sensory evaluation of the synergism among ester
+9. Cook, D. J., Hollowood, T. A., Linforth, R. S. T. & Taylor, A. J. Cor- odorants in light aroma-type liquor by odor threshold, aroma
+relating instrumental measurements of texture and ﬂavour release intensity and ﬂash GC electronic nose. Food Res. Int. 113,
+with human perception. Int. J. Food Sci. Technol. 40, 102114 (2018).
+631641 (2005). 35. Yu, P., Low, M. Y. & Zhou, W. Design of experiments and regression
+10. Chinchanachokchai, S., Thontirawong, P. & Chinchanachokchai, P. modelling in food ﬂavour and sensory analysis: A review. Trends
+A tale of two recommender systems: The moderating role of con- Food Sci. Technol. 71,202215 (2018).
+sumer expertise on artiﬁcial intelligence based product recom- 36. Oladokun, O. et al. The impact of hop bitter acid and polyphenol
+mendations. J. Retail. Consum. Serv. 61,112 (2021). proﬁles on the perceived bitterness of beer. Food Chem. 205,
+11. Ross, C. F. Sensory science at the human-machine interface.Trends 212220 (2016).
+Food Sci. Technol. 20,6372 (2009). 37. Linforth, R., Cabannes, M., Hewson, L., Yang,N. & Taylor, A. Effect of
+12. Chambers, E. IV & Koppel, K. Associations of volatile compounds fat content on ﬂavor delivery during consumption: An in vivo
+with sensory aroma and ﬂavor: The complex nature of ﬂavor. model. J. Agric. Food Chem. 58, 69056911 (2010).
+Molecules 18, 48874905 (2013). 38. Guo,S.,NaJom,K.&Ge,Y.Inﬂuence of roasting condition onﬂavor
+13. Pinu, F. R. MetabolomicsThe new frontier in food safety and proﬁle of sunﬂower seeds: A ﬂavoromics approach. Sci. Rep. 9,
+quality research. Food Res. Int. 72,8081 (2015). 11295 (2019).
+14. Danezis, G. P., Tsagkaris, A. S., Brusic, V. & Georgiou, C. A. Food 39. Ren, Q. et al. The changes of microbial community and ﬂavor
+authentication: state of the art and prospects.Curr. Opin. Food Sci. compound in the fermentation process of Chinese rice wine
+10,2231 (2016). using Fagopyrum tataricum grain as feedstock. Sci. Rep. 9,
+15. Shepherd, G. M. Smell images and theﬂavour system in the human 3365 (2019).
+brain. Nature 444,316321 (2006). 40. Hastie, T., Friedman, J. & Tibshirani, R. The Elements of Statistical
+16. Meilgaard, M. C. Prediction of ﬂavor differences between beers Learning. (Springer, New York, NY). https://doi.org/10.1007/978-0-
+from their chemical composition. J. Agric. Food Chem. 30, 387-21606-5 (2001).
+10091017 (1982). 41. Dietz, C., Cook, D., Huismann, M., Wilson, C. & Ford, R. The multi-
+17. Xu, L. et al. Widespread receptor-driven modulation in peripheral sensory perception of hop essential oil: a review. J. Inst. Brew. 126,
+olfactory coding. Science 368, eaaz5390 (2020). 320342 (2020).
+18. Kupferschmidt, K. Following the ﬂavor. Science 340, 42. Roncoroni, Miguel & Verstrepen, Kevin Joan. Belgian Beer: Tested
+808809 (2013). and Tasted. (Lannoo, 2018).
+19. Billesbølle, C. B. et al. Structural basis of odorant recognition by a 43. Meilgaard,M.Flavorchemistryofbeer: Part II: Flavor and threshold
+human odorant receptor. Nature 615,742749 (2023). of 239 aroma volatiles. in (1975).
+Nature Communications| (2024) 15:2368 13
+
+===== PAGE 14 =====
+Article https://doi.org/10.1038/s41467-024-46346-0
+44. Bokulich, N. A. & Bamforth, C. W. The microbiology of malting and 68. Lundberg, S. M. et al. From local explanations to global under-
+brewing. Microbiol. Mol. Biol. Rev. MMBR 77,157172 (2013). standing with explainable AI for trees. Nat. Mach. Intell. 2,
+45. Dzialo, M. C., Park, R., Steensels, J., Lievens, B. & Verstrepen, K. J. 5667 (2020).
+Physiology, ecology and industrial applications of aroma formation 69. Ickes,C.M.&Cadwallader,K.R.Effectsofethanolonﬂavor per-
+in yeast. FEMS Microbiol. Rev. 41,S95S128 (2017). ception in alcoholic beverages. Chemosens. Percept. 10,
+46. Datta, A. et al. Computer-aided food engineering. Nat. Food 3, 119134 (2017).
+894904 (2022). 70. Kato, M. et al. Inﬂuence of high molecular weight polypeptides on
+47. American Society of Brewing Chemists. Beer Methods. (American the mouthfeel of commercial beer. J. Inst. Brew. 127,2740 (2021).
+Society of Brewing Chemists, St. Paul, MN, U.S.A.). 71. Wauters, R. et al. Novel Saccharomyces cerevisiae variants slow
+48. Olaniran, A. O., Hiralal, L., Mokoena, M. P. & Pillay, B. Flavour-active down the accumulation of staling aldehydes and improve beer
+volatile compounds in beer: production, regulation and control. J. shelf-life. Food Chem. 398,111 (2023).
+Inst. Brew. 123,1323 (2017). 72. Li, H., Jia, S. & Zhang, W. Rapid determination of low-level sulfur
+49. Verstrepen, K. J. et al. Flavor-active esters: Adding fruitiness to beer. compounds in beer by headspace gas chromatography with a
+J. Biosci. Bioeng. 96, 110118 (2003). pulsed ﬂame photometric detector. J.Am.Soc.Brew.Chem.66,
+50. Meilgaard, M. C. Flavour chemistry of beer. part I: ﬂavour interac- 188191 (2008).
+tion between principal volatiles. Master Brew. Assoc. Am. Tech. Q 73. Dercksen, A., Laurens, J., Torline, P., Axcell, B. C. & Rohwer, E.
+12,107117 (1975). Quantitative analysis of volatile sulfur compounds in beer using a
+51. Briggs, D. E., Boulton, C. A., Brookes, P. A. & Stevens, R. Brewing membrane extraction interface. J.Am.Soc.Brew.Chem.54,
+227254. (Woodhead Publishing). https://doi.org/10.1533/ 228233 (1996).
+9781855739062.227 (2004). 74. Molnar, C. Interpretable Machine Learning: A Guide for Making
+52. Bossaert, S., Crauwels, S., De Rouck, G. & Lievens, B. The power of Black-Box Models Interpretable. (2020).
+sour - A review: Old traditions, new opportunities. BrewingScience 75. Zhao, Q. & Hastie, T. Causal interpretations of black-box models. J.
+72,7888 (2019). Bus. Econ. Stat. Publ. Am. Stat. Assoc. 39,272281 (2019).
+53. Verstrepen, K. J. et al. Flavor active esters: Adding fruitiness to beer. 76. Hastie, T., Tibshirani, R. & Friedman, J. The Elements of Statistical
+J. Biosci. Bioeng. 96, 110118 (2003). Learning. (Springer, 2019).
+54. Snauwaert, I. et al. Microbial diversity and metabolite composition 77. Labrado, D. et al. Identiﬁcation by NMR of key compounds present
+of Belgian red-brown acidic ales. Int. J. Food Microbiol. 221, in beer distillates and residual phases after dealcoholization by
+111 (2016). vacuum distillation. J. Sci. Food Agric. 100,39713978 (2020).
+55. Spitaels,F. et al. Themicrobial diversity oftraditionalspontaneously 78. Lusk,L.T.,Kay,S.B.,Porubcan,A.&Ryder,D.S.Keyolfactorycues
+fermented lambic beer. PLoS ONE 9,e95384(2014). forbeeroxidation.J.Am.Soc.Brew.Chem.70,257261 (2012).
+56. Blanco, C. A., Andrés-Iglesias, C. & Montero, O. Low-alcohol Beers: 79. Gonzalez Viejo, C., Torrico, D. D., Dunshea, F. R. & Fuentes, S.
+FlavorCompounds,Defects, and ImprovementStrategies.Crit.Rev. Development of artiﬁcial neural network models to assess beer
+Food Sci. Nutr. 56,13791388 (2016). acceptability based on sensory properties using a robotic pourer: A
+57. Jackowski, M. & Trusek, A. Non-Alcohol. beer Prod.  Overv. 20, comparative model approach to achieve an artiﬁcial intelligence
+3238 (2018). system. Beverages 5, 33 (2019).
+58. Takoi, K. et al. The contribution of geraniol metabolism to the citrus 80. Gonzalez Viejo, C., Fuentes, S., Torrico, D. D., Godbole, A. & Dun-
+ﬂavour of beer: Synergy of geraniol and β-citronellol under coex- shea, F. R. Chemical characterization of aromas in beer and their
+istence with excess linalool. J. Inst. Brew. 116,251260 (2010). effect on consumers liking. Food Chem. 293,479485 (2019).
+59. Kroeze, J. H. & Bartoshuk, L. M. Bitterness suppression as revealed 81. Gilbert, J. L. et al. Identifying breeding priorities for blueberryﬂavor
+by split-tongue taste stimulation in humans. Physiol. Behav. 35, using biochemical, sensory, and genotype by environment ana-
+779783 (1985). lyses. PLOS ONE 10,121 (2015).
+60. Mennella, J. A. et al. A spoonful of sugar helps the medicine go 82. Goulet, C. et al. Role of an esterase inﬂavor volatile variation within
+down: Bitter masking bysucrose among children and adults.Chem. the tomato clade. Proc. Natl. Acad. Sci. 109,1900919014 (2012).
+Senses 40,1725 (2015). 83. Borisov, V. et al. Deep Neural Networks and Tabular Data: A Survey.
+61. Wietstock,P.,Kunz,T.,Perreira,F.&Methner,F.-J.Metalchelation IEEE Trans. Neural Netw. Learn. Syst. 121 https://doi.org/10.1109/
+behavior of hop acids in buffered model systems. BrewingScience TNNLS.2022.3229161 (2022).
+69,5663 (2016). 84. Statista. Statista Consumer Market Outlook: Beer - Worldwide.
+62. Sancho, D., Blanco, C. A., Caballero, I. & Pascual, A. Free iron in pale, 85. Seitz, H. K. & Stickel, F. Molecular mechanisms of alcoholmediated
+dark and alcohol-free commercial lager beers.J. Sci. Food Agric.91, carcinogenesis. Nat. Rev. Cancer 7,599612 (2007).
+11421147 (2011). 86. Voordeckers, K. et al. Ethanol exposure increases mutation rate
+63. Rodrigues, H. & Parr, W. V. Contribution of cross-cultural studies to through error-prone polymerases. Nat. Commun. 11, 3664 (2020).
+understanding wine appreciation: A review. Food Res. Int. 115, 87. Goelen, T. et al. Bacterial phylogeny predicts volatile organic
+251258 (2019). compound composition and olfactory response of an aphid para-
+64. Korneva, E. & Blockeel, H. Towards better evaluation of multi-target sitoid. Oikos 129,14151428 (2020).
+regression models. in ECML PKDD 2020 Workshops (eds. 88. Reher, T. et al. Evaluation of hop (Humulus lupulus) as a repellent
+Koprinska, I. et al.) 353362 (Springer International Publishing, for the management of Drosophila suzukii. Crop Prot. 124,
+Cham, 2020). https://doi.org/10.1007/978-3-030-65965-3_23. 104839 (2019).
+65. Gastón Ares. Mathematical and Statistical Methods in Food Science 89. Stein, S. E. An integrated method for spectrum extraction and
+and Technology. (Wiley, 2013). compound identiﬁcation from gas chromatography/mass spec-
+66. Grinsztajn, L., Oyallon, E. & Varoquaux, G. Why do tree-based trometry data. J.Am.Soc.MassSpectrom.10, 770781 (1999).
+models still outperform deep learning on tabular data? Preprint at 90. American Society of Brewing Chemists. Sensory Analysis Methods.
+http://arxiv.org/abs/2207.08815 (2022). (American Society of Brewing Chemists, St. Paul, MN, U.S.A., 1992).
+67. Gries,S.T.StatisticsforLinguistics with R: A Practical Introduction. 91. McAuley,J.,Leskovec,J.&Jurafsky,D.LearningAttitudesand
+in Statistics for Linguistics with R (De Gruyter Mouton, 2021). Attributes from Multi-Aspect Reviews. Preprint at https://doi.org/
+https://doi.org/10.1515/9783110718256. 10.48550/arXiv.1210.3926 (2012).
+Nature Communications| (2024) 15:2368 14
+
+===== PAGE 15 =====
+Article https://doi.org/10.1038/s41467-024-46346-0
+92. Meilgaard, M. C., Carr, B. T. & Carr, B. T. Sensory Evaluation Techni- Correspondence and requests for materials should be addressed to
+ques. (CRCPress,Boca Raton).https://doi.org/10.1201/b16452(2014). Kevin J. Verstrepen.
+93. Schreurs, M. et al. Data from: Predicting and improving complex
+beer ﬂavor through machine learning. Zenodo https://doi.org/10. Peer review information Nature Communications thanks Florian Bauer,
+5281/zenodo.10653704 (2024). Andrew John Macintosh and the other, anonymous, reviewer(s) for their
+contribution to the peer review of this work. A peer reviewﬁle is available.
+Acknowledgements
+We thank all lab members for their discussions and thank all tasting Reprints and permissions information is available at
+panel members for their contributions. Special thanks go out to Dr. Karin http://www.nature.com/reprints
+Voordeckers for her tremendous helpin proofreading and improving the
+manuscript. M.S. was supported by a Baillet-Latour fellowship, L.C. PublishersnoteSpringer Nature remains neutral with regard to jur-
+acknowledges ﬁnancial support from KU Leuven (C16/17/006), F.A.T. isdictional claims in published maps and institutional afﬁliations.
+was supported by a PhD fellowship from FWO (1S08821N). Research in
+the lab of K.J.V. is supported by KU Leuven, FWO, VIB, VLAIO and the Open Access This article is licensed under a Creative Commons
+Brewing Science Serves Health Fund. Research in the lab of T.W. is Attribution 4.0 International License, which permits use, sharing,
+supported by FWO (G.0A51.15) and KU Leuven (C16/17/006). adaptation, distribution and reproduction in any medium or format, as
+long as you give appropriate credit to the original author(s) and the
+Author contributions source, provide a link to the Creative Commons licence, and indicate if
+S.P., M.S. and K.J.V. conceived the experiments. S.P., M.S. and K.J.V. changes were made. The images or other third party material in this
+designedthe experiments. S.P., M.S., M.R.,B.H.and F.A.T.performed the article are included in the articles Creative Commons licence, unless
+experiments. S.P., M.S., L.C., C.V., L.K., A.B., P.M., L.D., T.W. and K.J.V. indicated otherwise in a credit line to the material. If material is not
+contributed analysis ideas. S.P., M.S., L.C., C.V., T.W. and K.J.V. analyzed included in the articles Creative Commons licence and your intended
+the data. All authors contributed to writing the manuscript. use is not permitted by statutory regulation or exceeds the permitted
+use, you will need to obtain permission directly from the copyright
+Competing interests holder. To view a copy of this licence, visithttp://creativecommons.org/
+K.J.V. is afﬁliated with bar.on. The other authors declare no competing licenses/by/4.0/.
+interests.
+© The Author(s) 2024
+Additional information
+Supplementary information The online version contains
+supplementary material available at
+https://doi.org/10.1038/s41467-024-46346-0.
+Nature Communications| (2024) 15:2368 15
