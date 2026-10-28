@@ -1,0 +1,534 @@
+{
+  "config": {
+    "cvae": {
+      "latent": 8,
+      "beta": 0.005,
+      "epochs": 3000,
+      "hidden": 128
+    },
+    "generation": {
+      "n_per_style": 60,
+      "sampling": "风格后验均值 + N(0, 0.3^2)（小样本比先验采样更贴近真实分布）"
+    },
+    "transfer": {
+      "pairs": [
+        [
+          "Pils/Lager",
+          "Tripel"
+        ],
+        [
+          "Blond",
+          "Tripel"
+        ],
+        [
+          "Lambic",
+          "Kriek"
+        ],
+        [
+          "Wheat",
+          "Saison"
+        ],
+        [
+          "Stout/Porter",
+          "Fruitbeer"
+        ]
+      ],
+      "K_candidates": 8,
+      "noise_sigma": 0.3,
+      "method_selection": "按真实数据训练的风格分类器置信度选择条件解码/潜空间平移"
+    },
+    "defects": {
+      "DMS": {
+        "unit": "ug/L",
+        "threshold": 17.25
+      },
+      "diacetyl": {
+        "unit": "mg/L",
+        "threshold": 0.29925
+      },
+      "4VG": {
+        "unit": "mg/L",
+        "threshold": 0.206333333
+      },
+      "t2n": {
+        "unit": "mg/L",
+        "threshold": null
+      }
+    },
+    "random_seed": 42
+  },
+  "cvae_train": {
+    "final_loss": 0.08923684060573578,
+    "recon_mse": 0.07082665711641312,
+    "mean_feature_r2": 0.9288888983743769
+  },
+  "style_classifier_cv_accuracy": 0.544,
+  "generated": {
+    "style_classifier_accuracy": 0.6909090909090909,
+    "style_confidence_mean": 0.34117424242424244,
+    "mmd_mean": 0.4995240042215668,
+    "mmd_reference_mean": 0.3020541761671301,
+    "corr_structure_distance_mean": 0.4764779547153124,
+    "surrogate_sensory_mae_mean": 0.05748456851464338,
+    "surrogate_sensory_mae_reference": 0.1125118974477814,
+    "real_defect_above_share": {
+      "DMS": 0.5933541890804267,
+      "diacetyl": 0.41634825245097795,
+      "4VG": 0.05275932953826692
+    },
+    "defect_stats": {
+      "DMS": {
+        "threshold": 17.25,
+        "above_share": 0.0,
+        "pre_projection_above_share": 0.7136363636363635,
+        "capped_share": 0.7371212121212122,
+        "median_conc": 16.387500000000003
+      },
+      "diacetyl": {
+        "threshold": 0.29925,
+        "above_share": 0.0,
+        "pre_projection_above_share": 0.4598484848484848,
+        "capped_share": 0.47348484848484845,
+        "median_conc": 0.25640413303664145
+      },
+      "4VG": {
+        "threshold": 0.206333333,
+        "above_share": 0.0,
+        "pre_projection_above_share": 0.04090909090909091,
+        "capped_share": 0.04090909090909091,
+        "median_conc": 0.011366229731890946
+      },
+      "t2n": {
+        "threshold": null,
+        "above_share": null,
+        "median_conc": 0.010613713425556802
+      }
+    },
+    "per_style": {
+      "Amber": {
+        "mmd": 0.46639407533611427,
+        "corr_distance": 0.4191155691109311,
+        "surrogate_mae": 0.0751751461525242
+      },
+      "Blond": {
+        "mmd": 0.392004154663896,
+        "corr_distance": 0.37425148492437615,
+        "surrogate_mae": 0.05815003337496181
+      },
+      "Brett/cofermented": {
+        "mmd": 0.551023067682323,
+        "corr_distance": 0.6081818705505803,
+        "surrogate_mae": 0.0924358399146917
+      },
+      "Brown": {
+        "mmd": 0.456626178650106,
+        "corr_distance": 0.40436470866403834,
+        "surrogate_mae": 0.03069456929142725
+      },
+      "Brut": {
+        "mmd": 0.6398329329797797,
+        "corr_distance": 0.6916825377317751,
+        "surrogate_mae": 0.11080613039960965
+      },
+      "Christmas": {
+        "mmd": 0.5015048594610257,
+        "corr_distance": 0.4421966231094644,
+        "surrogate_mae": 0.05138662343333619
+      },
+      "Dubbel": {
+        "mmd": 0.42371424510327776,
+        "corr_distance": 0.42694520137912145,
+        "surrogate_mae": 0.08650654956199007
+      },
+      "Faro": {
+        "mmd": 0.706688983245528,
+        "corr_distance": 0.7215814780461454,
+        "surrogate_mae": 0.07702868856561407
+      },
+      "Flanders old brown": {
+        "mmd": 0.5783434089024377,
+        "corr_distance": 0.5609161406262245,
+        "surrogate_mae": 0.04378641501050996
+      },
+      "Fruitbeer": {
+        "mmd": 0.5439650136287667,
+        "corr_distance": 0.48034406189407125,
+        "surrogate_mae": 0.07068053831324546
+      },
+      "Hoppy": {
+        "mmd": 0.47908365730318525,
+        "corr_distance": 0.3959880950402226,
+        "surrogate_mae": 0.05494452848419582
+      },
+      "Kriek": {
+        "mmd": 0.48012155921894334,
+        "corr_distance": 0.41184681306985577,
+        "surrogate_mae": 0.05134104287238157
+      },
+      "Lambic": {
+        "mmd": 0.42302619624641175,
+        "corr_distance": 0.4431355481517152,
+        "surrogate_mae": 0.0224779026258743
+      },
+      "Low/No alcohol": {
+        "mmd": 0.538049150063192,
+        "corr_distance": 0.49124845540201734,
+        "surrogate_mae": 0.04008449130329563
+      },
+      "Pils/Lager": {
+        "mmd": 0.3971790496521723,
+        "corr_distance": 0.4393320918950355,
+        "surrogate_mae": 0.023862345280130936
+      },
+      "Saison": {
+        "mmd": 0.5101857991232768,
+        "corr_distance": 0.4446855917398849,
+        "surrogate_mae": 0.07583144052684665
+      },
+      "Scotch": {
+        "mmd": 0.5497164377348444,
+        "corr_distance": 0.5802012068797955,
+        "surrogate_mae": 0.08244718167588105
+      },
+      "Stout/Porter": {
+        "mmd": 0.49425276530487205,
+        "corr_distance": 0.45861747999953967,
+        "surrogate_mae": 0.0384969088544258
+      },
+      "Strong ale": {
+        "mmd": 0.4724295418464032,
+        "corr_distance": 0.3661638894236805,
+        "surrogate_mae": 0.05214541135029556
+      },
+      "Tripel": {
+        "mmd": 0.39753483427917313,
+        "corr_distance": 0.3773556085885853,
+        "surrogate_mae": 0.03284299304081521
+      },
+      "West Flanders ale": {
+        "mmd": 0.5491891624849241,
+        "corr_distance": 0.514486737612907,
+        "surrogate_mae": 0.05317039088792504
+      },
+      "Wheat": {
+        "mmd": 0.4386630199638176,
+        "corr_distance": 0.42987380989690677,
+        "surrogate_mae": 0.04036533640217649
+      }
+    }
+  },
+  "transfer": {
+    "Pils/Lager->Tripel": {
+      "n_source": 11,
+      "method": "latent_shift",
+      "chosen_style_confidence": 0.21,
+      "primary_method_style_confidence": 0.05484848484848484,
+      "shift_method_style_confidence": 0.21,
+      "primary_sensory_mae_vs_target": 0.19220167943409636,
+      "shift_sensory_mae_vs_target": 0.03640316374292844,
+      "chosen_sensory_mae_vs_target": 0.03640316374292844,
+      "defect_worsened_share": {
+        "DMS": 0.0,
+        "diacetyl": 0.0,
+        "4VG": 0.0,
+        "t2n": 0.0
+      },
+      "above_threshold_share": {
+        "DMS": 0.0,
+        "diacetyl": 0.0,
+        "4VG": 0.0,
+        "t2n": null
+      },
+      "sensory_change": {
+        "overall": 0.40366449557215134,
+        "A_esters_all": 0.5212422635338538,
+        "A_hops_all": 0.47228217787506505,
+        "F_esters_all": 0.6846929246561438,
+        "stale_hops": -0.1160446291542453,
+        "diacetyl": -0.13050940771058223,
+        "dms": -0.3312732710942232
+      }
+    },
+    "Blond->Tripel": {
+      "n_source": 31,
+      "method": "conditional_decode",
+      "chosen_style_confidence": 0.1275268817204301,
+      "primary_method_style_confidence": 0.1275268817204301,
+      "shift_method_style_confidence": 0.10956989247311825,
+      "primary_sensory_mae_vs_target": 0.07293585945456578,
+      "shift_sensory_mae_vs_target": 0.07193521012473408,
+      "chosen_sensory_mae_vs_target": 0.07293585945456578,
+      "defect_worsened_share": {
+        "DMS": 0.0,
+        "diacetyl": 0.0,
+        "4VG": 0.0,
+        "t2n": 0.0
+      },
+      "above_threshold_share": {
+        "DMS": 0.0,
+        "diacetyl": 0.0,
+        "4VG": 0.0,
+        "t2n": null
+      },
+      "sensory_change": {
+        "overall": -0.0905677203265848,
+        "A_esters_all": -0.05982503360254904,
+        "A_hops_all": -0.05908853468005786,
+        "F_esters_all": -0.0060134333599366,
+        "stale_hops": 0.057834441385933424,
+        "diacetyl": 0.01061908113579794,
+        "dms": -0.006209653766119261
+      }
+    },
+    "Lambic->Kriek": {
+      "n_source": 11,
+      "method": "latent_shift",
+      "chosen_style_confidence": 0.23363636363636361,
+      "primary_method_style_confidence": 0.20727272727272725,
+      "shift_method_style_confidence": 0.23363636363636361,
+      "primary_sensory_mae_vs_target": 0.13841672949799091,
+      "shift_sensory_mae_vs_target": 0.17757427480070123,
+      "chosen_sensory_mae_vs_target": 0.17757427480070123,
+      "defect_worsened_share": {
+        "DMS": 0.0,
+        "diacetyl": 0.0,
+        "4VG": 0.0,
+        "t2n": 0.0
+      },
+      "above_threshold_share": {
+        "DMS": 0.0,
+        "diacetyl": 0.0,
+        "4VG": 0.0,
+        "t2n": null
+      },
+      "sensory_change": {
+        "overall": -0.16744349383405188,
+        "A_esters_all": 0.1551630174504249,
+        "A_hops_all": -0.02575757349270047,
+        "F_esters_all": 0.14837303899642457,
+        "stale_hops": -0.10842978096540026,
+        "diacetyl": 0.08104421854376002,
+        "dms": -0.01416144912620694
+      }
+    },
+    "Wheat->Saison": {
+      "n_source": 12,
+      "method": "conditional_decode",
+      "chosen_style_confidence": 0.0952777777777778,
+      "primary_method_style_confidence": 0.0952777777777778,
+      "shift_method_style_confidence": 0.08166666666666667,
+      "primary_sensory_mae_vs_target": 0.1950387100902504,
+      "shift_sensory_mae_vs_target": 0.18177172148778076,
+      "chosen_sensory_mae_vs_target": 0.1950387100902504,
+      "defect_worsened_share": {
+        "DMS": 0.0,
+        "diacetyl": 0.0,
+        "4VG": 0.0,
+        "t2n": 0.0
+      },
+      "above_threshold_share": {
+        "DMS": 0.0,
+        "diacetyl": 0.0,
+        "4VG": 0.0,
+        "t2n": null
+      },
+      "sensory_change": {
+        "overall": -0.09845738553650729,
+        "A_esters_all": 0.038808397571418324,
+        "A_hops_all": -0.06815485471286964,
+        "F_esters_all": 0.07402863037453127,
+        "stale_hops": 0.02913900826665243,
+        "diacetyl": 0.05769171322994996,
+        "dms": -0.12024312345511667
+      }
+    },
+    "Stout/Porter->Fruitbeer": {
+      "n_source": 13,
+      "method": "latent_shift",
+      "chosen_style_confidence": 0.31333333333333335,
+      "primary_method_style_confidence": 0.08025641025641027,
+      "shift_method_style_confidence": 0.31333333333333335,
+      "primary_sensory_mae_vs_target": 0.324622376089896,
+      "shift_sensory_mae_vs_target": 0.10412079423214607,
+      "chosen_sensory_mae_vs_target": 0.10412079423214607,
+      "defect_worsened_share": {
+        "DMS": 0.0,
+        "diacetyl": 0.0,
+        "4VG": 0.0,
+        "t2n": 0.0
+      },
+      "above_threshold_share": {
+        "DMS": 0.0,
+        "diacetyl": 0.0,
+        "4VG": 0.0,
+        "t2n": null
+      },
+      "sensory_change": {
+        "overall": -0.22264047441009865,
+        "A_esters_all": 0.18492869960698882,
+        "A_hops_all": -0.4610435694098068,
+        "F_esters_all": 0.0836302879779495,
+        "stale_hops": -0.02674201437051528,
+        "diacetyl": 0.07133383275830828,
+        "dms": -0.06918648346065777
+      }
+    }
+  },
+  "consumer_target": {
+    "n_descriptors": 183,
+    "note": "7.csv 消费者描述符作为辅助目标（决策 4B）；Ridge 代理仅用于相对比较，非真实消费者实验",
+    "generated_vs_real_mae": {
+      "Amber": 0.2532329862151458,
+      "Blond": 0.21923809898877814,
+      "Brett/cofermented": 0.4145769146442709,
+      "Brown": 0.22596094545117373,
+      "Brut": 0.46658414218258515,
+      "Christmas": 0.33176878326839154,
+      "Dubbel": 0.20192856959373184,
+      "Faro": 0.6274164516005538,
+      "Flanders old brown": 0.3576975104551868,
+      "Fruitbeer": 0.3806947832589037,
+      "Hoppy": 0.2831692656437314,
+      "Kriek": 0.2725268410863487,
+      "Lambic": 0.2667476270429026,
+      "Low/No alcohol": 0.44329880914358005,
+      "Pils/Lager": 0.20123044449265273,
+      "Saison": 0.34468982326054604,
+      "Scotch": 0.36116442611992255,
+      "Stout/Porter": 0.28649680910473474,
+      "Strong ale": 0.27798944626976324,
+      "Tripel": 0.21131924304499666,
+      "West Flanders ale": 0.43513556710154033,
+      "Wheat": 0.21818304243105485
+    },
+    "key_descriptors": {
+      "Tripel": {
+        "aroma_fruity": {
+          "real": 0.8853592728695983,
+          "generated": 0.8969479041172002
+        },
+        "aroma_estery": {
+          "real": 0.6995868333687466,
+          "generated": 1.0604769503115699
+        },
+        "aroma_hoppy": {
+          "real": 0.18996693055557273,
+          "generated": 0.40697742674765147
+        },
+        "aroma_sweet": {
+          "real": 0.40196956641964193,
+          "generated": 0.8470278635554894
+        },
+        "taste_bitter": {
+          "real": 0.2726438234169933,
+          "generated": 0.15877502898796758
+        },
+        "taste_sour": {
+          "real": -0.4286165007012233,
+          "generated": -0.4151173971997307
+        },
+        "palate_alcohol": {
+          "real": 0.8315219223983219,
+          "generated": 0.8437818932620403
+        }
+      },
+      "Kriek": {
+        "aroma_fruity": {
+          "real": -1.1137873069468196,
+          "generated": -1.2718427204353517
+        },
+        "aroma_estery": {
+          "real": -0.7139247012552004,
+          "generated": -0.7241602181627929
+        },
+        "aroma_hoppy": {
+          "real": -0.8422212460485035,
+          "generated": -0.6674418879765177
+        },
+        "aroma_sweet": {
+          "real": -0.8095409252099361,
+          "generated": -0.5984374175721706
+        },
+        "taste_bitter": {
+          "real": -1.3204395223326562,
+          "generated": -1.3300916880499154
+        },
+        "taste_sour": {
+          "real": 1.6973301249792576,
+          "generated": 1.457417066279178
+        },
+        "palate_alcohol": {
+          "real": -0.7022418162395065,
+          "generated": -0.856660452986674
+        }
+      },
+      "Lambic": {
+        "aroma_fruity": {
+          "real": -0.20524286935143052,
+          "generated": -0.18194649078837577
+        },
+        "aroma_estery": {
+          "real": -0.3573749549982303,
+          "generated": -0.7153344338908479
+        },
+        "aroma_hoppy": {
+          "real": -0.7061672423019243,
+          "generated": -0.9992616728091139
+        },
+        "aroma_sweet": {
+          "real": -0.4339233971481082,
+          "generated": -0.09546197542011875
+        },
+        "taste_bitter": {
+          "real": -1.0430116204723694,
+          "generated": -1.2555191934556214
+        },
+        "taste_sour": {
+          "real": 2.369824275929705,
+          "generated": 2.4455259304665597
+        },
+        "palate_alcohol": {
+          "real": -0.7013108411665104,
+          "generated": -0.5852212511481247
+        }
+      },
+      "Pils/Lager": {
+        "aroma_fruity": {
+          "real": -1.07203360325265,
+          "generated": -0.9622307540119528
+        },
+        "aroma_estery": {
+          "real": -0.5341197427684832,
+          "generated": -0.4699910750369926
+        },
+        "aroma_hoppy": {
+          "real": 1.0242021383090518,
+          "generated": 1.0552630824534903
+        },
+        "aroma_sweet": {
+          "real": -0.2467382760096779,
+          "generated": 0.03253298622242705
+        },
+        "taste_bitter": {
+          "real": 0.492958021661124,
+          "generated": 0.5876541208983015
+        },
+        "taste_sour": {
+          "real": -0.5338579544131592,
+          "generated": -0.7503868559489857
+        },
+        "palate_alcohol": {
+          "real": -0.6832872210260791,
+          "generated": -0.45287787593121054
+        }
+      }
+    }
+  },
+  "runtime_seconds": 45.1,
+  "env": {
+    "python": "3.11.13",
+    "torch": "2.8.0+cu126",
+    "numpy": "2.3.2",
+    "pandas": "2.3.1"
+  }
+}
