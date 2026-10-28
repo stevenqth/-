@@ -1,0 +1,366 @@
+[
+  {
+    "id": 1,
+    "kind": "赛题",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年赛题（2021-2025）\\2021年赛题及附件\\赛道a\\2021年MathorCup大数据挑战赛-赛道A.pdf",
+    "text": "资料\\历年竞赛研读\\01_2021年MathorCup大数据挑战赛-赛道A.txt",
+    "pages": 5
+  },
+  {
+    "id": 2,
+    "kind": "赛题",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年赛题（2021-2025）\\2021年赛题及附件\\赛道B\\2021年MathorCup大数据挑战赛-赛道B.pdf",
+    "text": "资料\\历年竞赛研读\\02_2021年MathorCup大数据挑战赛-赛道B.txt",
+    "pages": 6
+  },
+  {
+    "id": 3,
+    "kind": "赛题",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年赛题（2021-2025）\\2022年赛题及附件\\初赛赛题 2022年MathorCup大数据竞赛\\2022年MathorCup大数据竞赛-赛道A初赛\\2022年MathorCup大数据挑战赛-赛道A初赛.pdf",
+    "text": "资料\\历年竞赛研读\\03_2022年MathorCup大数据挑战赛-赛道A初赛.txt",
+    "pages": 5
+  },
+  {
+    "id": 4,
+    "kind": "赛题",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年赛题（2021-2025）\\2022年赛题及附件\\初赛赛题 2022年MathorCup大数据竞赛\\2022年MathorCup大数据竞赛-赛道B初赛\\2022年MathorCup大数据挑战赛-赛道B初赛.pdf",
+    "text": "资料\\历年竞赛研读\\04_2022年MathorCup大数据挑战赛-赛道B初赛.txt",
+    "pages": 2
+  },
+  {
+    "id": 5,
+    "kind": "赛题",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年赛题（2021-2025）\\2023年赛题及附件\\2023年MathorCup大数据挑战赛-赛道A初赛\\2023年MathorCup大数据挑战赛-赛道A初赛\\2023年MathorCup大数据挑战赛-赛道A初赛.pdf",
+    "text": "资料\\历年竞赛研读\\05_2023年MathorCup大数据挑战赛-赛道A初赛.txt",
+    "pages": 3
+  },
+  {
+    "id": 6,
+    "kind": "赛题",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年赛题（2021-2025）\\2023年赛题及附件\\2023年MathorCup大数据挑战赛-赛道B初赛\\2023年MathorCup大数据挑战赛-赛道B初赛\\2023年MathorCup大数据挑战赛-赛道B初赛.pdf",
+    "text": "资料\\历年竞赛研读\\06_2023年MathorCup大数据挑战赛-赛道B初赛.txt",
+    "pages": 4
+  },
+  {
+    "id": 7,
+    "kind": "赛题",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年赛题（2021-2025）\\2024年赛题及附件\\2024年MathorCup大数据挑战赛-赛道A初赛\\2024年MathorCup大数据挑战赛-赛道A初赛.pdf",
+    "text": "资料\\历年竞赛研读\\07_2024年MathorCup大数据挑战赛-赛道A初赛.txt",
+    "pages": 4
+  },
+  {
+    "id": 8,
+    "kind": "赛题",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年赛题（2021-2025）\\2024年赛题及附件\\2024年MathorCup大数据挑战赛-赛道B初赛\\2024年MathorCup大数据挑战赛-赛道B初赛.pdf",
+    "text": "资料\\历年竞赛研读\\08_2024年MathorCup大数据挑战赛-赛道B初赛.txt",
+    "pages": 5
+  },
+  {
+    "id": 9,
+    "kind": "赛题",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年赛题（2021-2025）\\2025年赛题及附件\\2025年MathorCup大数据挑战赛-赛道A初赛\\2025年MathorCup大数据挑战赛-赛道A初赛.pdf",
+    "text": "资料\\历年竞赛研读\\09_2025年MathorCup大数据挑战赛-赛道A初赛.txt",
+    "pages": 2
+  },
+  {
+    "id": 10,
+    "kind": "赛题",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年赛题（2021-2025）\\2025年赛题及附件\\2025年MathorCup大数据挑战赛-赛道A初赛\\数据集说明.pdf",
+    "text": "资料\\历年竞赛研读\\10_数据集说明.txt",
+    "pages": 1
+  },
+  {
+    "id": 11,
+    "kind": "赛题",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年赛题（2021-2025）\\2025年赛题及附件\\2025年MathorCup大数据挑战赛-赛道A初赛\\集装箱数据描述 - 初赛.pdf",
+    "text": "资料\\历年竞赛研读\\11_集装箱数据描述 - 初赛.txt",
+    "pages": 2
+  },
+  {
+    "id": 12,
+    "kind": "赛题",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年赛题（2021-2025）\\2025年赛题及附件\\2025年MathorCup大数据挑战赛-赛道B初赛\\2025年MathorCup大数据挑战赛-赛道B初赛.pdf",
+    "text": "资料\\历年竞赛研读\\12_2025年MathorCup大数据挑战赛-赛道B初赛.txt",
+    "pages": 5
+  },
+  {
+    "id": 13,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2021年MathorCup大数据竞优秀论文\\2021年MathorCup大数据竞优秀论文1.pdf",
+    "text": "资料\\历年竞赛研读\\13_2021年MathorCup大数据竞优秀论文1.txt",
+    "pages": 35
+  },
+  {
+    "id": 14,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2021年MathorCup大数据竞优秀论文\\2021年MathorCup大数据竞优秀论文2.pdf",
+    "text": "资料\\历年竞赛研读\\14_2021年MathorCup大数据竞优秀论文2.txt",
+    "pages": 29
+  },
+  {
+    "id": 15,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2021年MathorCup大数据竞优秀论文\\2021年MathorCup大数据竞优秀论文3.pdf",
+    "text": "资料\\历年竞赛研读\\15_2021年MathorCup大数据竞优秀论文3.txt",
+    "pages": 23
+  },
+  {
+    "id": 16,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2021年MathorCup大数据竞优秀论文\\2021年MathorCup大数据竞优秀论文4.pdf",
+    "text": "资料\\历年竞赛研读\\16_2021年MathorCup大数据竞优秀论文4.txt",
+    "pages": 23
+  },
+  {
+    "id": 17,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2021年MathorCup大数据竞优秀论文\\2021年MathorCup大数据竞优秀论文5.pdf",
+    "text": "资料\\历年竞赛研读\\17_2021年MathorCup大数据竞优秀论文5.txt",
+    "pages": 20
+  },
+  {
+    "id": 18,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2021年MathorCup大数据竞优秀论文\\2021年MathorCup大数据竞优秀论文6.pdf",
+    "text": "资料\\历年竞赛研读\\18_2021年MathorCup大数据竞优秀论文6.txt",
+    "pages": 27
+  },
+  {
+    "id": 19,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2021年MathorCup大数据竞优秀论文\\2021年MathorCup大数据竞优秀论文7.pdf",
+    "text": "资料\\历年竞赛研读\\19_2021年MathorCup大数据竞优秀论文7.txt",
+    "pages": 28
+  },
+  {
+    "id": 20,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2021年MathorCup大数据竞优秀论文\\2021年MathorCup大数据竞优秀论文8.pdf",
+    "text": "资料\\历年竞赛研读\\20_2021年MathorCup大数据竞优秀论文8.txt",
+    "pages": 39
+  },
+  {
+    "id": 21,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2022年MathorCup大数据竞赛优秀论文\\2022年MathorCup大数据竞赛优秀论文-1.pdf",
+    "text": "资料\\历年竞赛研读\\21_2022年MathorCup大数据竞赛优秀论文-1.txt",
+    "pages": 27
+  },
+  {
+    "id": 22,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2022年MathorCup大数据竞赛优秀论文\\2022年MathorCup大数据竞赛优秀论文-2.pdf",
+    "text": "资料\\历年竞赛研读\\22_2022年MathorCup大数据竞赛优秀论文-2.txt",
+    "pages": 23
+  },
+  {
+    "id": 23,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2022年MathorCup大数据竞赛优秀论文\\2022年MathorCup大数据竞赛优秀论文-3.pdf",
+    "text": "资料\\历年竞赛研读\\23_2022年MathorCup大数据竞赛优秀论文-3.txt",
+    "pages": 34
+  },
+  {
+    "id": 24,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2022年MathorCup大数据竞赛优秀论文\\2022年MathorCup大数据竞赛优秀论文-4.pdf",
+    "text": "资料\\历年竞赛研读\\24_2022年MathorCup大数据竞赛优秀论文-4.txt",
+    "pages": 22
+  },
+  {
+    "id": 25,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2022年MathorCup大数据竞赛优秀论文\\2022年MathorCup大数据竞赛优秀论文-5.pdf",
+    "text": "资料\\历年竞赛研读\\25_2022年MathorCup大数据竞赛优秀论文-5.txt",
+    "pages": 31
+  },
+  {
+    "id": 26,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2022年MathorCup大数据竞赛优秀论文\\2022年MathorCup大数据竞赛优秀论文-6.pdf",
+    "text": "资料\\历年竞赛研读\\26_2022年MathorCup大数据竞赛优秀论文-6.txt",
+    "pages": 29
+  },
+  {
+    "id": 27,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2022年MathorCup大数据竞赛优秀论文\\2022年MathorCup大数据竞赛优秀论文-7.pdf",
+    "text": "资料\\历年竞赛研读\\27_2022年MathorCup大数据竞赛优秀论文-7.txt",
+    "pages": 18
+  },
+  {
+    "id": 28,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2022年MathorCup大数据竞赛优秀论文\\2022年MathorCup大数据竞赛优秀论文-8.pdf",
+    "text": "资料\\历年竞赛研读\\28_2022年MathorCup大数据竞赛优秀论文-8.txt",
+    "pages": 32
+  },
+  {
+    "id": 29,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2023年MathorCup大数据竞赛优秀论文\\2023年MathorCup大数据竞赛优秀论文-1.pdf",
+    "text": "资料\\历年竞赛研读\\29_2023年MathorCup大数据竞赛优秀论文-1.txt",
+    "pages": 38
+  },
+  {
+    "id": 30,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2023年MathorCup大数据竞赛优秀论文\\2023年MathorCup大数据竞赛优秀论文-2.pdf",
+    "text": "资料\\历年竞赛研读\\30_2023年MathorCup大数据竞赛优秀论文-2.txt",
+    "pages": 52
+  },
+  {
+    "id": 31,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2023年MathorCup大数据竞赛优秀论文\\2023年MathorCup大数据竞赛优秀论文-3.pdf",
+    "text": "资料\\历年竞赛研读\\31_2023年MathorCup大数据竞赛优秀论文-3.txt",
+    "pages": 53
+  },
+  {
+    "id": 32,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2023年MathorCup大数据竞赛优秀论文\\2023年MathorCup大数据竞赛优秀论文-4.pdf",
+    "text": "资料\\历年竞赛研读\\32_2023年MathorCup大数据竞赛优秀论文-4.txt",
+    "pages": 62
+  },
+  {
+    "id": 33,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2023年MathorCup大数据竞赛优秀论文\\2023年MathorCup大数据竞赛优秀论文-5.pdf",
+    "text": "资料\\历年竞赛研读\\33_2023年MathorCup大数据竞赛优秀论文-5.txt",
+    "pages": 53
+  },
+  {
+    "id": 34,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2023年MathorCup大数据竞赛优秀论文\\2023年MathorCup大数据竞赛优秀论文-6.pdf",
+    "text": "资料\\历年竞赛研读\\34_2023年MathorCup大数据竞赛优秀论文-6.txt",
+    "pages": 46
+  },
+  {
+    "id": 35,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2023年MathorCup大数据竞赛优秀论文\\2023年MathorCup大数据竞赛优秀论文-7.pdf",
+    "text": "资料\\历年竞赛研读\\35_2023年MathorCup大数据竞赛优秀论文-7.txt",
+    "pages": 43
+  },
+  {
+    "id": 36,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2023年MathorCup大数据竞赛优秀论文\\2023年MathorCup大数据竞赛优秀论文-8.pdf",
+    "text": "资料\\历年竞赛研读\\36_2023年MathorCup大数据竞赛优秀论文-8.txt",
+    "pages": 34
+  },
+  {
+    "id": 37,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2024年MathorCup大数据竞赛优秀论文\\2024年MathorCup大数据竞赛优秀论文-1.pdf",
+    "text": "资料\\历年竞赛研读\\37_2024年MathorCup大数据竞赛优秀论文-1.txt",
+    "pages": 59
+  },
+  {
+    "id": 38,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2024年MathorCup大数据竞赛优秀论文\\2024年MathorCup大数据竞赛优秀论文-2.pdf",
+    "text": "资料\\历年竞赛研读\\38_2024年MathorCup大数据竞赛优秀论文-2.txt",
+    "pages": 52
+  },
+  {
+    "id": 39,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2024年MathorCup大数据竞赛优秀论文\\2024年MathorCup大数据竞赛优秀论文-3.pdf",
+    "text": "资料\\历年竞赛研读\\39_2024年MathorCup大数据竞赛优秀论文-3.txt",
+    "pages": 48
+  },
+  {
+    "id": 40,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2024年MathorCup大数据竞赛优秀论文\\2024年MathorCup大数据竞赛优秀论文-4.pdf",
+    "text": "资料\\历年竞赛研读\\40_2024年MathorCup大数据竞赛优秀论文-4.txt",
+    "pages": 59
+  },
+  {
+    "id": 41,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2024年MathorCup大数据竞赛优秀论文\\2024年MathorCup大数据竞赛优秀论文-5.pdf",
+    "text": "资料\\历年竞赛研读\\41_2024年MathorCup大数据竞赛优秀论文-5.txt",
+    "pages": 52
+  },
+  {
+    "id": 42,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2024年MathorCup大数据竞赛优秀论文\\2024年MathorCup大数据竞赛优秀论文-6.pdf",
+    "text": "资料\\历年竞赛研读\\42_2024年MathorCup大数据竞赛优秀论文-6.txt",
+    "pages": 68
+  },
+  {
+    "id": 43,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2024年MathorCup大数据竞赛优秀论文\\2024年MathorCup大数据竞赛优秀论文-7.pdf",
+    "text": "资料\\历年竞赛研读\\43_2024年MathorCup大数据竞赛优秀论文-7.txt",
+    "pages": 66
+  },
+  {
+    "id": 44,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2024年MathorCup大数据竞赛优秀论文\\2024年MathorCup大数据竞赛优秀论文-8.pdf",
+    "text": "资料\\历年竞赛研读\\44_2024年MathorCup大数据竞赛优秀论文-8.txt",
+    "pages": 69
+  },
+  {
+    "id": 45,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2025年MathorCup大数据竞赛优秀论文\\2025年MathorCup大数据竞赛优秀论文-1.pdf",
+    "text": "资料\\历年竞赛研读\\45_2025年MathorCup大数据竞赛优秀论文-1.txt",
+    "pages": 32
+  },
+  {
+    "id": 46,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2025年MathorCup大数据竞赛优秀论文\\2025年MathorCup大数据竞赛优秀论文-2.pdf",
+    "text": "资料\\历年竞赛研读\\46_2025年MathorCup大数据竞赛优秀论文-2.txt",
+    "pages": 22
+  },
+  {
+    "id": 47,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2025年MathorCup大数据竞赛优秀论文\\2025年MathorCup大数据竞赛优秀论文-3.pdf",
+    "text": "资料\\历年竞赛研读\\47_2025年MathorCup大数据竞赛优秀论文-3.txt",
+    "pages": 32
+  },
+  {
+    "id": 48,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2025年MathorCup大数据竞赛优秀论文\\2025年MathorCup大数据竞赛优秀论文-4.pdf",
+    "text": "资料\\历年竞赛研读\\48_2025年MathorCup大数据竞赛优秀论文-4.txt",
+    "pages": 25
+  },
+  {
+    "id": 49,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2025年MathorCup大数据竞赛优秀论文\\2025年MathorCup大数据竞赛优秀论文-5.pdf",
+    "text": "资料\\历年竞赛研读\\49_2025年MathorCup大数据竞赛优秀论文-5.txt",
+    "pages": 20
+  },
+  {
+    "id": 50,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2025年MathorCup大数据竞赛优秀论文\\2025年MathorCup大数据竞赛优秀论文-6.pdf",
+    "text": "资料\\历年竞赛研读\\50_2025年MathorCup大数据竞赛优秀论文-6.txt",
+    "pages": 33
+  },
+  {
+    "id": 51,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2025年MathorCup大数据竞赛优秀论文\\2025年MathorCup大数据竞赛优秀论文-7.pdf",
+    "text": "资料\\历年竞赛研读\\51_2025年MathorCup大数据竞赛优秀论文-7.txt",
+    "pages": 33
+  },
+  {
+    "id": 52,
+    "kind": "论文",
+    "source": "C:\\Users\\22010\\Desktop\\大数据竞赛历年优秀论文（2021-2025）\\2025年MathorCup大数据竞赛优秀论文\\2025年MathorCup大数据竞赛优秀论文-8.pdf",
+    "text": "资料\\历年竞赛研读\\52_2025年MathorCup大数据竞赛优秀论文-8.txt",
+    "pages": 46
+  }
+]
