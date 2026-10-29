@@ -1,0 +1,29 @@
+{
+  "case": "Pils_Lager_beer81_to_Tripel",
+  "elapsed_seconds": 4.232307195663452,
+  "variants": [
+    {
+      "case": "Pils_Lager_beer81_to_Tripel",
+      "variant": "four_objective",
+      "pareto_points": 124,
+      "status": "feasible",
+      "best_expert_error": 0.0151047847050182,
+      "best_external_error": 0.0592789101536695,
+      "best_heldout_external_error": 0.0636322244129199,
+      "max_stale_delta": -2.8957600772373685e-06,
+      "max_support_ratio": 0.4842501063607849,
+      "common_box_mc_hypervolume": NaN
+    },
+    {
+      "case": "Pils_Lager_beer81_to_Tripel",
+      "variant": "shared_defect_knob",
+      "pareto_points": 122,
+      "status": "feasible",
+      "best_expert_error": 0.015373577488127219,
+      "best_external_error": 0.059273531730763745,
+      "best_heldout_external_error": 0.06362446356339319,
+      "max_stale_delta": -6.6830922443680805e-06,
+      "max_support_ratio": 0.49359093372868357
+    }
+  ]
+}

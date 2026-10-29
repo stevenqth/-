@@ -1,0 +1,54 @@
+{
+  "case": "Pils_Lager_beer218_to_Tripel",
+  "elapsed_seconds": 17.503287076950073,
+  "variants": [
+    {
+      "case": "Pils_Lager_beer218_to_Tripel",
+      "variant": "four_objective",
+      "pareto_points": 123,
+      "status": "feasible",
+      "best_expert_error": 0.015124018896930437,
+      "best_external_error": 0.05666305492879549,
+      "best_heldout_external_error": 0.06065741748548045,
+      "max_stale_delta": -0.00017912559121268818,
+      "max_support_ratio": 0.47469461548531156,
+      "common_box_mc_hypervolume": 0.5905833333333333
+    },
+    {
+      "case": "Pils_Lager_beer218_to_Tripel",
+      "variant": "no_external",
+      "pareto_points": 117,
+      "status": "feasible",
+      "best_expert_error": 0.015136328284535684,
+      "best_external_error": 0.05739317312481841,
+      "best_heldout_external_error": 0.06147116160352423,
+      "max_stale_delta": -0.00024677456265297635,
+      "max_support_ratio": 0.4448229852982538,
+      "common_box_mc_hypervolume": 0.5949166666666666
+    },
+    {
+      "case": "Pils_Lager_beer218_to_Tripel",
+      "variant": "shared_defect_knob",
+      "pareto_points": 124,
+      "status": "feasible",
+      "best_expert_error": 0.015047380263482265,
+      "best_external_error": 0.056664180823355295,
+      "best_heldout_external_error": 0.06066381417968576,
+      "max_stale_delta": -7.218238434589561e-07,
+      "max_support_ratio": 0.4736922814408605,
+      "common_box_mc_hypervolume": 0.607
+    },
+    {
+      "case": "Pils_Lager_beer218_to_Tripel",
+      "variant": "random_equal_budget",
+      "pareto_points": 1917,
+      "status": "feasible",
+      "best_expert_error": 0.015330227541225918,
+      "best_external_error": 0.05732323775193984,
+      "best_heldout_external_error": 0.061269598191426196,
+      "max_stale_delta": -0.00014159838444858882,
+      "max_support_ratio": 0.4652337017619948,
+      "common_box_mc_hypervolume": 0.6006666666666667
+    }
+  ]
+}

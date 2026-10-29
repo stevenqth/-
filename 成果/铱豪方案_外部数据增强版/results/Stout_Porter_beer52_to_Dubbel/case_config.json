@@ -1,0 +1,50 @@
+{
+  "source_beer": 52,
+  "source_style": "Stout/Porter",
+  "target_style": "Dubbel",
+  "source_defect_imputed": false,
+  "control_feature": "selin.11.en.4.alpha.ol",
+  "control_bound": -1.81781854,
+  "defect_caps": [
+    16.3875,
+    0.2842875,
+    0.009216504177830818,
+    0.13440391665
+  ],
+  "guard_models": [
+    "Ridge1000",
+    "ET3",
+    "RF5"
+  ],
+  "support_limit": 1.3081695871875456,
+  "population": 64,
+  "generations": 50,
+  "seeds": [
+    42,
+    43
+  ],
+  "dimensions": [
+    "Astringency",
+    "Body",
+    "Alcohol",
+    "Bitter",
+    "Sweet",
+    "Sour",
+    "Fruits",
+    "Hoppy",
+    "Spices",
+    "Malty"
+  ],
+  "external_weights": [
+    0.17106567397550604,
+    0.016197448160940205,
+    0.11397345637260586,
+    0.09816539495910227,
+    0.07558339221314475,
+    0.13644883421356035,
+    0.10227198005017221,
+    0.11279981715350333,
+    0.04332241545015547,
+    0.1301715874513095
+  ]
+}

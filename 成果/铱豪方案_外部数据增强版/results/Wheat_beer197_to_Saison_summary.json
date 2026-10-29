@@ -1,0 +1,29 @@
+{
+  "case": "Wheat_beer197_to_Saison",
+  "elapsed_seconds": 4.2312421798706055,
+  "variants": [
+    {
+      "case": "Wheat_beer197_to_Saison",
+      "variant": "four_objective",
+      "pareto_points": 115,
+      "status": "feasible",
+      "best_expert_error": 0.0637349989005795,
+      "best_external_error": 0.0425848831210521,
+      "best_heldout_external_error": 0.0528435678865579,
+      "max_stale_delta": 0.0,
+      "max_support_ratio": 0.4883539117159869,
+      "common_box_mc_hypervolume": NaN
+    },
+    {
+      "case": "Wheat_beer197_to_Saison",
+      "variant": "shared_defect_knob",
+      "pareto_points": 123,
+      "status": "feasible",
+      "best_expert_error": 0.0637419633290253,
+      "best_external_error": 0.04309459097286812,
+      "best_heldout_external_error": 0.053401025916570366,
+      "max_stale_delta": 0.0,
+      "max_support_ratio": 0.4909313311075524
+    }
+  ]
+}

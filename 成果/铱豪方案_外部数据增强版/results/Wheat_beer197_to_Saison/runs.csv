@@ -1,0 +1,5 @@
+variant,seed,evaluations,feasible_final,min_violation
+four_objective,42,3864,64,0.0
+four_objective,43,3864,64,0.0
+shared_defect_knob,42,3864,64,0.0
+shared_defect_knob,43,3864,64,0.0

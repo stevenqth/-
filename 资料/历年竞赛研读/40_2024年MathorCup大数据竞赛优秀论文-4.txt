@@ -1,0 +1,2080 @@
+【PDF第1页】
+队伍编号
+题
+MCB2401985
+号 A
+基于机器学习的台风路径预测与特征关系分析的综合研究
+摘 要
+台风作为一种强烈的热带气旋，是对人类生活和生产影响巨大的气象现象。台风不
+仅带来狂风暴雨，还可能引发风暴潮和泥石流等灾害，造成生态破坏和经济损失。因此，
+研究台风的形成、发展及其路径具有重要意义。本文利用机器学习技术，分析台风的特
+征参数与环境因素之间的关系，旨在提高台风的预测能力。
+针对研究问题，首先分析台风特征参数（如强度、等级、风速）与气温、气压、季
+风的关系，建立分类评价模型。其次，以 2024 年 9 月的第 13 号台风贝碧嘉为例，探讨
+其路径预测模型。最后，研究台风登陆后降水量与风速的关系及降水量与距离台风中心
+的关系。
+问题一分析：该题需要构建台风特征参数与环境因子之间的关系模型，并通过建立
+的模型分析 2024 年 7 月和 9 月的台风数据，评估模型效果。为了解决问题一，本文通
+过数据预处理、异常值分析等步骤，建立有效的分类评价模型。利用肘部法则确定最优
+聚类数 K=6，并采用 KMeans、层次聚类和 DBSCAN 三种聚类算法进行对比分析。结果
+显示，DBSCAN 在处理复杂模式和噪声方面表现最佳。其次采用爬虫以及现有公开数
+据集搜集 2024 年台风数据，对爬取到的 2024 年台风数据选取上述搭建的模型进行聚类
+分析。
+问题二分析：利用随机森林、XGBoost 及基于注意力机制的 CNN-LSTM 模型构建
+台风路径分析预测模型，通过动态时间规整（DTW）算法对比预测路径与实际路径，提
+升预测的准确性与可靠性。针对问题二，采用 LSTM 模型进行路径预测，结合 DTW 算
+法评估模型性能，结果表明基于注意力机制的 CNN-LSTM 模型在各项指标上表现优越，
+均方根误差为 0.0336，预测性能指标达到 0.99533。
+问题三分析：研究台风登陆后的降水量与风速的关系，以及降水量与距台风中心的
+关系，建立相应模型进行分析。针对问题三，建立降水量与风速及距离之间的关系模型，
+结果显示指数衰减模型在拟合效果上优于幂律衰减模型，为进一步的气象研究提供了可
+靠依据。
+关键词：台风路径预测；机器学习；动态时间规整；指数衰减模型；聚类分析
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第2页】
+ଢ੣
+၂a ໙ีᇗඍ ························································································ 1
+1.1ࣟ····················································································· 1
+1.2 ໙ีေ౰ ····················································································· 1
+a༅ ························································································ 1
+2.1༅ ·················································································· 1
+2.2༅ ·················································································· 2
+2.3༅ ·················································································· 2
+೘aഡ ························································································ 2
+ඹaඪૼ ························································································ 3
+໴aࢳ································································ 3
+5.1༅ ··············································································· 3
+5.2 ඔऌყԩ৘ ·················································································· 4
+5.2.1ߐ············································································ 4
+5.2.2 ඔऌౢ༡ ············································································ 5
+5.2.3 หᆘщ઒ ············································································ 5
+5.2.4߄········································································· 5
+5.3༅ ······························································· 5
+5.3.1ᄵ ············································································ 5
+5.4б ··································································· 5
+5.5༅ ······················································ 6
+5.5.1ෘ ········································································· 7
+5.5.2༅ ········································································· 7
+5.5.3༅ ········································································· 8
+5.6߄··············································································· 8
+5.7߄······························································· 9
+5.8 2024༅ ···························································· 10
+ੂaࢳ································································ 11
+6.1 ඔऌყԩ৘ ·················································································· 12
+6.1.1หᆘิ౼ ······················································· 12
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第3页】
+6.1.2߄········································································· 13
+6.2৫ ··································································· 13
+6.2.1೦ਟଆ྘ ······································································ 13
+6.2.2 XGBoost ଆ྘ ······································································ 13
+6.2.3֥CNN-LSTM ଆ྘ ········································· 14
+6.2.4ࢳ············································································ 16
+6.2.5߄··································································· 17
+6.3ᆜčDTWم···························································· 17
+6.3.1 DTWෘ ····································································· 17
+6.3.2ࢳ············································································ 18
+௾aࢳ··································································· 19
+7.1 ඔऌሙС ····················································································· 19
+7.2৫ ····················································································· 19
+7.2.1༢ଆ྘ ······················································· 19
+7.2.2༢ଆ྘ ······················································· 20
+7.3ܙ····················································································· 20
+ϖaဒ ············································································ 23
+8.1༅ ·················································································· 23
+8.2༅ ····················································································· 23
+a༅ ··············································································· 24
+9.1 DBSCAN ଆ྘ ·············································································· 24
+9.2֥CNN-LSTM ଆ྘ ·················································· 24
+9.3ଆ྘ ··············································································· 24
+ҕॉ໓ང ······························································································· 25
+Aਙі ····················································································· 27
+B੣ ս઒ ···························································································· 27
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第4页】
+၂a ໙ีᇗඍ
+1.1ࣟ
+ᇗေగའགྷའb [1] ః
+ࣜބߊ
+ऎႵᇗေၩ
+ၬb
+༢ૡ
+৘
+ყБି৯b
+༅đೂ 2024 ୍ 7ބ9࠱
+ބࢸ
+ളଁҍӁνಆb
+1.2 ໙ีေ౰
+໙ี 1ࡹ
+ଆ྘đѩૼಒѓሙbၛ 2024 ୍ 7ބ9๯
+౵љb
+໙ี 2ყҩଆ྘bၛ 2024 ୍ 9 ᄅ 13 ರᇀ 17
+ֻ13ᆜčDTWਫ਼
+бb
+໙ี 3༢b
+ၛ 2024 ୍ 9 ᄅ 16 ರᇀ 18ֻ֥13ࣉ
+༅b
+༅
+2.1༅
+֥
+ଆ྘bູՎđ໡ૌླေ༵ᅳԛ 2024 ୍ 7ބ9ࣉ
+ࠏ
+೦ਟaXGBoost֥CNN-LSTM۲
+ᆜ čDTWࣉࣥ
+b
+1
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第5页】
+2.2༅
+ॖौ
+aඔ
+೦ਟaXGBoosta
+֥CNN-LSTM࿊ԛቋႪଆ
+ᆜ čDTWଆ྘
+b
+2.3༅
+طࡆ
+ࢆࠣ
+ᆷѓೂ R2ބMSEb
+ၛ 2024 ୍ 9 ᄅ 16 ರ-18ֻ֥13ଆ྘đყҩН
+༅b
+ഡ
+ഡğ
+•ഡ 1ၹ෍ඔ
+႕ཙb
+•ഡ 2֥
+ྟb
+•ഡ 3႕ཙ
+ଆ྘ѽሚb
+•ഡ 4཮
+గའགྷའb
+•ഡ 5ݚބࡱ
+ၹ
+ಠb
+2
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第6页】
+ඪૼ
+і 1აඪૼ
+ݼژֆ໊ ඪૼ
+di -ֻiᇇՑҵၳ
+n -ඔਈ
+xi -ֻ֥iᆴ
+yj -ֻ֥jᆴ
+ti -ֻiՄ
+tj -ֻjՄ
+P0 mm/hඣਈ
+γ -؇
+P ′
+0 mm/hඣਈ
+δ -؇
+P mmඣਈ
+V m/s෎
+D km ए৖
+P ′′
+0 mm/hඣਈ
+γ′ -༢ඔ
+P ′′′
+0 mm/hඣਈ
+δ′ -ᆷඔ
+ࢳ
+5.1༅
+భิđ ္൞ඔ
+ӈ
+ຩ஍ [2]༅ೂ༯ğ
+Ⴟ൐Ⴈ 3σᇹད྘๭đ ໡
+ٳ
+b
+ᆷѓඔऌ
+໊ඔčQ3໊ඔčQ1໊एčIQR໊
+༢ೂൔč1Ď෮ൕğ
+3
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第7页】
+IQR = Q3 − Q1 (1)
+ൔູğ
+ഈཋ = Q3 + 1.5 × IQR (2)
+༯ཋ = Q1 − 1.5 × IQR (3)
+ऌ1945-2023
+ད྘๭b๭1aބ๭1bб
+౦ঃb
+(a) ඔऌყԩ৘భ
+ (b)ު
+๭ 1 ད྘๭
+5.2 ඔऌყԩ৘
+ሙСඔ
+ބ
+൬
+ӱೂ༯ğ
+5.2.1ߐ
+၂ᇁྟb
+čၛ฿
+ᇏิ
+ऌ
+ཛb
+4
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第8页】
+5.2.2 ඔऌౢ༡
+֥
+ಠđ໡
+ྛb
+5.2.3 หᆘщ઒
+఼
+ཟሇ
+༅b
+5.2.4߄
+ൔೂ༯ğ
+X ′
+ij = Xij − Xmin,j
+Xmax,j − Xmin,j
+(4)
+ൔᇏđX ′
+ijඔᆴđXijֻjֻ֥iඔᆴđXmin,j
+ބXmax,jֻjቋնᆴb
+5.3༅
+5.3.1ᄵ
+োљ
+ᆭ [3]۴
+֥֤֞
+༢๭ೂ ๭2ऊোোљඔՖ 1֞6ކ
+োљඔնႿ6b ၹՎđ
+ᇡ໊҆ᇂູ K = 6ऊোඔູ 6b
+5.4б
+مٚ[4]ൡऊোඔଢູ K = 6 đ໡ૌ൐Ⴈ KMeans[5]aҪՑऊো
+(Agglomerative Clustering) [ 6]ބDBSCAN [ 7]༅đ
+ѩҐႨ੽ক༢ඔaCalinski-HarabazބDavies-Bouldinb ऊোෘ
+ೂі2b
+KMeansᇉྏটྙӮ Kđ Ⴎ
+ᆭ
+5
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第9页】
+๭ 2༢๭
+ކ
+b DBSCANႿ
+ো໙ีႭູ
+ऊো
+ሙಒྟb
+і 2ᆷѓ
+م੽ক༢ඔ (SC) Calinski-Harabaz ᆷඔ (CH) Davies-Bouldin ᆷඔ (DB)
+KMeans 0.654891 92430.456525 0.414592
+ҪՑऊো (Agglomerative Clustering) 0.654891 92430.456525 0.414592
+DBSCAN 0.644629 109302.072225 0.480731
+ᆷѓᇶေЇও੽ক༢ඔ [8]aCalinski-Harabaz ᆷඔ [9]ބDavies-Bouldin
+ᆷඔ [10]б੽ক༢ඔaCalinski-HarabazބDavies-BouldinđDB-
+SCANބCalinski-Harabazط
+Davies-BouldinႪb
+5.5༅
+หᆘ:ྛਔථ௃
+޺
+6
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第10页】
+၇ऌb
+໡ૌ൮༵Ֆ Excelڄ
+ܱ
+ඔऌປᆜྟb
+5.5.1ෘ
+༢ඔčSpearman’s rank correlation coefficient Ď[11]࠹
+ൔೂ??ٚ
+ఃཁᇷྟඣ௜čp ᆴĎ b
+ρ = 1 − 6P d2
+i
+n(n2 − 1) (5)
+ఃᇏđdiֻiᇇՑҵၳ;nඔਈb
+5.5.2༅
+ྟđ໡ૌ൐Ⴈಣ৯๭ॖ
+đ Ֆ
+b
+๭ 3ྟइᆔಣ৯๭
+࣍ࢤ1đ
+b Վ
+෻
+෎b
+7
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第11页】
+5.5.3༅
+p-valueဢЧ
+༢ඔ ρਈ čোරႿt֥tႿնဢЧđ
+රğ
+t = ρ ×
+r n − 2
+1 − ρ2
+ఃᇏđρ༢ඔĠnնཬb
+і 3֥p ᆴनູ 0.0֥
+p ᆴ < 0.05)bऎุটඪđp ᆴཬႿ 0.05ູ Truebі4ࢲ࠺
+b
+і 3ྟཁᇷྟඣ௜ (p ᆴ)
+؇ࠩ֩ڄ෎ గ࿢
+؇0.0 0.0 0.0 0.0
+ࠩ֩ڄ0.0 0.0 0.0 0.0
+෎ 0.0 0.0 0.0 0.0
+గ࿢ 0.0 0.0 0.0 0.0
+і 4࠺p ᆴ <0.05)
+؇ࠩ֩ڄ෎ గ࿢
+؇True True True True
+ࠩ֩ڄTrue True True True
+෎ True True True True
+గ࿢ True True True True
+၂҄ඪૼᆃུ
+ປૅđ ๝ൈ
+໾৘ӈ്b
+5.6߄
+༅čPCAĎ[12]ࡼ
+эၳ
+8
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第12页】
+గ࿢ႋႨPCAົđ ᆻ
+ඔऌіൕb
+đ ၛ
+ሢ൐Ⴈ PCAᇶӮ
+ၞ
+b
+ᇅਔ2D๭b ೂ๭4սі
+֞xؽֻ
+֞yোљb
+๭ 4֥2D߄
+ݖ2D҃౦ঃb
+ૡđ і
+ݖ
+႕
+ཙb
+5.7߄
+֥ࣜڄ
+֥
+ྐ༏bᆃུ
+ሢđ ໡ૌ൐ႨBasemapোљ
+๭ೂ๭5෮ൕbՖ๭5๭ഈӯ
+9
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第13页】
+ބ
+౵თb
+๭ 5҃๭
+5.8 2024༅
+ؓمٚ2024
+b
+ರ௹ሳ
+ྐ༏đ ѩೱ࿊ԛ7ބ9োđ
+ູ 6 ᄅᇀ 8ܼ
+ູ9 ᄅᇀ 11ڄ
+ᄖđॖି
+༅bщ઒ѓሙೂ༯ğ
+і 5щ઒ѓሙ
+؇࿢ВВڄڄڄ
+щ઒ 1 2 3 4 5 6
+đ൐Ⴈ DBSCAN
+10
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第14页】
+۴
+ڄAڄBb
+đ໡ૌ൐Ⴈ PCAbPCAႵི
+҃౦ঃb ๭6ᅚ
+֥2DဢЧđ࿾೤іൕ
+҃౦ঃđ്
+ҵၳྟb
+๭ 6 2024֥2D߄
+ᄝ 2024 ୍ 7ބ9ࣜ
+b
+౵
+႕
+ࢳ
+ӈᇗေb
+ࢳ
+ਫ਼
+ຩ઎čLSTMࡹ
+ᆜč DTWყҩི
+b
+11
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第15页】
+і 6ٺ
+ٺোљٺ
+7ڄڄAଲസ
+ڄBКസ
+ڄCസ
+ڄDസ
+ڄE ෻ຖസ
+ڄF ෻ຖസ
+9ڄڄAଲസ
+ڄBസ
+ڄC්സ
+ڄD්സ
+ڄE൧
+ڄFଲസ
+6.1 ඔऌყԩ৘
+ߎ
+ڄ
+֥
+Ԥb
+6.1.1หᆘิ౼
+෎a గ࿢a
+bູਔಒЌ
+ൔb
+a෻
+ൔೂ༯ğ
+ࡗ_ ฿ = (ࡗ−ࡗ)
+86400 (6)
+ࡗ_ ฿ = (ࡗ−ࡗ)
+86400 (7)
+߄
+ࠢXࠢ
+12
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第16页】
+yb
+6.1.2߄
+หᆘb ໡ૌ
+۱؟
+หᆘđЇওğ
+•෎aလੀb
+•b
+•b
+ሢ൐Ⴈ Z-score႕ཙğ
+Z = X − µ
+σ (8)
+ఃᇏđX ູჰ൓หᆘᆴđµ ູหᆘनᆴđσ ູหᆘѓሙҵb
+6.2৫
+ყҩb ᆃུଆ྘Їও
+೦ਟ [13]aXGBoost[14]֥CNN-LSTM[15] ೘ᇕଆ྘đૄᇕଆ྘
+b
+6.2.1೦ਟଆ྘
+b[13]༅ᇏ
+ҕ
+ൔೂ༯ğ
+I (Xj) = 1
+n
+nX
+i=1
+(Eji − Ei) (9)
+ఃᇏđXjֻjหᆘэਈđI (Xj)ඔđEiֻiտຓ
+༂ҵđEji ൞ᄝหᆘ Xjඔđॖၛ
+หᆘb
+6.2.2 XGBoost ଆ྘
+XGBoostb[14] ෱
+ၛ CARTԮ๤෥ാ
+ඔğ
+13
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第17页】
+Ω (fk) = γT + 1
+2λ∥ω∥2 (10)
+ఃᇏđγބλ༢ඔđTඔđω֥ׄࢫ
+Ⴟ࿞਀ဢЧ G = {(x, y1), (x, y2), . . . ,(x, ym)}đXGBoostඔॖі
+ൕູğ
+OXGBoost (fk) =
+nX
+i=1
+l
+ 
+yi, ˆyt−1
+i + fk (xi)
+
++ Ω (fk) (11)
+ఃᇏđlඔđˆyt−1
+iֻt − 1ඔđॖၛႵིิ
+ყҩି৯b
+6.2.3֥CNN-LSTM ଆ྘
+֥CNN-LSTMھ
+ຩ઎čCNNၫຩ઎čLSTMᇅđ ၛႵིิ
+ሙಒྟb[15]
+CNNൻೆ྽ਙ X = [ x1, x2, . . . , xn]đ
+Ҡቔॖၛіൕູğ
+Zi = (X ∗ K)(i) =
+kX
+j=1
+xi+j−1 · kj (12)
+ఃᇏđKđZiൻԛđkҪđ
+หᆘb
+หᆘൻೆ LSTM༢bLSTM۷
+ྍॖၛіൕູğ
+ft = σ(Wf · [ht−1, xt] + bf ) (၌ອ૊) (13)
+it = σ(Wi · [ht−1, xt] + bi) (ൻೆ૊) (14)
+˜Ct = tanh(Wc · [ht−1, xt] + bc) (ၫֆჭ) (15)
+Ct = ft · Ct−1 + it · ˜Ct (ྍ) (16)
+ot = σ(Wo · [ht−1, xt] + bo) (ൻԛ૊) (17)
+ht = ot · tanh(Ct) (ႅҟሑ෿ൻԛ) (18)
+ႅҟሑ෿ht
+ഈ༯໓ཟਈ ctෘğ
+14
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第18页】
+αt = exp(et)PT
+j=1 exp(ej)
+(19)
+ఃᇏđet = vT
+a · tanh(Wa · ht + Ua · ct−1)đvaaWaބUaҕ
+ඔbᇿၩ৯ಃᇗ αtളӮഈ༯໓ཟਈğ
+ct =
+TX
+t=1
+αtht (20)
+ቋᇔđLSTMྛყҩğ
+ˆyt = Predictor(ht, ct) (21)
+ᇅᄹ
+Ⴕིྟb๭ 7 ᅚൕਔ CNN-LSTM
+b
+๭ 7֥CNN-LSTMܒࢲ
+๭ 8ӱb
+15
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第19页】
+๭ 8ყҩଆ྘ੀӱ๭
+6.2.4ࢳ
+೦ਟaXGBoost֥CNN-LSTM
+ෘਔन
+༂ҵčRMSEĎ[16]༂ҵčMAEĎ[17]༂ҵčMSEĎ[18]ყҩ
+ೂі 7 ෮ൕğ
+і 7หᆘ
+೦ਟ XGBoost CNN-LSTM
+RMSE 0.1154 0.0811 0.0336
+MAE 0.0774 0.0555 0.0295
+MSE 0.0134 0.0066 0.0071
+ყҩྟି 0.63027 0.86857 0.99533
+Ֆі 7֥CNN-LSTMđ
+༂ҵčRMSEĎູ 0.0336༂ҵčMAEĎູ 0.0295༂ҵčMSEĎ
+ູ 0.0071֞0.99533b ః࿞਀აဒᆣ෥ാ౷ཌa ࿞਀აဒᆣMAE ౷ཌ
+ೂ๭9bބ๭9a֥CNN-LSTMႿః෰ଆ
+֥CNN-LSTM
+b
+16
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第20页】
+(a) ࿞਀აဒᆣ෥ാ౷ཌ
+ (b) ࿞਀აဒᆣ MAE ౷ཌ
+๭ 9֥CNN-LSTMඔऌ
+6.2.5߄
+ଆ྘ྟିb
+ӑҕඔЇও LSTMđ
+ğ
+ቋႪҕඔ = arg min
+θ
+0
+@ 1
+k
+kX
+j=1
+෥ാ(j, θ)
+1
+A (22)
+6.3ᆜčDTWم
+ᆜčDTWđႭఃൡ
+ఊb [19] DTWཌ
+ᇏđ DTWႨ
+b
+6.3.1 DTWෘ
+DTWൔೂ༯ğ
+DT W(i, j) = cost(i, j) + min
+8
+>>>><
+>>>>:
+DT W(i − 1, j)
+DT W(i, j − 1)
+DT W(i − 1, j − 1)
+(23)
+ఃᇏđcost(i, j)ׄ( i, j)ෘğ
+cost(i, j) =
+q
+(xi − yj)2 + (ti − tj)2 (24)
+17
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第21页】
+ᆃ৚đxiބyjᆴđtiބtjՄbDTWݖ
+ෘԛՖ྽ਙ 1྽ਙ 2b
+ᄝЧՑൌဒᇏđDTW ए৖ູ 7.3179ཌྷ
+֥DTWđଆ྘ᄝ
+࿽đ7.3179֥DTW႘ਔଆ྘
+Ⴕིྟb
+DTWु
+Ⴕིྟb ೂ๭
+10 ෮ൕđDTW྽ਙᆴbਫ਼
+༅ଆ྘
+ყҩіགྷb
+๭ 10ࢠ
+Ч໓൐Ⴈ DTWෘ DTW ए
+іགྷbDTWି৯đ
+༅ᇏіགྷႭູԛ೤bՎຓđ DTW܂
+b
+6.3.2ࢳ
+b2024 ୍ 9 ᄅ
+13 ರ-17 ರૄರ 14ֻ֥ׄ13čі 1 ෮ൕĎ b
+18
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第22页】
+і 8 2024 ୍ 9 ᄅ 13 ರ-17 ರૄರ 14ֻ֥ׄ13ᇏྏ໊ᇂ
+ࡗᇏྏ໊ᇂყҩᆴ (؇ࣜ/؇)ᇏྏ໊ᇂᆇൌᆴ (؇ࣜ/؇)
+13 ರ 14:00 136°09′89″Eđ23°79′73″N 135°6′Eđ23°6′N
+14 ರ 14:00 130°25′87″Eđ26°68′29″N 130°3′Eđ27°3′N
+15 ರ 14:00 126°51′76″Eđ29°70′41″N 126°2′Eđ30°1′N
+16 ರ 14:00 120°14′57″Eđ31°47′92″N 120°5′Eđ31°5′N
+17 ರ 14:00 116°55′62″Eđ32°65′05″N 116°3′Eđ33°3′N
+ࢳ
+7.1 ඔऌሙС
+గའअ [20]aᇏ
+గའअಣջగ࿈ሧਘ [21]௜෻ [3]ཌྷ
+ඔऌყԩ৘b
+7.2৫
+ބ
+༢ଆ྘b
+7.2.1༢ଆ྘
+ཌྟଆ྘
+ඣਈ P෎ Vଆ྘đྙൔູğ
+P = β0 + β1V + ϵ (25)
+ఃᇏđβ0एđβ1༢ඔđϵ ൞༂ҵཛb
+ཌྟଆ྘
+ඣਈ P෎ V ᆭ
+ଆ྘іൕູğ
+P = P0 · e−γV (26)
+ଆ྘ᄵູğ
+P = P ′
+0 · V −δ (27)
+ఃᇏđP0 aγĠP ′
+0aδඣਈa
+఼
+b
+19
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第23页】
+7.2.2༢ଆ྘
+ཌྟଆ྘
+༢ଆ྘đ໡ૌ০Ⴈ Haversineൔ [22]֨ڄ
+ए৖bHaversineඔ࿐іղູğ
+d = 2R · arcsin
+ s
+sin2
+∆ϕ
+2
+
++ cos(ϕ1) · cos(ϕ2) · sin2
+∆λ
+2
+!
+(28)
+ఃᇏđRđϕ1ބϕ2đ∆ϕބ∆λҵb
+ଆ྘đྙൔູğ
+P = β0 + β1d + ϵ (29)
+ཌྟଆ྘
+ඣਈ P აए৖ Dଆ྘іൕູğ
+P = P ′′
+0 · e−γ′D (30)
+ଆ྘ᄵູğ
+P = P ′′′
+0 · D−δ′
+(31)
+ఃᇏđPඣਈđD ູए৖bP ′′
+0ඣਈaγ′ࡨ
+༢ඔaP ′′′
+0ඣਈaδ′ᆷඔb
+7.3ܙ
+đ൐Ⴈ R2༂ҵč MSEĎ
+ᆷѓb
+ೂі9෮ൕb
+і 9ݔࢲܙ
+ଆ྘ো྘ R2 MSE
+ଆ྘ 0.0800 240.77
+ଆ྘ 0.1000 0.3607
+ଆ྘ 0.0667 0.3741
+đ๭ 11 ෮
+ൕbՖ๭ 11ab๙
+20
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第24页】
+b
+ᄝ๭ 11b෎ӯ
+b
+(a)ଆ྘Ď
+(b)Ď
+๭ 11༢
+ೂі 10 ෮ൕb
+і 10ݔࢲܙ
+ଆ྘ো྘ R2 MSE
+ଆ྘ 0.0600 245.55
+ଆ྘ 0.0842 0.3671
+ଆ྘ 0.0667 0.3741
+đ๭ 12 ෮
+21
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第25页】
+ൕbՖ๭ 12ab๙
+đ
+೛b ᄝ๭ 12bb
+b
+(a)ଆ྘Ď
+(b)Ď
+๭ 12༢
+ݔࢲ
+іૼđଆ྘ط
+ކ
+ਔॖौ၇ऌb
+22
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第26页】
+ဒ
+8.1༅
+ྛັཬಠ
+bᄝЧ࿹
+༅đЇওğ
+•෎႕ཙႭູཁ
+႕ཙb
+• గ࿢ܴ
+႕ཙb
+•؇ః
+႕ཙb
+ڸ
+ሙ
+ॖौྟb
+8.2༅
+ᇕ
+༂ҵᆷѓЇওğ
+•༂ҵčRMSEĎ֥ࣚ
+b
+RMSE =
+vuut 1
+n
+nX
+i=1
+(yi − ˆyi)2 (32)
+•༂ҵčMAEĎ႘
+ሙಒྟb
+MAE = 1
+n
+nX
+i=1
+|yi − ˆyi| (33)
+• R²༢ඔି৯bR²࣍ࢤ1ݔ
+b
+ඔऌđೂі7aі9aі10ඔ
+ყҩᇏđଆ྘
+֥
+ཟb
+23
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第27页】
+༅
+9.1 DBSCAN ଆ྘
+•՛ğ DBSCANčDensity-Based Spatial Clustering of Applications
+with Noise്љ಩ၩྙሑ
+֤DBSCANඣ
+đDBSCAN֥
+ੰb
+•ğ DBSCANਆ
+čEpsඔ čMinPts႕ཙऊো
+োđ႕ཙ
+b
+9.2֥CNN-LSTM ଆ྘
+•ၫაหᆘิ౼ğLSTM༢đ
+ຩ઎č CNNĎᄝൻೆඔऌ
+ࡗ
+Ⴟ
+৥
+৳b
+•གğཌྷ
+ົඔऌൈbՎຓđଆ྘
+ႋႨᇏ
+đ႕
+b
+9.3ଆ྘
+•ྟ఼ğଆb ๙
+ႋႨb
+෻
+b
+•ğ༢൞ཌ
+ࢆ࠽
+ؓ
+ଆ྘
+24
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第28页】
+ሙಒ
+ྟb
+ҕॉ໓ང
+[1] աѧӏ,வ.ྙหᆘ[J].ଲն࿐࿐Б (ሱ
+ಖ॓࿐ϱ), 2024.
+[2]ຩ஍[EB/OL]. 2024. https://pan.baidu.com/s/1JZ_163qGoIDQkKqcDvT4Pw.
+[3] ဗᆇᆇ, ৙ᚼဧ, ဗॖၞ,֩.ඣ௜
+༅[J].ྐ༏, 2021.
+[4]ࡄ,ڂ,ᅦ৽.Ⴟ k-meansمٚ[J].ն࿐
+࿐Б (ሱಖ॓࿐ϱ), 2020.
+[5] Ⴟሷӑ, ӧራራ, ໓ૼ,֩.Ⴟ V AE-Kmeansඌ[J].ଲ
+৯, 2024.
+[6]᠚, ਾზ੃.࣮[J].ҩਈა॥ᇅ, 2024.
+[7]ࡴ,෤ᠺ, ਾ೏Ⴣ,֩.Ⴟ DBSCANٳ
+༅[J].აႋႨ, 2024.
+[8] ਃ฿Ӯ, ৙਱.ଆ྘ [J]. ಣି
+ӱ, 2024.
+[9]ਡ.Ⴟ Calinski-Harabazຉ௪ཌྷэ [Z]. [҂བྷ]:
+ն࿐, 2021.
+[10]ົ, ӱ჏,ᆽ.Ⴟ K नᆴ +DaviesiBouldin ᆷඔ +PCAྟି
+࣮[J].ਫ਼, 2024.
+[11] ᅵളᇆ,ޡ,߆.؇
+࣮[C]//č2022 ୍Ď. [҂བྷ]:ຩႵཋᄳ಩
+ඳ, 2024.
+[12] โ౪, ୸ဝᆟ, ౷఼,֩X༅-િӁ
+്љ[J].༅, 2024.
+[13]ԫ, ৙ಳ,٦.ႋႨ [J].༆િฒ
+࠯2024.
+25
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第29页】
+[14]ࣧ,๠,࢐,֩ .Ⴟ XGBoost֥COPD৫ა௟
+ࡎ[J].๙ն࿐࿐Б (၄࿐ϱ), 2024.
+[15]߰ޥ,ࢭ,້ೋᄹ,֩.֥CNN-LSTM-XGBoost৯
+ყҩଆ྘[J].৯, 2024, 23.
+[16] ᅦੀလ, ઔၬᇏ, ಩૾૾,֩.࠹[J].ა
+थҦ, 2020.
+[17] ӧ༐ು.؇[J]. ඔ࿐࿐Б,
+1987.
+[18] ӱৄ.࠹ܙ֥[Z]. [҂བྷ]:ഽ
+ն࿐, 2023.
+[19]ຯ, ఫӱဘ, ᅦᠯ,֩.م[J]. ॥ᇅ
+ඌ, 2024.
+[20]గའअ[EB/OL]. 2024. http://www.cma.gov.cn/.
+[21]௜෻[EB/OL]. 2024. https://open.geovisearth.com/service/resource.
+[22] L B J, L R, S S. Real-time healthcare monitoring system through haversine distance
+calculation-based global positioning system[J]. International Journal of Medical Engi-
+neering and Informatics, 2024.
+[23]గའअಣջగ࿈ሧਘ[EB/OL]. 2024. https://tcdata.typhoon.org.cn/rdqxfy.html.
+26
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第30页】
+੣ Aਙі
+଀ି૭ඍ
+Q1.pyྏս઒
+Q2.pyྏս઒
+Q3.pyྏս઒
+і 11ਙі
+੣ B ս઒
+Q1.py
+1 #֝ೆ с ေ֥९
+2 import pandas as pd # ඔ ऌ ԩ ৘
+3 import numpy as np # ඔ ᆴ࠹ෘ
+4 import matplotlib.pyplot as plt #߻๭
+5 # import seaborn as sns # ඔ ऌ ॖ ൪߄
+6 from sklearn.model_selection import train_test_split # ඔ ऌࠢ
+߃ٳ 
+7 from sklearn.ensemble import RandomForestClassifier # ෛࠏ೦
+ਟٳো ఖ
+8 from sklearn.metrics import classification_report ,
+confusion_matrix # ଆ ྘ ௟ܙ
+9 from sklearn.preprocessing import StandardScaler # ห ᆘ ѓ ሙ߄
+10
+11 #ࡆᄛ ඔ ऌࠢ
+12 file_path = '1945−2023. xlsx '
+13 data = pd.read_excel(file_path)
+14
+15 import pandas as pd
+16
+17
+18 #קၬ ၂۱ݦ ඔ ট ሇߐൈࡗ۬ ൔ
+19 def convert_to_datetime(column):
+20 return pd.to_datetime(data[column], errors= 'coerce ')
+27
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第31页】
+21
+22
+23 #ࡼ෻ڄఏ ൓ ൈaࢲඏ ൈࡗބ ֒భ ෻ڄൈࡗሇߐູ ರ ௹ ൈࡗ۬ ൔ
+24 time_columns = [ ' ෻ڄఏ ൓ ൈࡗ' ,' ෻ڄࢲ ඏ ൈࡗ' ,' ֒భ ෻ڄൈࡗ' 
+]
+25 for col in time_columns:
+26 data[col] = convert_to_datetime(col)
+27
+28 #࠹ෘ ӻ ࿃ ൈࡗč ၛ ฿ ູ ֆ ໊ Ď đ ѩ เࡆູ ྍ ਙ
+29 data[ ' ෻ڄӻ ࿃ ൈࡗ' ] = (data[ ' ෻ڄࢲ ඏ ൈࡗ' ] − data[ ' ෻ڄఏ ൓
+ൈࡗ' ]).dt.total_seconds() / (24 * 3600)
+30
+31 # ิ ౼ ᄅٺྐ ༏
+32 data[ ' ᄅٺ' ] = data[ '֒భ ෻ڄൈࡗ' ].dt.month
+33
+34 # ೷ ԢݣႵ ಌ ാ ᆴ֥ྛ
+35 data_cleaned = data.dropna()
+36
+37 #֝ԛ ౢ ৘ު֥ ඔ ऌ
+38 data_cleaned.to_excel( ' ෻ڄඔ ऌ _ ౢ ৘ު. xlsx ', index=False)
+39
+40 # Ֆ ౢ ৘ު֥ ඔ ऌ ᇏ؀౼
+41 data = pd.read_excel( ' ෻ڄඔ ऌ _ ౢ ৘ު. xlsx ')
+42
+43
+44 # ౵ٳ༱ ෻ڄč 6−8ᄅ Ďބ౬ ෻ڄč 9−11 ᄅ Ď
+45 def categorize_season(month):
+46 if 6 <= month <= 8:
+47 return ' ༱ ෻ڄ' 
+48 elif 9 <= month <= 11:
+49 return ' ౬ ෻ڄ' 
+50 return ' ః ෰ '
+51
+52
+53 data[ '࠱ࢫ '] = data[ ' ᄅٺ' ]. apply (categorize_season)
+28
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第32页】
+54
+55 #ݖੲ ԛ ༱ ෻ڄބ ౬ ෻ڄ֥ ඔ ऌ
+56 data = data[data[ '࠱ࢫ '].isin([ ' ༱ ෻ڄ' ,' ౬ ෻ڄ' ])].copy()
+57
+58
+59 # ো љ߃ٳ ѓ ሙ
+60 #ؓ' ෻ڄ఼؇' ࣉྛ щ ઒
+61 def encode_typhoon_intensity(intensity):
+62 mapping = {
+63 ' ಣ ջ֮࿢ (TD)': '1',
+64 ' ಣ ջڄВ (TS)': '2',
+65 ' ఼ ಣ ջڄВ (STS )': '3',
+66 ' ෻ڄ( TY)': '4',
+67 ' ఼ ෻ڄ( STY )': '5',
+68 ' ӑ ఼ ෻ڄ( Super TY)': '6'
+69 }
+70 return int (mapping.get(intensity , 0))
+71
+72
+73 data[ ' ෻ڄ఼؇' ] = data[ ' ෻ڄ఼؇' ]. apply (lambda x:
+encode_typhoon_intensity(x) if pd.notna(x) else 0)
+74
+75
+76 #ؓ' ၍׮ٚ ཟ 'ࣉྛ щ ઒
+77 def encode_movement_direction(direction):
+78 mapping = { ' ொ ': '0', ' К ': '1', ' ༆ ': '2', 'ת' :' 3', ' ଲ
+': '4'}
+79 if pd.notna(direction):
+80 return int (''.join(mapping[char] for char in direction
+if char in mapping)) or 0
+81 return 0
+82
+83
+84 data[ ' ၍׮ٚ ཟ '] = data[ ' ၍׮ٚ ཟ ']. apply (
+encode_movement_direction)
+29
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第33页】
+85
+86 #֝ԛ ԩ ৘ު֥ ඔ ऌ֞ྍ֥Excel ໓ࡱ
+87 data.to_excel( ' ෻ڄඔ ऌ _ ԩ ৘ު_ щ ઒ٚൔ ྩڿ. xlsx ', index=False
+)
+88
+89 import pandas as pd
+90 from sklearn.cluster import KMeans , DBSCAN ,
+AgglomerativeClustering
+91 from sklearn.preprocessing import StandardScaler
+92 from sklearn.metrics import silhouette_score ,
+calinski_harabasz_score , davies_bouldin_score
+93 import matplotlib.pyplot as plt
+94 import matplotlib.font_manager as fm
+95 import warnings
+96
+97 file_path = ' ෻ڄඔ ऌ _ ԩ ৘ު_ щ ઒ٚൔ ྩڿ. xlsx '
+98 data = pd.read_excel(file_path)
+99 #ޭ੻ࣞۡ ྐ ༏
+100 warnings.filterwarnings( 'ignore ', category=DeprecationWarning)
+101
+102 # ഡ ᇂ ሳ ุ ູ ᆦ ӻ ᇏ ໓֥ሳ ุ č SimHei Ď
+103 plt.rcParams[ 'font .sans−serif '] = [ 'SimHei ']
+104 plt.rcParams[ 'axes .unicode_minus '] = False # Ⴈ Ⴟ ᆞ ӈ ཁ ൕڵݼ 
+105
+106 import matplotlib.pyplot as plt
+107 from sklearn.preprocessing import StandardScaler
+108 from sklearn.cluster import KMeans , AgglomerativeClustering ,
+DBSCAN
+109 from sklearn.metrics import silhouette_score ,
+calinski_harabasz_score , davies_bouldin_score
+110
+111 # ࿊ ᄴ Ⴈ Ⴟ ऊ োٳ༅֥ห ᆘ ğ ෻ڄ఼a֩aڄ෎ a గ ࿢
+112 features = [ ' ෻ڄ఼؇' ,' ෻ڄ֩ ࠩ' ,' ڄ෎ ', ' గ ࿢ ']
+113 data_filtered = data.dropna(subset=features)
+114
+30
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第34页】
+115 # ඔ ऌ ѓ ሙ߄
+116 scaler = StandardScaler()
+117 features_scaled = scaler.fit_transform(data_filtered[features
+])
+118
+119 # ൐ Ⴈ ᇡٚم ಒקቋࡄऊ ো ඔ ଢ
+120 sse = []
+121 k_range = range (2, 11)
+122 for k in k_range:
+123 kmeans = KMeans(n_clusters=k, random_state=42)
+124 kmeans.fit(features_scaled)
+125 sse.append(kmeans.inertia_)
+126
+127 #߻ᇅ ᇡٚم ๭
+128 plt.figure(figsize=(10, 6))
+129 plt.plot(k_range , sse, marker= 'o')
+130 plt.xlabel( ' ऊ ো ඔ ଢ (k)')
+131 plt.ylabel( 'SSE ( ༂ ҵ ௜ٚބ )')
+132 plt.title( ' ᇡٚم ಒקቋࡄऊ ো ඔ ଢ ')
+133 plt.show()
+134
+135 #۴ऌ ᇡٚم ࿊ ᄴކൡ֥ऊ ো ඔ ଢ ( ॖ ၛ۴ऌ ཁ ൕ֥๭ ྙטᆜ )
+136 optimal_k = 6
+137
+138
+139 #קၬ ၂۱ݦ ඔ ট ᆳ ྛ ऊ ো ѩ࠹ෘ ௟ࡎᆷ ѓ
+140 def evaluate_clustering(algorithm , features_scaled , n_clusters
+=None):
+141 if algorithm == 'KMeans ':
+142 model = KMeans(n_clusters=n_clusters , random_state=42)
+143 elif algorithm == 'Agglomerative ':
+144 model = AgglomerativeClustering(n_clusters=n_clusters)
+145 elif algorithm == 'DBSCAN ':
+146 model = DBSCAN(eps=0.5, min_samples=5)
+147 else :
+31
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第35页】
+148 raise ValueError( " ໃקၬ֥ऊ ো ෘb")
+149
+150 labels = model.fit_predict(features_scaled)
+151
+152 results = {}
+153 if algorithm != 'DBSCAN ' or len (set (labels)) > 1: #
+DBSCAN ห ൹ ԩ ৘
+154 results[ 'silhouette '] = silhouette_score(
+features_scaled , labels)
+155 results[ 'calinski_harabasz '] = calinski_harabasz_score
+(features_scaled , labels)
+156 results[ 'davies_bouldin '] = davies_bouldin_score(
+features_scaled , labels)
+157 else :
+158 results = { 'silhouette ': −1, 'calinski_harabasz ': −1,
+'davies_bouldin ': −1} # ᆺ Ⴕ ၂۱ো֥౦ ঃ
+159
+160 return results
+161
+162
+163 # ൐ Ⴈ؟ᇕ ऊ ো ෘمࣉ ྛ ऊ ো ѩ ௟ࡎ
+164 algorithms = [ 'KMeans ', 'Agglomerative ']
+165 results = {
+166 ' ෘم' [],
+167 ' ੽ ক ༢ ඔ (SC)': [],
+168 'Calinski −Harabaz (CH)': [],
+169 'Davies −Bouldin Index (DB)': []
+170 }
+171
+172 for algo in algorithms:
+173 metrics = evaluate_clustering(algo, features_scaled ,
+optimal_k)
+174 results[ ' ෘم' ].append(algo)
+175 results[ ' ੽ ক ༢ ඔ (SC)'].append(metrics[ 'silhouette '])
+176 results[ 'Calinski −Harabaz (CH)'].append(metrics[ '
+32
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第36页】
+calinski_harabasz '])
+177 results[ 'Davies −Bouldin Index (DB)'].append(metrics[ '
+davies_bouldin '])
+178
+179 # ԩ ৘ DBSCAN
+180 dbscan_metrics = evaluate_clustering( 'DBSCAN ', features_scaled
+)
+181 results[ ' ෘم' ].append( 'DBSCAN ')
+182 results[ ' ੽ ক ༢ ඔ (SC)'].append(dbscan_metrics[ 'silhouette '])
+183 results[ 'Calinski −Harabaz (CH)'].append(dbscan_metrics[ '
+calinski_harabasz '])
+184 results[ 'Davies −Bouldin Index (DB)'].append(dbscan_metrics[ '
+davies_bouldin '])
+185
+186 #ࡼऊ োࢲݔ ა ௟ࡎᆷ ѓࣉྛ бࢠ
+187 results_df = pd.DataFrame(results)
+188 results_df
+189
+190 import pandas as pd
+191 from sklearn.preprocessing import StandardScaler
+192 from sklearn.decomposition import PCA
+193 from sklearn.cluster import DBSCAN
+194 import matplotlib.pyplot as plt
+195 import warnings
+196
+197
+198 def load_data(file_path):
+199 """ࡆᄛ Excel ඔ ऌ """
+200 return pd.read_excel(file_path)
+201
+202
+203 def preprocess_data(data, features):
+204 """ ඔ ऌ ყ ԩ ৘ đ Ї ও ಀ Ԣ ಌ ാ ᆴބѓ ሙ߄""" 
+205 data_filtered = data.dropna(subset=features)
+206 scaler = StandardScaler()
+33
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第37页】
+207 features_scaled = scaler.fit_transform(data_filtered[
+features])
+208 return data_filtered , features_scaled
+209
+210
+211 def cluster_data(features_scaled):
+212 """ ൐ Ⴈ DBSCANࣉྛ ऊ ো """
+213 dbscan = DBSCAN(eps=0.5, min_samples=5)
+214 return dbscan.fit_predict(features_scaled)
+215
+216
+217 def add_classification(data, labels):
+218 """۴ऌ ऊ োࢲݔ เࡆ෻ڄো љ """
+219 data[ ' ऊ ো ো љ '] = labels
+220 data[ ' ෻ڄো љ '] = data. apply (
+221 lambda row: f "{row ['࠱ࢫ ]}{ chr (65 + row [' ऊ ো ো љ ']) }
+" if row[ ' ऊ ো ো љ '] >= 0 else " ໃٳো ", axis=1
+222 )
+223 return data
+224
+225
+226 def perform_pca(features_scaled):
+227 """ ൐ Ⴈ PCAࢆົ ᇀ 2D """
+228 pca = PCA(n_components=2)
+229 return pca.fit_transform(features_scaled)
+230
+231
+232 def plot_results(pca_features_2d , data_filtered):
+233 """߻ᇅ ෻ڄো љ֥2D ऊ ো ॖ ൪߄""" 
+234 plt.figure(figsize=(12, 8))
+235 unique_labels = data_filtered[ ' ෻ڄো љ '].unique()
+236 colors = plt.cm.get_cmap( 'Set2 ', len (unique_labels))
+237
+238 for i, label in enumerate (unique_labels):
+239 class_data = pca_features_2d[data_filtered[ ' ෻ڄো љ ']
+34
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第38页】
+== label]
+240 plt.scatter(class_data[:, 0], class_data[:, 1],
+241 color=colors(i), label=label , s=60, alpha
+=0.8, edgecolor= 'w')
+242
+243 # ഡ ᇂ ᇏ ໓ ሳ ุ đ х ૧ڵݼ ཁ ൕ ໙ ี
+244 plt.rcParams[ 'font .sans−serif '] = [ 'SimHei ']
+245 plt.rcParams[ 'axes .unicode_minus '] = False
+246
+247 plt.grid(True)
+248 plt.title( ' ෻ڄো љ֥2D ऊ ো ॖ ൪߄' fontsize=16)
+249 plt.xlabel( 'PCA Component 1', fontsize=12)
+250 plt.ylabel( 'PCA Component 2', fontsize=12)
+251 plt.legend(title= ' ෻ڄো љ ', title_fontsize= '13', loc= '
+best ')
+252 plt.xlim((−4, 6))
+253 plt.ylim((−1, 3))
+254 plt.show()
+255
+256
+257 def save_results(data, output_prefix , max_rows_per_file
+=500000):
+258 """ࡼࢲ ݔٳ ؟؍ ֝ԛ ູ Excel ໓ࡱ""" 
+259 num_parts = len (data) // max_rows_per_file + 1
+260
+261 for i in range (num_parts):
+262 start_row = i * max_rows_per_file
+263 end_row = min ((i + 1) * max_rows_per_file , len (data))
+264 output_file_path = f '{output_prefix }_part {i + 1}. xlsx '
+265 data.iloc[start_row:end_row].to_excel(output_file_path
+, index=False)
+266 print (f" ԩ ৘ު֥ ඔ ऌ ၘ֝ԛ֞{output_file_path }")
+267
+268 # ᇶ ӱ ྽
+269
+35
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第39页】
+270
+271 def main():
+272 warnings.filterwarnings( 'ignore ', category=
+DeprecationWarning)
+273
+274 file_path = ' ෻ڄඔ ऌ _ ԩ ৘ު_ щ ઒ٚൔ ྩڿ. xlsx '
+275 features = [ ' ෻ڄ఼؇' ,' ෻ڄ֩ ࠩ' ,' ڄ෎ ', ' గ ࿢ ']
+276
+277 # 1.ࡆᄛ ඔ ऌ
+278 data = load_data(file_path)
+279
+280 # 2. ඔ ऌ ყ ԩ ৘
+281 data_filtered , features_scaled = preprocess_data(data,
+features)
+282
+283 # 3. ऊ ো
+284 cluster_labels = cluster_data(features_scaled)
+285
+286 # 4.ࡆೆٳো ྐ ༏
+287 data_filtered = add_classification(data_filtered ,
+cluster_labels)
+288
+289 # 5. PCAࢆົ
+290 pca_features_2d = perform_pca(features_scaled)
+291
+292 # 6. ॖ ൪߄ࢲ ݔ
+293 plot_results(pca_features_2d , data_filtered)
+294
+295 # 7. Ќ թ ቋ ᇔࢲݔ 
+296 data[ ' ෻ڄো љ '] = data_filtered[ ' ෻ڄো љ ']
+297 data_final = data.drop(columns=[ '࠱ࢫ '])
+298 save_results(data_final , ' ෻ڄٳ োࢲݔ _ ቋ ᇔ ')
+299
+300
+301 if __name__ == "__main__ ":
+36
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第40页】
+302 main()
+303
+304 import pandas as pd
+305 import matplotlib.pyplot as plt
+306 from mpl_toolkits.basemap import Basemap
+307 import warnings
+308
+309 #ޭ੻ࣞۡ ྐ ༏
+310 warnings.filterwarnings( 'ignore ', category=DeprecationWarning)
+311
+312 # ഡ ᇂ ሳ ุ ູ ᆦ ӻ ᇏ ໓֥ሳ ุ č SimHei Ď
+313 plt.rcParams[ 'font .sans−serif '] = [ 'SimHei ']
+314 plt.rcParams[ 'axes .unicode_minus '] = False # Ⴈ Ⴟ ᆞ ӈ ཁ ൕڵݼ 
+315
+316
+317 def load_data(file_path):
+318 """ࡆᄛ Excel ඔ ऌ ѩْ߭ DataFrame """
+319 try :
+320 data = pd.read_excel(file_path)
+321 return data
+322 except Exception as e:
+323 print (f"ࡆᄛ ඔ ऌ ൈ ԛ հ : {e}")
+324 return None
+325
+326
+327 def plot_typhoon_map(data):
+328 """ ᄝֹ๭ ഈ߻ᇅ ෻ڄٳ ো """
+329 lon = data[ 'ࣜ؇ ']
+330 lat = data[ ' ໂ؇' ]
+331 category = data[ ' ෻ڄো љ ']
+332
+333 unique_categories = category.unique()
+334 colors = plt.cm.tab10( range (len (unique_categories)))
+335
+336 plt.figure(figsize=(14, 10))
+37
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第41页】
+337 m = Basemap(projection= 'cyl ', resolution= 'l', llcrnrlat
+=−20, urcrnrlat=45, llcrnrlon=100, urcrnrlon=180)
+338 m.drawcoastlines()
+339 m.drawcountries()
+340 m.drawmapboundary(fill_color= 'lightblue ')
+341 m.fillcontinents(color= 'lightgrey ', lake_color= 'lightblue '
+)
+342
+343 for i, cat in enumerate (unique_categories):
+344 indices = category == cat
+345 m.scatter(lon[indices], lat[indices], latlon=True,
+label=cat, color=colors[i], s=10, alpha=0.7)
+346
+347 plt.legend(title= ' ෻ڄো љ ', loc= 'upper right ')
+348 plt.title( ' ෻ڄো љࣜໂ؇ॖ ൪߄' )
+349 plt.xlabel( 'ࣜ؇ ')
+350 plt.ylabel( ' ໂ؇' )
+351 plt.show()
+352
+353
+354 def main():
+355 file_path = ' ෻ڄٳ োࢲݔ _ ቋ ᇔ _part1 .xlsx '
+356 data = load_data(file_path)
+357
+358 if data is not None:
+359 plot_typhoon_map(data)
+360
+361
+362 if __name__ == "__main__ ":
+363 main()
+Q2.py
+1 #֝ೆ с ေ֥९
+2 import pandas as pd # ඔ ऌ ԩ ৘
+3 import numpy as np # ඔ ᆴ࠹ෘ
+38
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第42页】
+4 import matplotlib.pyplot as plt #߻๭
+5 # import seaborn as sns # ඔ ऌ ॖ ൪߄
+6 from sklearn.model_selection import train_test_split # ඔ ऌࠢ
+߃ٳ 
+7 from sklearn.ensemble import RandomForestClassifier # ෛࠏ೦
+ਟٳো ఖ
+8 from sklearn.metrics import classification_report ,
+confusion_matrix # ଆ ྘ ௟ܙ
+9 from sklearn.preprocessing import StandardScaler # ห ᆘ ѓ ሙ߄
+10
+11 #ࡆᄛ ඔ ऌࠢ
+12 file_path = '1945−2023. xlsx '
+13 data = pd.read_excel(file_path)
+14
+15 import pandas as pd
+16
+17
+18 #קၬ ၂۱ݦ ඔ ট ሇߐൈࡗ۬ ൔ
+19 def convert_to_datetime(column):
+20 return pd.to_datetime(data[column], errors= 'coerce ')
+21
+22
+23 #ࡼ෻ڄఏ ൓ ൈaࢲඏ ൈࡗބ ֒భ ෻ڄൈࡗሇߐູ ರ ௹ ൈࡗ۬ ൔ
+24 time_columns = [ ' ෻ڄఏ ൓ ൈࡗ' ,' ෻ڄࢲ ඏ ൈࡗ' ,' ֒భ ෻ڄൈࡗ' 
+]
+25 for col in time_columns:
+26 data[col] = convert_to_datetime(col)
+27
+28 #࠹ෘ ӻ ࿃ ൈࡗč ၛ ฿ ູ ֆ ໊ Ď đ ѩ เࡆູ ྍ ਙ
+29 data[ ' ෻ڄӻ ࿃ ൈࡗ' ] = (data[ ' ෻ڄࢲ ඏ ൈࡗ' ] − data[ ' ෻ڄఏ ൓
+ൈࡗ' ]).dt.total_seconds() / (24 * 3600)
+30
+31 # ิ ౼ ᄅٺྐ ༏
+32 data[ ' ᄅٺ' ] = data[ '֒భ ෻ڄൈࡗ' ].dt.month
+33
+39
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第43页】
+34 # ೷ ԢݣႵ ಌ ാ ᆴ֥ྛ
+35 data_cleaned = data.dropna()
+36
+37 #֝ԛ ౢ ৘ު֥ ඔ ऌ
+38 data_cleaned.to_excel( ' ෻ڄඔ ऌ _ ౢ ৘ު. xlsx ', index=False)
+39
+40 # Ֆ ౢ ৘ު֥ ඔ ऌ ᇏ؀౼
+41 data = pd.read_excel( ' ෻ڄඔ ऌ _ ౢ ৘ު. xlsx ')
+42
+43
+44 # ౵ٳ༱ ෻ڄč 6−8ᄅ Ďބ౬ ෻ڄč 9−11 ᄅ Ď
+45 def categorize_season(month):
+46 if 6 <= month <= 8:
+47 return ' ༱ ෻ڄ' 
+48 elif 9 <= month <= 11:
+49 return ' ౬ ෻ڄ' 
+50 return ' ః ෰ '
+51
+52
+53 data[ '࠱ࢫ '] = data[ ' ᄅٺ' ]. apply (categorize_season)
+54
+55 #ݖੲ ԛ ༱ ෻ڄބ ౬ ෻ڄ֥ ඔ ऌ
+56 data = data[data[ '࠱ࢫ '].isin([ ' ༱ ෻ڄ' ,' ౬ ෻ڄ' ])].copy()
+57
+58
+59 # ো љ߃ٳ ѓ ሙ
+60 #ؓ' ෻ڄ఼؇' ࣉྛ щ ઒
+61 def encode_typhoon_intensity(intensity):
+62 mapping = {
+63 ' ಣ ջ֮࿢ (TD)': '1',
+64 ' ಣ ջڄВ (TS)': '2',
+65 ' ఼ ಣ ջڄВ (STS )': '3',
+66 ' ෻ڄ( TY)': '4',
+67 ' ఼ ෻ڄ( STY )': '5',
+68 ' ӑ ఼ ෻ڄ( Super TY)': '6'
+40
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第44页】
+69 }
+70 return int (mapping.get(intensity , 0))
+71
+72
+73 data[ ' ෻ڄ఼؇' ] = data[ ' ෻ڄ఼؇' ]. apply (lambda x:
+encode_typhoon_intensity(x) if pd.notna(x) else 0)
+74
+75
+76 #ؓ' ၍׮ٚ ཟ 'ࣉྛ щ ઒
+77 def encode_movement_direction(direction):
+78 mapping = { ' ொ ': '0', ' К ': '1', ' ༆ ': '2', 'ת' :' 3', ' ଲ
+': '4'}
+79 if pd.notna(direction):
+80 return int (''.join(mapping[char] for char in direction
+if char in mapping)) or 0
+81 return 0
+82
+83
+84 data[ ' ၍׮ٚ ཟ '] = data[ ' ၍׮ٚ ཟ ']. apply (
+encode_movement_direction)
+85
+86 #֝ԛ ԩ ৘ު֥ ඔ ऌ֞ྍ֥Excel ໓ࡱ
+87 data.to_excel( ' ෻ڄඔ ऌ _ ԩ ৘ު_ щ ઒ٚൔ ྩڿ. xlsx ', index=False
+)
+88
+89 import pandas as pd
+90 from sklearn.cluster import KMeans , DBSCAN ,
+AgglomerativeClustering
+91 from sklearn.preprocessing import StandardScaler
+92 from sklearn.metrics import silhouette_score ,
+calinski_harabasz_score , davies_bouldin_score
+93 import matplotlib.pyplot as plt
+94 import matplotlib.font_manager as fm
+95 import warnings
+96
+41
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第45页】
+97 file_path = ' ෻ڄඔ ऌ _ ԩ ৘ު_ щ ઒ٚൔ ྩڿ. xlsx '
+98 data = pd.read_excel(file_path)
+99 #ޭ੻ࣞۡ ྐ ༏
+100 warnings.filterwarnings( 'ignore ', category=DeprecationWarning)
+101
+102 # ഡ ᇂ ሳ ุ ູ ᆦ ӻ ᇏ ໓֥ሳ ุ č SimHei Ď
+103 plt.rcParams[ 'font .sans−serif '] = [ 'SimHei ']
+104 plt.rcParams[ 'axes .unicode_minus '] = False # Ⴈ Ⴟ ᆞ ӈ ཁ ൕڵݼ 
+105
+106 import matplotlib.pyplot as plt
+107 from sklearn.preprocessing import StandardScaler
+108 from sklearn.cluster import KMeans , AgglomerativeClustering ,
+DBSCAN
+109 from sklearn.metrics import silhouette_score ,
+calinski_harabasz_score , davies_bouldin_score
+110
+111 # ࿊ ᄴ Ⴈ Ⴟ ऊ োٳ༅֥ห ᆘ ğ ෻ڄ఼a֩aڄ෎ a గ ࿢
+112 features = [ ' ෻ڄ఼؇' ,' ෻ڄ֩ ࠩ' ,' ڄ෎ ', ' గ ࿢ ']
+113 data_filtered = data.dropna(subset=features)
+114
+115 # ඔ ऌ ѓ ሙ߄
+116 scaler = StandardScaler()
+117 features_scaled = scaler.fit_transform(data_filtered[features
+])
+118
+119 # ൐ Ⴈ ᇡٚم ಒקቋࡄऊ ো ඔ ଢ
+120 sse = []
+121 k_range = range (2, 11)
+122 for k in k_range:
+123 kmeans = KMeans(n_clusters=k, random_state=42)
+124 kmeans.fit(features_scaled)
+125 sse.append(kmeans.inertia_)
+126
+127 #߻ᇅ ᇡٚم ๭
+128 plt.figure(figsize=(10, 6))
+42
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第46页】
+129 plt.plot(k_range , sse, marker= 'o')
+130 plt.xlabel( ' ऊ ো ඔ ଢ (k)')
+131 plt.ylabel( 'SSE ( ༂ ҵ ௜ٚބ )')
+132 plt.title( ' ᇡٚم ಒקቋࡄऊ ো ඔ ଢ ')
+133 plt.show()
+134
+135 #۴ऌ ᇡٚم ࿊ ᄴކൡ֥ऊ ো ඔ ଢ ( ॖ ၛ۴ऌ ཁ ൕ֥๭ ྙטᆜ )
+136 optimal_k = 6
+137
+138
+139 #קၬ ၂۱ݦ ඔ ট ᆳ ྛ ऊ ো ѩ࠹ෘ ௟ࡎᆷ ѓ
+140 def evaluate_clustering(algorithm , features_scaled , n_clusters
+=None):
+141 if algorithm == 'KMeans ':
+142 model = KMeans(n_clusters=n_clusters , random_state=42)
+143 elif algorithm == 'Agglomerative ':
+144 model = AgglomerativeClustering(n_clusters=n_clusters)
+145 elif algorithm == 'DBSCAN ':
+146 model = DBSCAN(eps=0.5, min_samples=5)
+147 else :
+148 raise ValueError( " ໃקၬ֥ऊ ো ෘb")
+149
+150 labels = model.fit_predict(features_scaled)
+151
+152 results = {}
+153 if algorithm != 'DBSCAN ' or len (set (labels)) > 1: #
+DBSCAN ห ൹ ԩ ৘
+154 results[ 'silhouette '] = silhouette_score(
+features_scaled , labels)
+155 results[ 'calinski_harabasz '] = calinski_harabasz_score
+(features_scaled , labels)
+156 results[ 'davies_bouldin '] = davies_bouldin_score(
+features_scaled , labels)
+157 else :
+158 results = { 'silhouette ': −1, 'calinski_harabasz ': −1,
+43
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第47页】
+'davies_bouldin ': −1} # ᆺ Ⴕ ၂۱ো֥౦ ঃ
+159
+160 return results
+161
+162
+163 # ൐ Ⴈ؟ᇕ ऊ ো ෘمࣉ ྛ ऊ ো ѩ ௟ࡎ
+164 algorithms = [ 'KMeans ', 'Agglomerative ']
+165 results = {
+166 ' ෘم' [],
+167 ' ੽ ক ༢ ඔ (SC)': [],
+168 'Calinski −Harabaz (CH)': [],
+169 'Davies −Bouldin Index (DB)': []
+170 }
+171
+172 for algo in algorithms:
+173 metrics = evaluate_clustering(algo, features_scaled ,
+optimal_k)
+174 results[ ' ෘم' ].append(algo)
+175 results[ ' ੽ ক ༢ ඔ (SC)'].append(metrics[ 'silhouette '])
+176 results[ 'Calinski −Harabaz (CH)'].append(metrics[ '
+calinski_harabasz '])
+177 results[ 'Davies −Bouldin Index (DB)'].append(metrics[ '
+davies_bouldin '])
+178
+179 # ԩ ৘ DBSCAN
+180 dbscan_metrics = evaluate_clustering( 'DBSCAN ', features_scaled
+)
+181 results[ ' ෘم' ].append( 'DBSCAN ')
+182 results[ ' ੽ ক ༢ ඔ (SC)'].append(dbscan_metrics[ 'silhouette '])
+183 results[ 'Calinski −Harabaz (CH)'].append(dbscan_metrics[ '
+calinski_harabasz '])
+184 results[ 'Davies −Bouldin Index (DB)'].append(dbscan_metrics[ '
+davies_bouldin '])
+185
+186 #ࡼऊ োࢲݔ ა ௟ࡎᆷ ѓࣉྛ бࢠ
+44
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第48页】
+187 results_df = pd.DataFrame(results)
+188 results_df
+189
+190 import pandas as pd
+191 from sklearn.preprocessing import StandardScaler
+192 from sklearn.decomposition import PCA
+193 from sklearn.cluster import DBSCAN
+194 import matplotlib.pyplot as plt
+195 import warnings
+196
+197
+198 def load_data(file_path):
+199 """ࡆᄛ Excel ඔ ऌ """
+200 return pd.read_excel(file_path)
+201
+202
+203 def preprocess_data(data, features):
+204 """ ඔ ऌ ყ ԩ ৘ đ Ї ও ಀ Ԣ ಌ ാ ᆴބѓ ሙ߄""" 
+205 data_filtered = data.dropna(subset=features)
+206 scaler = StandardScaler()
+207 features_scaled = scaler.fit_transform(data_filtered[
+features])
+208 return data_filtered , features_scaled
+209
+210
+211 def cluster_data(features_scaled):
+212 """ ൐ Ⴈ DBSCANࣉྛ ऊ ো """
+213 dbscan = DBSCAN(eps=0.5, min_samples=5)
+214 return dbscan.fit_predict(features_scaled)
+215
+216
+217 def add_classification(data, labels):
+218 """۴ऌ ऊ োࢲݔ เࡆ෻ڄো љ """
+219 data[ ' ऊ ো ো љ '] = labels
+220 data[ ' ෻ڄো љ '] = data. apply (
+45
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第49页】
+221 lambda row: f "{row ['࠱ࢫ ]}{ chr (65 + row [' ऊ ো ো љ ']) }
+" if row[ ' ऊ ো ো љ '] >= 0 else " ໃٳো ", axis=1
+222 )
+223 return data
+224
+225
+226 def perform_pca(features_scaled):
+227 """ ൐ Ⴈ PCAࢆົ ᇀ 2D """
+228 pca = PCA(n_components=2)
+229 return pca.fit_transform(features_scaled)
+230
+231
+232 def plot_results(pca_features_2d , data_filtered):
+233 """߻ᇅ ෻ڄো љ֥2D ऊ ো ॖ ൪߄""" 
+234 plt.figure(figsize=(12, 8))
+235 unique_labels = data_filtered[ ' ෻ڄো љ '].unique()
+236 colors = plt.cm.get_cmap( 'Set2 ', len (unique_labels))
+237
+238 for i, label in enumerate (unique_labels):
+239 class_data = pca_features_2d[data_filtered[ ' ෻ڄো љ ']
+== label]
+240 plt.scatter(class_data[:, 0], class_data[:, 1],
+241 color=colors(i), label=label , s=60, alpha
+=0.8, edgecolor= 'w')
+242
+243 # ഡ ᇂ ᇏ ໓ ሳ ุ đ х ૧ڵݼ ཁ ൕ ໙ ี
+244 plt.rcParams[ 'font .sans−serif '] = [ 'SimHei ']
+245 plt.rcParams[ 'axes .unicode_minus '] = False
+246
+247 plt.grid(True)
+248 plt.title( ' ෻ڄো љ֥2D ऊ ো ॖ ൪߄' fontsize=16)
+249 plt.xlabel( 'PCA Component 1', fontsize=12)
+250 plt.ylabel( 'PCA Component 2', fontsize=12)
+251 plt.legend(title= ' ෻ڄো љ ', title_fontsize= '13', loc= '
+best ')
+46
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第50页】
+252 plt.xlim((−4, 6))
+253 plt.ylim((−1, 3))
+254 plt.show()
+255
+256
+257 def save_results(data, output_prefix , max_rows_per_file
+=500000):
+258 """ࡼࢲ ݔٳ ؟؍ ֝ԛ ູ Excel ໓ࡱ""" 
+259 num_parts = len (data) // max_rows_per_file + 1
+260
+261 for i in range (num_parts):
+262 start_row = i * max_rows_per_file
+263 end_row = min ((i + 1) * max_rows_per_file , len (data))
+264 output_file_path = f '{output_prefix }_part {i + 1}. xlsx '
+265 data.iloc[start_row:end_row].to_excel(output_file_path
+, index=False)
+266 print (f" ԩ ৘ު֥ ඔ ऌ ၘ֝ԛ֞{output_file_path }")
+267
+268 # ᇶ ӱ ྽
+269
+270
+271 def main():
+272 warnings.filterwarnings( 'ignore ', category=
+DeprecationWarning)
+273
+274 file_path = ' ෻ڄඔ ऌ _ ԩ ৘ު_ щ ઒ٚൔ ྩڿ. xlsx '
+275 features = [ ' ෻ڄ఼؇' ,' ෻ڄ֩ ࠩ' ,' ڄ෎ ', ' గ ࿢ ']
+276
+277 # 1.ࡆᄛ ඔ ऌ
+278 data = load_data(file_path)
+279
+280 # 2. ඔ ऌ ყ ԩ ৘
+281 data_filtered , features_scaled = preprocess_data(data,
+features)
+282
+47
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第51页】
+283 # 3. ऊ ো
+284 cluster_labels = cluster_data(features_scaled)
+285
+286 # 4.ࡆೆٳো ྐ ༏
+287 data_filtered = add_classification(data_filtered ,
+cluster_labels)
+288
+289 # 5. PCAࢆົ
+290 pca_features_2d = perform_pca(features_scaled)
+291
+292 # 6. ॖ ൪߄ࢲ ݔ
+293 plot_results(pca_features_2d , data_filtered)
+294
+295 # 7. Ќ թ ቋ ᇔࢲݔ 
+296 data[ ' ෻ڄো љ '] = data_filtered[ ' ෻ڄো љ ']
+297 data_final = data.drop(columns=[ '࠱ࢫ '])
+298 save_results(data_final , ' ෻ڄٳ োࢲݔ _ ቋ ᇔ ')
+299
+300
+301 if __name__ == "__main__ ":
+302 main()
+303
+304 import pandas as pd
+305 import matplotlib.pyplot as plt
+306 from mpl_toolkits.basemap import Basemap
+307 import warnings
+308
+309 #ޭ੻ࣞۡ ྐ ༏
+310 warnings.filterwarnings( 'ignore ', category=DeprecationWarning)
+311
+312 # ഡ ᇂ ሳ ุ ູ ᆦ ӻ ᇏ ໓֥ሳ ุ č SimHei Ď
+313 plt.rcParams[ 'font .sans−serif '] = [ 'SimHei ']
+314 plt.rcParams[ 'axes .unicode_minus '] = False # Ⴈ Ⴟ ᆞ ӈ ཁ ൕڵݼ 
+315
+316
+48
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第52页】
+317 def load_data(file_path):
+318 """ࡆᄛ Excel ඔ ऌ ѩْ߭ DataFrame """
+319 try :
+320 data = pd.read_excel(file_path)
+321 return data
+322 except Exception as e:
+323 print (f"ࡆᄛ ඔ ऌ ൈ ԛ հ : {e}")
+324 return None
+325
+326
+327 def plot_typhoon_map(data):
+328 """ ᄝֹ๭ ഈ߻ᇅ ෻ڄٳ ো """
+329 lon = data[ 'ࣜ؇ ']
+330 lat = data[ ' ໂ؇' ]
+331 category = data[ ' ෻ڄো љ ']
+332
+333 unique_categories = category.unique()
+334 colors = plt.cm.tab10( range (len (unique_categories)))
+335
+336 plt.figure(figsize=(14, 10))
+337 m = Basemap(projection= 'cyl ', resolution= 'l', llcrnrlat
+=−20, urcrnrlat=45, llcrnrlon=100, urcrnrlon=180)
+338 m.drawcoastlines()
+339 m.drawcountries()
+340 m.drawmapboundary(fill_color= 'lightblue ')
+341 m.fillcontinents(color= 'lightgrey ', lake_color= 'lightblue '
+)
+342
+343 for i, cat in enumerate (unique_categories):
+344 indices = category == cat
+345 m.scatter(lon[indices], lat[indices], latlon=True,
+label=cat, color=colors[i], s=10, alpha=0.7)
+346
+347 plt.legend(title= ' ෻ڄো љ ', loc= 'upper right ')
+348 plt.title( ' ෻ڄো љࣜໂ؇ॖ ൪߄' )
+49
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第53页】
+349 plt.xlabel( 'ࣜ؇ ')
+350 plt.ylabel( ' ໂ؇' )
+351 plt.show()
+352
+353
+354 def main():
+355 file_path = ' ෻ڄٳ োࢲݔ _ ቋ ᇔ _part1 .xlsx '
+356 data = load_data(file_path)
+357
+358 if data is not None:
+359 plot_typhoon_map(data)
+360
+361
+362 if __name__ == "__main__ ":
+363 main()
+Q3.py
+1 import pandas as pd
+2 from datetime import datetime
+3
+4 #؀౼ ඔ ऌࠢ
+5 station_df = pd.read_csv( 'China_Sta .csv ')
+6 precipitation_df = pd.read_csv( '1951−2018
+_MaxHourlyPrecipitation .csv ', header=None)
+7 typhoon_df = pd.read_excel( 'typhoon .xlsx ')
+8
+9 # ູࢆඣ ඔ ऌࠢเࡆਙ ଀
+10 precipitation_columns = [
+11 'tropical_cyclone_serial ', 'tropical_cyclone_number ', '
+station_number ',
+12 'max_rain_intensity_count ', 'max_hourly_precipitation ',
+13 'first_max_rain_time ', 'second_max_rain_time ',
+14 'third_max_rain_time ', 'fourth_max_rain_time ',
+15 'fifth_max_rain_time ', 'extra ' #حຓ ၂ ਙ
+16 ]
+50
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第54页】
+17 precipitation_df.columns = precipitation_columns
+18
+19
+20 #קၬݦඔࡼ؇ ٳ૰ ሇߐູ ൅ࣉᇅ؇
+21 def dms_to_decimal(dms_str):
+22 parts = dms_str.strip().split()
+23 degrees , minutes , seconds = map (int , parts[:−1])
+24 direction = parts[−1]
+25 decimal = degrees + minutes / 60 + seconds / 3600
+26 return decimal if direction in ['N', 'E'] else −decimal
+27
+28
+29 #ࡼฐ ҩ ఖ֥ࣜ ໂ؇ሇߐູ ൅ࣉᇅ؇
+30 station_df[ 'lat '] = station_df[ 'lat ']. apply (dms_to_decimal)
+31 station_df[ 'long '] = station_df[ 'long ']. apply (dms_to_decimal)
+32
+33
+34 # Ұ ᅳڸ࣍ ֥ฐ ҩ ఖ
+35 def find_nearby_stations(lng, lat, station_df , tolerance=0.5):
+36 return station_df[
+37 (station_df[ 'long '].between(lng − tolerance , lng +
+tolerance)) &
+38 (station_df[ 'lat '].between(lat − tolerance , lat +
+tolerance))
+39 ]
+40
+41
+42 #ࢳ༅ ൈࡗٓ ຶ ѩ࡟Ұ ෻ڄൈࡗ൞ڎᄝࢆ჏ ൈࡗଽ
+43 def is_typhoon_time_in_range(rain_times , typhoon_time):
+44 for time in rain_times:
+45 if isinstance (time, str ) and time:
+46 time_range = time.split( '−')
+47 if len (time_range) == 2: # ಒ Ќ Ⴕ ఏ ᆸ ൈࡗ
+48 start_time_str , end_time_str = map (str .strip ,
+time_range)
+51
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第55页】
+49 try :
+50 start_time = datetime.strptime(
+start_time_str , '%Y%m%d%H%M')
+51 end_time = datetime.strptime(end_time_str ,
+'%Y%m%d%H%M')
+52 if start_time <= typhoon_time <= end_time:
+53 return True
+54 except ValueError as e:
+55 print (f" ൈࡗࢳ ༅ հ ༂ : {e} | start_time : {
+start_time_str }, end_time : {end_time_str }")
+56 return False
+57
+58
+59 #ކѩ ඔ ऌ
+60 results = []
+61
+62 for _, typhoon in typhoon_df.iterrows():
+63 lng, lat = typhoon[ 'lng '], typhoon[ 'lat ']
+64 nearby_stations = find_nearby_stations(lng, lat,
+station_df)
+65
+66 for _, station in nearby_stations.iterrows():
+67 station_id = station[ 'StationID ']
+68 rain_data = precipitation_df[precipitation_df[ '
+station_number '] == station_id]
+69
+70 typhoon_time = datetime.strptime(typhoon[ 'time '], '%Y
+−%m−%dT%H:%M:%S')
+71
+72 for _, rain in rain_data.iterrows():
+73 rain_times = [rain[i] for i in range (5, 10)] #ࢆ
+჏ ൈࡗሳ؍
+74
+75 if is_typhoon_time_in_range(rain_times ,
+typhoon_time):
+52
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第56页】
+76 result = {
+77 'tropical_cyclone_serial ': rain[ '
+tropical_cyclone_serial '],
+78 'tropical_cyclone_number ': rain[ '
+tropical_cyclone_number '],
+79 'station_number ': station_id ,
+80 'Typhoon Time ': typhoon[ 'time '],
+81 'ࢆඣ ਈ ': rain[ 'max_hourly_precipitation '
+],
+82 ' ෻ڄᇏ ໓ ଀ ӫ ': typhoon[ 'name '],
+83 ' ෻ڄ఼؇' typhoon[ 'strong '],
+84 'ڄ෎֩ࠩ 'typhoon[ 'power '],
+85 'ڄ෎ ': typhoon[ 'speed '],
+86 ' ၍׮ٚ ཟ ': typhoon[ 'move_dir '],
+87 ' ၍׮෎؇' typhoon[ 'move_speed '],
+88 ' ෻ڄగ ࿢ ': typhoon[ 'pressure '],
+89 'ࣜ؇ 'typhoon[ 'lng '],
+90 ' ໂ؇' typhoon[ 'lat '],
+91 'ֹׄ 'typhoon[ 'land '],
+92 }
+93 results.append(result)
+94
+95 # Էࡹࢲ ݔDataFrame ѩ Ќ թ
+96 results_df = pd.DataFrame(results)
+97 results_df.to_excel( 'ࢆ჏ ਈ _with_typhoon_features .xlsx ', index
+=False)
+98
+99 import pandas as pd
+100 import numpy as np
+101 import matplotlib.pyplot as plt
+102 from sklearn.linear_model import LinearRegression
+103 from sklearn.metrics import mean_squared_error , r2_score
+104 import ast
+105 import math
+106
+53
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第57页】
+107 #؀౼ ඔ ऌ
+108 df = pd.read_excel( 'ࢆ჏ ਈ _with_typhoon_features .xlsx ')
+109
+110 # ิ ౼ ྍ֥೘ ਙ
+111 df[ '֨੤ ൈࡗ' ] = df[ 'ֹׄ ']. apply (lambda x: ast.literal_eval(x
+)[0][ 'land_time '])
+112 df[ '֨੤ࣜ؇ '] = df[ 'ֹׄ ']. apply (lambda x: ast.literal_eval(x
+)[0][ 'lng '])
+113 df[ '֨੤ ໂ؇' ] = df[ 'ֹׄ ']. apply (lambda x: ast.literal_eval(x
+)[0][ 'lat '])
+114
+115 # յ ႆࢲݔ 
+116 print (df[[ '֨੤ ൈࡗ' ,' ֨੤ࣜ؇ ',' ֨੤ ໂ؇' ]])
+117
+118
+119 #קၬ Ϻ ᇹݦඔ ၛࡹ৫ ଆ ྘ ѩ ௟ܙ
+120 def create_and_evaluate_model(X, y, model_name):
+121 model = LinearRegression()
+122 model.fit(X, y)
+123
+124 # ყ ҩބ࠹ ෘ ௟ࡎᆷ ѓ
+125 y_pred = model.predict(X)
+126 mse = mean_squared_error(y, y_pred)
+127 r2 = r2_score(y, y_pred)
+128
+129 # ൻ ԛ ௟ࡎᆷ ѓ
+130 print (f '{model_name }֥ཌ ྟ݂߭ ଆ ྘ :')
+131 print (f 'MSE : {mse :.2 f}')
+132 print (f 'R² : {r2 :.2 f}')
+133
+134 return model , y_pred
+135
+136
+137 #קၬ Ϻ ᇹݦඔ ၛ ॖ ൪߄
+138 def plot_relationship(x, y, y_pred , x_label , y_label , title ,
+54
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第58页】
+color= 'blue '):
+139 plt.figure(figsize=(10, 6))
+140 plt.scatter(x, y, color=color , label= ' ඔ ऌׄ' )
+141 plt.plot(x, y_pred , color= 'red ', linewidth=2, label= ' ཌ ྟ
+݂߭ ଆ ྘ ')
+142 plt.xlabel(x_label)
+143 plt.ylabel(y_label)
+144 plt.title(title)
+145 plt.legend()
+146 plt.grid(True)
+147 plt.show()
+148
+149
+150 #ࡹ৫ࢆඣ ਈ აڄ෎֥ܱ ༢ ଆ ྘
+151 X_wind = df[[ 'ڄ෎ ']]
+152 y_rainfall = df[ 'ࢆඣ ਈ ']
+153
+154 rain_wind_model , y_pred_wind = create_and_evaluate_model(
+X_wind , y_rainfall , "ࢆඣ ਈ აڄ෎ ")
+155 plot_relationship(df[ 'ڄ෎ '], df[ 'ࢆඣ ਈ '], y_pred_wind , 'ڄ෎
+(m/s)', 'ࢆඣ ਈ (mm)', 'ࢆඣ ਈ აڄ෎֥ܱ ༢ ')
+156
+157
+158 #קၬ Haversine܄ൔ࠹ෘ ए ৖
+159 def haversine(lon1, lat1, lon2, lat2):
+160 """
+161࠹ෘ ਆ۱ࣜ ໂ؇ᆭࡗ֥ ए ৖܄৚ Ď
+162 """
+163 R = 6371 #ֹ౯ ϶đ ֆ ໊܄৚
+164 phi1 = math.radians(lat1)
+165 phi2 = math.radians(lat2)
+166 delta_phi = math.radians(lat2 − lat1)
+167 delta_lambda = math.radians(lon2 − lon1)
+168
+169 a = math.sin(delta_phi / 2) ** 2 + \
+55
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+
+【PDF第59页】
+170 math.cos(phi1) * math.cos(phi2) * math.sin(
+delta_lambda / 2) ** 2
+171 c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 − a))
+172
+173 distance = R * c
+174 return distance
+175
+176
+177 #࠹ෘ ૄ ่࠺੣ ა ҕ ॉ֥ׄ ए ৖
+178 df[ ' ए ৖ '] = df. apply (lambda row: haversine(row[ '֨੤ࣜ؇ '],
+row[ '֨੤ ໂ؇' ], row[ 'ࣜ؇ '], row[ ' ໂ؇' ]), axis=1)
+179
+180 #ࡹ৫ࢆඣ ਈ ა ए ৖֥ܱ ༢ ଆ ྘
+181 X_distance = df[[ ' ए ৖ ']]
+182 y_rain_distance = df[ 'ࢆඣ ਈ ']
+183
+184 rain_distance_model , y_pred_distance =
+create_and_evaluate_model(X_distance , y_rain_distance , "ࢆඣ
+ਈ ა ए ৖ ")
+185 plot_relationship(df[ ' ए ৖ '], df[ 'ࢆඣ ਈ '], y_pred_distance , '
+ए ৖ (km)', 'ࢆඣ ਈ (mm)', 'ࢆඣ ਈ ა ए ৖֥ܱ ༢ ',
+186 color= 'green ')
+56
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
+有偿提供国内直连的chatgpt或官方账号代充，提供各类竞赛辅导/代写，期刊文章代写代发，加微信anjia211014
