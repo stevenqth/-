@@ -1,0 +1,89 @@
+{
+  "engine": "Python numpy reference grid; NOT NSGA-II; NOT MATLAB",
+  "n_samples": 250,
+  "n_features": 231,
+  "n_sensory": 50,
+  "source_style": "Pils/Lager",
+  "target_style": "Tripel",
+  "source_beer": 218,
+  "source_row_1based": 23,
+  "stale_control_feature": "n.hexanol",
+  "stale_control_bound": 4.186010704859979,
+  "n_source": 11,
+  "n_target": 28,
+  "ridge_lambda": 1000,
+  "oof_mean_R2": 0.20537634899997215,
+  "cv_scope": "exploratory CV; lambda screened on same folds, not an unbiased test estimate",
+  "oof_stale_R2": 0.045828841592899905,
+  "grid_points": 9261,
+  "feasible_points": 9216,
+  "pareto_points": 3227,
+  "max_front_stale_constraint": -0.00011127763486645911,
+  "chemical_defect_cap": [
+    16.3875,
+    0.05411155065,
+    0.009216504177830818,
+    0.0010551232
+  ],
+  "decision_scenarios": [
+    {
+      "scenario": "balanced",
+      "front_id": 2178,
+      "alpha": 0.45,
+      "beta": 1.0,
+      "gamma": 0.15000000000000002,
+      "f1": 0.07411591609029557,
+      "f2": 0.4110222579846877,
+      "f3": 0.5,
+      "topsis": 0.7209727748190162,
+      "stale_constraint": -0.08326761164780913
+    },
+    {
+      "scenario": "sensory_first",
+      "front_id": 1613,
+      "alpha": 0.6000000000000001,
+      "beta": 1.0,
+      "gamma": 0.2,
+      "f1": 0.047066694716966125,
+      "f2": 0.5388032752286035,
+      "f3": 0.5,
+      "topsis": 0.7393575716446636,
+      "stale_constraint": -0.11439599193495993
+    },
+    {
+      "scenario": "small_change",
+      "front_id": 2796,
+      "alpha": 0.25,
+      "beta": 1.0,
+      "gamma": 0.05,
+      "f1": 0.12407666989677424,
+      "f2": 0.2443254566655801,
+      "f3": 0.5,
+      "topsis": 0.7118924244020631,
+      "stale_constraint": -0.037566371362978156
+    },
+    {
+      "scenario": "low_defect",
+      "front_id": 2196,
+      "alpha": 0.45,
+      "beta": 1.0,
+      "gamma": 0.1,
+      "f1": 0.07511876538121591,
+      "f2": 0.40705474480750325,
+      "f3": 0.5,
+      "topsis": 0.7894600714308133,
+      "stale_constraint": -0.07740749657141556
+    }
+  ],
+  "checks": [
+    "row-key alignment",
+    "verified mixed raw/log10 transforms for four defects",
+    "fold-local imputation and scaling",
+    "finite objectives",
+    "chemical caps and non-worsening",
+    "grid front nondominance",
+    "known dominance fixture"
+  ],
+  "runtime_seconds": 5.51,
+  "MATLAB_execution": "not performed; executable not found"
+}
