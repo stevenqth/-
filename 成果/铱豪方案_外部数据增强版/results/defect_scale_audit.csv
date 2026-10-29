@@ -1,0 +1,5 @@
+column,transform,compared,discrepancies_above_1e_6,max_difference
+DMS,log10,249,0,4.983440327066546e-10
+X2.3.butanedione,raw,241,3,0.31101582000000005
+X4VG,log10,82,0,4.977669387784545e-10
+X.E..2.nonenal,raw,249,2,0.004122478000000001

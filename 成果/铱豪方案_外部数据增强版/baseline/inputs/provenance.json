@@ -1,0 +1,21 @@
+{
+  "source_commit": "3e41cdf5380ea05ba9c37acbdd4992a062fc8e14",
+  "files": [
+    {
+      "path": "资料/附件/1.csv",
+      "saved_as": "1.csv",
+      "sha256": "71d8c69d344aec6c53e951643cbfc0fdac1c5bff77c34605f4aed78d9ac9ce26"
+    },
+    {
+      "path": "资料/附件/4.csv",
+      "saved_as": "4.csv",
+      "sha256": "b892fe3d63966118e148afd650cdab7c5f47927372654e77c910cf61179b435d"
+    },
+    {
+      "path": "成果/results/00_数值变换核验.csv",
+      "saved_as": "00_数值变换核验.csv",
+      "sha256": "ae711aa6aae5904de611cd8470f994c7bf4884ae2b03dc4027918ae117c5b643"
+    }
+  ],
+  "date": "2026-10-29 Asia/Shanghai"
+}
