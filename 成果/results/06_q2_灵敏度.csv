@@ -1,0 +1,4 @@
+﻿ablation,mean_jaccard_vs_baseline
+drop_official,0.706
+drop_ridge,0.3940000000000001
+rf_double_weight,0.8019999999999999
