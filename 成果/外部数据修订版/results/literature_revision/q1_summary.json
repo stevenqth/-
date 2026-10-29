@@ -1,0 +1,66 @@
+{
+  "outer": "3 repeats x 3 style-stratified folds",
+  "inner": "3 shuffled folds on each outer training set",
+  "candidates": [
+    "Mean",
+    "RankPLS3",
+    "RankPLS8",
+    "RankRidge",
+    "RandomForest",
+    "ExtraTrees"
+  ],
+  "final_selected": "RankRidge",
+  "full_fit_inner_scores": [
+    {
+      "model": "Mean",
+      "inner_mse": 0.33613382234647465
+    },
+    {
+      "model": "RankPLS3",
+      "inner_mse": 0.26920029752640723
+    },
+    {
+      "model": "RankPLS8",
+      "inner_mse": 0.2457858465780136
+    },
+    {
+      "model": "RankRidge",
+      "inner_mse": 0.2456429039087286
+    },
+    {
+      "model": "RandomForest",
+      "inner_mse": 0.25142041906923307
+    },
+    {
+      "model": "ExtraTrees",
+      "inner_mse": 0.25384314372075595
+    }
+  ],
+  "pooled_oof_scores": {
+    "FixedRandomForest": {
+      "r2": 0.19655819440114994,
+      "mae": 0.3566537196101088,
+      "spearman": 0.40119146937638206
+    },
+    "NestedSelected": {
+      "r2": 0.2113296382109091,
+      "mae": 0.35472477184301177,
+      "spearman": 0.3970466167097178
+    }
+  },
+  "std_across_repeats": {
+    "FixedRandomForest": 0.008393662551316091,
+    "NestedSelected": 0.013261771320570255
+  },
+  "selected_counts": {
+    "RankPLS8": 5,
+    "RankRidge": 4
+  },
+  "source_ids": [
+    "U1",
+    "U2",
+    "L1"
+  ],
+  "grade_scope": "relative grades only; no absolute grade accuracy",
+  "caveat": "outer estimates evaluate a predeclared selection procedure, not independent brewery/batch extrapolation"
+}

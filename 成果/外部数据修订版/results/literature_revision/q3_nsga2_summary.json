@@ -1,0 +1,49 @@
+{
+  "source_beer": 218,
+  "target_style": "Tripel",
+  "n_pareto": 163,
+  "runs": [
+    {
+      "seed": 42,
+      "n_feasible_front": 80,
+      "stop": "fixed 80-generation budget; no global optimality claim"
+    },
+    {
+      "seed": 43,
+      "n_feasible_front": 80,
+      "stop": "fixed 80-generation budget; no global optimality claim"
+    },
+    {
+      "seed": 44,
+      "n_feasible_front": 80,
+      "stop": "fixed 80-generation budget; no global optimality claim"
+    }
+  ],
+  "verified_physical_caps": [
+    "DMS"
+  ],
+  "positive_row_transform_fields": [
+    "DMS",
+    "X4VG"
+  ],
+  "analysis_scale_only": [
+    "X2.3.butanedione",
+    "X4VG",
+    "X.E..2.nonenal"
+  ],
+  "source_calibrated_4vg": 0.0,
+  "source_low_value_caveat": "Source 4VG calibrated value is zero; its supplied floor does not establish a positive physical source concentration. 4VG non-worsening is analysis-scale only.",
+  "max_stale_violation": 0.0,
+  "engine": "Python NSGA-II implementation; NOT MATLAB",
+  "source_ids": [
+    "U1",
+    "U2",
+    "L4",
+    "L5"
+  ],
+  "tests": {
+    "zdt1_n": 60,
+    "zdt1_median_front_residual": 1.3457193185406613e-05,
+    "feasibility_priority_fixture": true
+  }
+}

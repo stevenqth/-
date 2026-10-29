@@ -18,3 +18,6 @@ __pycache__/
 
 # 段睿手工 Q1 交付包（嵌套 Git 仓库，不纳入主仓库）
 Q1交付包-dr/
+
+# Literature-revision plotting cache
+成果/外部数据修订版/.cache/

@@ -1,0 +1,1495 @@
+===== PDF PAGE 1 =====
+Journal of Machine Learning Research 11 (2010) 2079-2107 Su bmitted 10/09; Revised 3/10; Published 7/10
+On Over-ﬁtting in Model Selection and Subsequent Selection Bias in
+Performance Evaluation
+Gavin C. Cawley GCC @CMP.UEA .AC.UK
+Nicola L. C. Talbot NLCT @CMP.UEA .AC.UK
+School of Computing Sciences
+University of East Anglia
+Norwich, United Kingdom NR4 7TJ
+Editor: Isabelle Guyon
+Abstract
+Model selection strategies for machine learning algorithm s typically involve the numerical opti-
+misation of an appropriate model selection criterion, often based on an estimator of generalisation
+performance, such as k-fold cross-validation. The error of such an estimator can b e broken down
+into bias and variance components. While unbiasedness is oft en cited as a beneﬁcial quality of a
+model selection criterion, we demonstrate that a low varian ce is at least as important, as a non-
+negligible variance introduces the potential for over-ﬁtting in model selection as well as in training
+the model. While this observation is in hindsight perhaps rather obvious, the degradation in perfor-
+mance due to over-ﬁtting the model selection criterion can be surprisingly large, an observation that
+appears to have received little attention in the machine learning literature to date. In this paper, we
+show that the effects of this form of over-ﬁtting are often of comparable magnitude to differences
+in performance between learning algorithms, and thus canno t be ignored in empirical evaluation.
+Furthermore, we show that some common performance evaluati on practices are susceptible to a
+form of selection bias as a result of this form of over-ﬁtting and hence are unreliable. We dis-
+cuss methods to avoid over-ﬁtting in model selection and subsequent selection bias in performance
+evaluation, which we hope will be incorporated into best pra ctice. While this study concentrates
+on cross-validation based model selection, the ﬁndings are quite general and apply to any model
+selection practice involving the optimisation of a model se lection criterion evaluated over a ﬁnite
+sample of data, including maximisation of the Bayesian evidence and optimisation of performance
+bounds.
+Keywords: model selection, performance evaluation, bias-variance trade-off, selection bias, over-
+ﬁtting
+1. Introduction
+This paper is concerned with two closely related topics that form core components of best practice in
+both the real world application of machine learning methods and the development of novel machine
+learning algorithms, namely model selection and performance evaluation. The majority of machine
+learning algorithms are based on some form of multi-level inference, where the model is deﬁned
+by a set of model parameters and also a set of hyper-parameters (Guyo n et al., 2009), for example
+in kernel learning methods the parameters correspond to the coefﬁcients o f the kernel expansion
+and the hyper-parameters include the regularisation parameter, the choice of kernel function and
+any associated kernel parameters. This division into parameters and hyp er-parameters is typically
+c⃝2010 Gavin C. Cawley and Nicola L. C. Talbot.
+
+===== PDF PAGE 2 =====
+CAWLEY AND TALBOT
+performed for computational convenience; for instance in the case of ke rnel machines, for ﬁxed
+values of the hyper-parameters, the parameters are normally given by the solution of a convex
+optimisation problem for which efﬁcient algorithms are available. Thus it makes sense to take
+advantage of this structure and ﬁt the model iteratively using a pair of nested loops, with the hyper-
+parameters adjusted to optimise a model selection criterion in the outer loop (model selection) and
+the parameters set to optimise a training criterion in the inner loop (model ﬁtting/train ing). In
+our previous study (Cawley and Talbot, 2007), we noted that the varianc e of the model selection
+criterion admitted the possibility of over-ﬁtting during model selection as well as the more familiar
+form of over-ﬁtting that occurs during training and demonstrated that this c ould be ameliorated to
+some extent by regularisation of the model selection criterion. The ﬁrst par t of this paper discusses
+the problem of over-ﬁtting in model selection in more detail, providing illustrative examples, and
+describes how to avoid this form of over-ﬁtting in order to gain the best attain able performance,
+desirable in practical applications, and required for fair comparison of machine learning algorithms.
+Unbiased and robust1 performance evaluation is undoubtedly the cornerstone of machine learn-
+ing research; without a reliable indication of the relative performance of c ompeting algorithms,
+across a wide range of learning tasks, we cannot have the clear picture of the strengths and weak-
+nesses of current approaches required to set the direction for futur e research. This topic is consid-
+ered in the second part of the paper, speciﬁcally focusing on the undes irable optimistic bias that
+can arise due to over-ﬁtting in model selection. This phenomenon is essentially analogous to the
+selection bias observed by Ambroise and McLachlan (2002) in microarray classiﬁcation, due to
+feature selection prior to performance evaluation, and shares a similar solution. We show that some,
+apparently quite benign, performance evaluation protocols in common use by the machine learning
+community are susceptible to this form of bias, and thus potentially give spuriou s results. In order
+to avoid this bias, model selection must be treated as an integral part of the model ﬁtting process and
+performed afresh every time a model is ﬁtted to a new sample of data. Furthermo re, as the differ-
+ences in performance due to model selection are shown to be often of comparable magnitude to the
+difference in performance between learning algorithms, it seems no longer me aningful to evaluate
+the performance of machine learning algorithms in isolation, and we should instead compare learn-
+ing algorithm/model selection procedure combinations. However, this means tha t robust unbiased
+performance evaluation is likely to require more rigorous and computationally in tensive protocols,
+such a nested cross-validation or “double cross” (Stone, 1974).
+None of the methods or algorithms discussed in this paper are new; the novel contribution
+of this work is an empirical demonstration that over-ﬁtting at the second level of inference (i.e.,
+model selection) can have a very substantial deleterious effect on the generalisation performance of
+state-of-the-art machine learning algorithms. Furthermore the demonstration that this can lead to a
+misleading optimistic bias in performance evaluation using evaluation protocols in common use in
+the machine learning community is also novel. The paper is intended to be of some tutorial value in
+promoting best practice in model selection and performance evaluation, however we also hope that
+the observation that over-ﬁtting in model selection is a signiﬁcant problem will encourage much
+needed algorithmic and theoretical development in this area.
+The remainder of the paper is structured as follows: Section 2 provides a b rief overview of the
+kernel ridge regression classiﬁer used as the base classiﬁer for the majority of the experimental work
+1. The term “robust” is used here to imply insensitivity to irrelevant experimental factors, such as the sampling and par-
+titioning of the data to form training, validation and test sets; this is normally achieved by computationally expensive
+resampling schemes, for example, cross-validation (Stone, 1974) and the bootstrap (Efron and Tibshirani, 1994).
+2080
+
+===== PDF PAGE 3 =====
+OVERFITTING IN MODEL SELECTION AND SELECTION BIAS IN PERFORMANCE EVALUATION
+and Section 3 describes the data sets used. Section 4 demonstrates the importa nce of the variance
+of the model selection criterion, as it can lead to over-ﬁtting in model selection, resulting in poor
+generalisation performance. A number of methods to avoid over-ﬁtting in mode l selection are also
+discussed. Section 5 shows that over-ﬁtting in model selection can result in biased performance
+evaluation if model selection is not viewed as an integral part of the modelling p rocedure. Two
+apparently benign and widely used performance evaluation protocols are shown to be affected by
+this problem. Finally, the work is summarised in Section 6.
+2. Kernel Ridge Regression
+In this section, we provide a brief overview of the Kernel Ridge Regression (KRR) classiﬁer (Saun-
+ders et al., 1998), also known as the Least-Squares Support Vector Machine (Suykens et al., 2002),
+Regularised Least Squares (Rifkin and Lippert, 2007), Regularisation Network (Poggio and Girosi,
+1990) etc., used as the base classiﬁer in most of the empirical demonstrations inthe sequel. Assume
+we are given labeled training data,D = {(xi,yi)}ℓ
+i=1, where xi ∈ X ⊂ Rd is a vector of input features
+describing the ith example and yi ∈ {− 1,+1} is an indicator variable such that yi = +1 if the ith
+example is drawn from the positive class, C +, and yi = − 1 if from the negative class, C − . Further
+let us assume there are ℓ+ positive examples and ℓ− = ℓ− ℓ+ negative examples. The Kernel Ridge
+Regression classiﬁer aims to construct a linear model f (x) = w · φ(x) +b in a ﬁxed feature space,
+φ : X → F , that is able to distinguish between examples drawn from C − and C +, such that
+x ∈
+{ C + if f (x) ≥ 0
+C − otherwise .
+However, rather than specifying the feature space, F , directly, it is induced by a kernel function,
+K : X × X → R, giving the inner product between the images of vectors in the feature space, F , that
+is, K (x,x′) = φ(x) · φ(x′). A common kernel function, used throughout this study, is the Gaussian
+radial basis function (RBF) kernel
+K (x,x′) = exp
+{
+− η∥x − x′∥2}
+, (1)
+where η is a kernel parameter controlling the sensitivity of the kernel function. However, the inter-
+pretation of the kernel function as evaluating the inner product between points in an implied feature
+space is valid for any kernel for which the kernel matrixK = [ki j = K (xi,x j)]ℓ
+i,j=1 is positive deﬁnite
+(Mercer, 1909), such that
+aT Ka > 0, ∀ a ̸= 0.
+The model parameters (w,b) are given by the minimum of a regularised (Tikhonov and Arsenin,
+1977) least-squares loss function,
+L = 1
+2 ∥w∥2 + 1
+2λ
+ℓ
+∑
+i=1
+[yi − w · φ(xi) − b]2 , (2)
+where λ is a regularisation parameter controlling the bias-variance trade-off (Gema n et al., 1992).
+The accuracy of the kernel machine on test data is critically dependent onthe choice of good values
+for the hyper-parameters, in this case λ and η. The search for the optimal values for such hyper-
+parameters is a process known as model selection. The representer theorem (Kimeldorf and Wahba,
+2081
+
+===== PDF PAGE 4 =====
+CAWLEY AND TALBOT
+1971) states that the solution to this optimisation problem can be written as an expa nsion of the
+form
+w =
+ℓ
+∑
+i=1
+αiφ(xi) = ⇒ f (x) =
+ℓ
+∑
+i=1
+αiK (xi,x) +b.
+The dual parameters of the kernel machine, α, are then given by the solution of a system of linear
+equations, [ K + λI 1
+1T 0
+] [ α
+b
+]
+=
+[ y
+0
+]
+. (3)
+where y = (y1,y2, . . . ,yℓ)T , which can be solved efﬁciently via Cholesky factorisation of K + λI,
+with a computational complexity of O(ℓ3) operations (Suykens et al., 2002). The simplicity and
+efﬁciency of the kernel ridge regression classiﬁer makes it an ideal ca ndidate for relatively small-
+scale empirical investigations of practical issues, such as model selection.
+2.1 Efﬁcient Leave-One-Out Cross-Validation
+Cross-validation (e.g., Stone, 1974) provides a simple and effective method for both model selec-
+tion and performance evaluation, widely employed by the machine learning commu nity. Under
+k-fold cross-validation the data are randomly partitioned to formk disjoint subsets of approximately
+equal size. In the ith fold of the cross-validation procedure, the ith subset is used to estimate the
+generalisation performance of a model trained on the remaining k − 1 subsets. The average of
+the generalisation performance observed over all k folds provides an estimate (with a slightly pes-
+simistic bias) of the generalisation performance of a model trained on the entire sample. The most
+extreme form of cross-validation, in which each subset contains only a sin gle pattern is known as
+leave-one-out cross-validation (Lachenbruch and Mickey, 1968; L untz and Brailovsky, 1969). An
+attractive feature of kernel ridge regression is that it is possible to perf orm leave-one-out cross-
+validation in closed form, with minimal cost as a by-product of the training algorithm (Cawley and
+Talbot, 2003). Let C represent the matrix on the left hand side of (3), then the residual error for the
+ith training pattern in the ith fold of the leave-one-out process is given by,
+r(− i)
+i = yi − ˆy(− i)
+i = αi
+C− 1
+ii
+,
+where ˆy(− j)
+i is the output of the kernel ridge regression machine for theith observation in the jth fold
+of the leave-one-out procedure and C− 1
+ii is the ith element of the principal diagonal of the inverse
+of the matrix C. Similar methods have been used in least-squares linear regression for man y years,
+(e.g., Stone, 1974; Weisberg, 1985). While the optimal model parameters of the kernel machine
+are given by the solution of a simple system of linear equations, (3), some fo rm of model selection
+is required to determine good values for the hyper-parameters, θ = (λ,η), in order to maximise
+generalisation performance. The analytic leave-one-out cross-valida tion procedure described here
+can easily be adapted to form the basis of an efﬁcient model selection strate gy (cf. Chapelle et al.,
+2002; Cawley and Talbot, 2003; Bo et al., 2006). In order to obtain a con tinuous model selection
+criterion, we adopt Allen’s Predicted REsidual Sum-of-Squares (PRESS) statistic (Allen, 1974),
+PRESS(θ) =
+ℓ
+∑
+i=1
+[
+r(− i)
+i
+]2
+.
+2082
+
+===== PDF PAGE 5 =====
+OVERFITTING IN MODEL SELECTION AND SELECTION BIAS IN PERFORMANCE EVALUATION
+The PRESS criterion can be optimised efﬁciently using scaled conjugate gradient descent (Williams,
+1991) or Nelder-Mead simplex (Nelder and Mead, 1965) procedures. For full details of the train-
+ing and model selection procedures for the kernel ridge regression cla ssiﬁer, see Cawley (2006).
+A public domain MATLAB implementation of the kernel ridge regression classiﬁe r, including au-
+tomated model selection, is provided by the Generalised Kernel Machine (GK M) (Cawley et al.,
+2007) toolbox.2
+3. Data Sets used in Empirical Demonstrations
+In this section, we describe the benchmark data sets used in this study to illustra te the problem
+of over-ﬁtting in model selection and to demonstrate the bias this can introduce in to performance
+evaluation.
+3.1 A Synthetic Benchmark
+A synthetic benchmark, based on that introduced by Ripley (1996), is use d widely in the next
+section to illustrate the nature of over-ﬁtting in model selection. The data are dr awn from four
+spherical bivariate Gaussian distributions, with equal probability. All fou r Gaussians have a com-
+mon variance, σ2 = 0.04. Patterns belonging to the positive classes are drawn from Gaussians
+centered on [+0.4,+0.7] and [− 0.3,+0.7]; the negative patterns are drawn from Gaussians cen-
+tered on [− 0.7,+0.3] and [+0.3,+0.3]. Figure 1 shows a realisation of the synthetic benchmark,
+consisting of 256 patterns, showing the Bayes-optimal decision boundaryand contours representing
+an a-posteriori probability of belonging to the positive class of 0 .1 and 0 .9. The Bayes error for
+this benchmark is approximately 12.38%. This benchmark is useful ﬁrstly as th e Bayes optimal
+decision boundary is known, but also because it provides an inexhaustible supply of data, allowing
+the numerical approximation of various expectations.
+3.2 A Suite of Benchmarks for Robust Performance Evaluation
+In addition to illustrating the nature of over-ﬁtting in model selection, we need to d emonstrate that
+it is a serious concern in practical applications and show that it can result in biased performance
+evaluation if not taken into consideration. Table 1 gives the details of a suite of thirteen benchmark
+data sets, introduced by R ¨atsch et al. (2001). Each benchmark is based on a data set from the
+UCI machine learning repository, augmented by a set of 100 pre-deﬁnedpartitions to form multiple
+realisations of the training and test sets (20 in the case of the larger
+image andsplice data sets).
+The use of multiple benchmarks means that the evaluation is more robust as the s election of data
+sets that provide a good match to the inductive bias of a particular classiﬁer b ecomes less likely.
+Likewise, the use of multiple partitions provides robustness against sensitiv ity to the sampling of
+data to form training and test sets. Results on this suite of benchmarks thus pr ovides a reasonable
+indication of the magnitude of the effects of over-ﬁtting in model selection that we might expect to
+see in practice.
+2. Toolbox can be found athttp://theoval.cmp.uea.ac.uk/˜gcc/projects/gkm.
+2083
+
+===== PDF PAGE 6 =====
+CAWLEY AND TALBOT
+x1
+x2
+ 
+ 
+−1.5 −1 −0.5 0 0.5 1−0.5
+0
+0.5
+1
+1.5
+p(C+|x) = 0.9
+p(C+|x) = 0.5
+p(C+|x) = 0.1
+x1
+x2
+ 
+ 
+−1.5 −1 −0.5 0 0.5 1−0.5
+0
+0.5
+1
+1.5
+f(x) = +1
+f(x) = 0
+f(x) = −1
+(a) (b)
+Figure 1: Realisation of the Synthetic benchmark data set, with Bayes optimal de cision bound-
+ary (a) and kernel ridge regression classiﬁer with an automatic relevanc e determination
+(ARD) kernel where the hyper-parameters are tuned so as to minimise the true test MSE
+(b).
+Data Set Training Testing Number of Input
+Patterns Patterns Replications Features
+banana 400 4900 100 2
+breast cancer 200 77 100 9
+diabetis 468 300 100 8
+ﬂare solar 666 400 100 9
+german 700 300 100 20
+heart 170 100 100 13
+image 1300 1010 20 18
+ringnorm 400 7000 100 20
+splice 1000 2175 20 60
+thyroid 140 75 100 5
+titanic 150 2051 100 3
+twonorm 400 7000 100 20
+waveform 400 4600 100 21
+Table 1: Details of data sets used in empirical comparison.
+4. Over-ﬁtting in Model Selection
+We begin by demonstrating that it is possible to over-ﬁt a model selection criterion based on a ﬁnite
+sample of data, using the synthetic benchmark problem, where ground truth is available. Here we
+use “over-ﬁtting in model selection” to mean minimisation of the model selection criter ion beyond
+the point at which generalisation performance ceases to improve and subsequently begins to decline.
+2084
+
+===== PDF PAGE 7 =====
+OVERFITTING IN MODEL SELECTION AND SELECTION BIAS IN PERFORMANCE EVALUATION
+Figure 1 (b) shows the output of a kernel ridge regression classiﬁer f or the synthetic problem, with
+the Automatic Relevance Determination (ARD) variant of the Gaussian radial basis function kernel,
+K (x,x′) = exp
+{
+−
+d
+∑
+i=1
+ηi(xi − x′
+i)2
+}
+,
+which has a separate scaling parameter, ηi, for each feature. A much larger training set of 4096
+samples was used, and the hyper-parameters were tuned to minimise the true tes t mean squared
+errors (MSE). The performance of this model achieved an error rate of 12.50%, which suggests that
+a model of this form is capable of approaching the Bayes error rate for th is problem, at least in
+principle, and so there is little concern of model mis-speciﬁcation.
+0 20 40 60 80 100 0.2 
+0.205 
+0.21 
+0.215 
+0.22 
+0.225 
+0.23 
+iteration 
+MSE 
+X−Validation 
+Test 
+0 20 40 60 80 100 0.2 
+0.21 
+0.22 
+0.23 
+0.24 
+0.25 
+0.26 
+0.27 
+iteration 
+MSE 
+X−Validation 
+Test 
+(a) (b)
+Figure 2: Evolution of the expected four-fold cross-validation and true test mean squared error as a
+function of the number of iterations (optimisation steps in the minimisation of the model
+selection criterion) of the model selection process, for a kernel ridge regression classiﬁer
+trained on the
+synthetic benchmark data set (a) and (b) the evolution of those statistics
+for a particular realisation of the data set.
+A further one thousand independent realisations of this benchmark weregenerated, each consist-
+ing of 64 samples. A kernel ridge regression classiﬁer, based on the ARD kernel, was constructed for
+each realisation, with the hyper-parameters tuned so as to minimise a four-fold cross-validation es-
+timate of the mean squared error. The true generalisation performance of each model was estimated
+numerically using the underlying generative model of the data set. Figure 2 (a) shows the expected
+true test and cross-validation estimates of the mean squared error averaged over all 1000 realisations
+of the benchmark. As would be expected, the cross-validation estimate of the mean squared error,
+forming the model selection criterion, is monotonically decreasing. However,the expected value of
+the true test MSE initially shows a decrease, as the hyper-parameters are modiﬁed in a manner that
+provides genuine improvements in generalisation, but after a relatively sho rt time (approximately
+30–40 iterations), the test error begins to climb slowly once more as the hyper-parameters are tuned
+in ways that exploit the meaningless statistical peculiarities of the sample. This pr oduces a close
+analog of the classic plot used to illustrate the nature of over-ﬁtting in training, for example, Figure
+2085
+
+===== PDF PAGE 8 =====
+CAWLEY AND TALBOT
+9.7 of the book by Bishop (1995). Figure 2 (b) shows the same statistics forone particular realisation
+of the data, demonstrating that the over-ﬁtting can in some cases be quite substantial, clearly in this
+case some form of early-stopping in the model selection process would hav e resulted in improved
+generalisation. Having demonstrated that the classic signature of over-ﬁtting during training is also
+apparent in the evolution of cross-validation and test errors during mode l selection, we discuss in
+the next section the origin of this form of over-ﬁtting in terms of thebias and variance of the model
+selection criterion.
+4.1 Bias and Variance in Model Selection
+Model selection criteria are generally based on an estimator of generalisation performance evaluated
+over a ﬁnite sample of data, this includes resampling methods, such as split samp le estimators,
+cross-validation (Stone, 1974) and bootstrap methods (Efron and Tibsh irani, 1994), but also more
+loosely, the Bayesian evidence (MacKay, 1992; Rasmussen and Williams, 2 006) and theoretical
+performance bounds such as the radius-margin bound (Vapnik, 1998). The error of an estimator can
+be decomposed into two components, bias and variance. Let G(θ) represent the true generalisation
+performance of a model with hyper-parameters θ, and g(θ;D) be an estimate of generalisation
+performance evaluated over a ﬁnite sample, D, of n patterns. The expected squared error of the
+estimator can then be written in the form (Geman et al., 1992; Duda et al., 2001),
+ED
+{
+[g(θ;D) − G(θ)]2
+}
+= [ED {g(θ;D) − G(θ)}]2 + ED
+{[
+g(θ;D) − ED ′
+{
+g(θ;D ′)
+}]2}
+,
+where ED {·} represents an expectation evaluated over independent samples, D, of size n. The ﬁrst
+term, the squared bias, represents the difference between the expected value of the estimator and the
+unknown value of the true generalisation error. The second term, known as the variance, reﬂects
+the variability of the estimator around its expected value due to the sampling of the d ata D on
+which it is evaluated. Clearly if the expected squared error is low, we may reasonably expect g(·) to
+perform well as a model selection criterion. However, in practice, the exp ected squared error may
+be signiﬁcant, in which case, it is interesting to ask whether the bias or the var iance component is
+of greatest importance in reliably achieving optimal generalisation.
+It is straightforward to demonstrate that leave-one-out cross-validation provides an almost un-
+biased estimate of the true generalisation performance (Luntz and Brailovsk y, 1969), and this is
+often cited as being an advantageous property of the leave-one-out estimator in the setting of model
+selection (e.g., Vapnik, 1998; Chapelle et al., 2002). However, for the p urpose of model selection,
+rather than performance evaluation, unbiasedness per se is relatively unimportant, instead the pri-
+mary requirement is merely for the minimum of the model selection criterion to provid e a reliable
+indication of the minimum of the true test error in hyper-parameter space. This point is illustrated
+in Figure 3, which shows a hypothetical example of a model selection criterion that is unbiased (by
+construction) (a) and another that is clearly biased (b). Unbiasedness provides the assurance that
+the minimum of the expected value of the model selection criterion, ED {g(θ;D)} coincides with
+the minimum of the test error, G(θ). However, in practice, we have only a ﬁnite sample of data,Di,
+over which to evaluate the model selection criterion, and so it is the minimum of g(θ;Di) that is of
+interest. In Figure 3 (a), it can be seen that while the estimator is unbiased, it has a high variance,
+and so there is a large spread in the values of θ at which the minimum occurs for different samples
+of data, and so g(θ;Di) is likely to provide a poor model selection criterion in practice. On the other
+hand, Figure 3 (b) shows a criterion with lower variance, and hence is the better model selection
+2086
+
+===== PDF PAGE 9 =====
+OVERFITTING IN MODEL SELECTION AND SELECTION BIAS IN PERFORMANCE EVALUATION
+criterion, despite being biased, as the minima of g′(θ;Di) for individual samples lie much closer
+to the minimum of the true test error. This demonstrates that while unbiasedness is reassuring, as
+it means that the form of the model selection criterion is correct on average, the variance of the
+criterion is also vitally important as it is this that ensures that the minimum of the selection criterion
+evaluated on a particular sample will provide good generalisation.
+0 2 4 6 8 10 0
+0.2 
+0.4 
+0.6 
+0.8 
+1
+error rate 
+θ
+test error 
+EDg( θ;D) 
+g( θ;D i)
+0 2 4 6 8 10 0
+0.2 
+0.4 
+0.6 
+0.8 
+1
+error rate 
+θ
+test error 
+EDg’( θ;D) 
+g’( θ;D i)
+(a) (b)
+Figure 3: Hypothetical example of an unbiased (a) and a biased (b) model selection criterion. Note
+that the biased model selection criterion (b) is likely to provide the more effective model
+selection criterion as it has a lower variance, even though it is signiﬁcantly b iased. For
+clarity, the true error rate and the expected value of the model selection criteria are shown
+with vertical displacements of − 0.6 and − 0.4 respectively.
+4.2 The Effects of Over-ﬁtting in Model Selection
+In this section, we investigate the effect of the variance of the model selectio n criterion using a
+more realistic example, again based on the
+synthetic benchmark, where the underlying generative
+model is known and so we are able to evaluate the true test error. It is demonstrated that over-ﬁtting
+in model selection can cause both under-ﬁtting and over-ﬁtting of the training sample. A ﬁxed
+training set of 256 patterns is generated and used to train a kernel ridge r egression classiﬁer, using
+the simple RBF kernel (1), with hyper-parameter settings deﬁning a ﬁne grid spanning reasonable
+values of the regularisation and kernel parameters, λ and η respectively. The smoothed error rate
+(Bo et al., 2006),
+SER(θ) = 1
+2n
+n
+∑
+i=1
+[1 − yi tanh {γ f (xi)}]
+is used as the statistic of interest, in order to improve the clarity of the ﬁgures, wh ere γ is a param-
+eter controlling the amount of smoothing applied ( γ = 8 is used throughout, however the precise
+value is not critical). Figure 4 (a) shows the true test smoothed error rate as a function of the hyper-
+parameters. As these are both scale parameters, a logarithmic representatio n is used for both axes.
+The true test smoothed error rate is an approximately unimodal function of the hyper-parameters,
+2087
+
+===== PDF PAGE 10 =====
+CAWLEY AND TALBOT
+with a single distinct minimum, indicating the hyper-parameter settings giving optimal g eneralisa-
+tion.
+log 2η
+log 2λ
+−8 −6 −4 −2 0 2 4 6 8
+−10 
+−8 
+−6 
+−4 
+−2 
+0
+2
+4
+6
+8
+log 2η
+log 2λ
+−8 −6 −4 −2 0 2 4 6 8
+−10 
+−8 
+−6 
+−4 
+−2 
+0
+2
+4
+6
+8
+(a) (b)
+Figure 4: Plot of the true test smoothed error rate (a) and mean smoothed error rate over 100 random
+validation sets of 64 samples (b), for a kernel ridge regression classiﬁe r as a function of
+the hyper-parameters. In each case, the minimum is shown by a yellow cross, +.
+In practical applications, however, the true test error is generally unknown, and so we must rely
+on an estimator of some sort. The simplest estimator for use in model selection is theerror computed
+over an independent validation set, that is, the split-sample estimator. It seems entirely reasonable
+to expect the split-sample estimator to be unbiased. Figure 4 (b) shows a plot of the mean smoothed
+error rate using the split-sample estimator, over 100 random validation sets, each of which consists
+of 64 patterns. Note that the same ﬁxed training set is used in each case. Th is plot is very similar
+to the true smoothed error, shown in Figure 4 (a), demonstrating that the split sample estimator is
+indeed approximately unbiased.
+While the split-sample estimator is unbiased, it may have a high variance, especia lly as in this
+case the validation set is (intentionally) relatively small. Figure 5 shows plots of the split-sample
+estimate of the smoothed error rate for six selected realisations of a validation s et of 64 patterns.
+Clearly, the split-sample error estimate is no longer as smooth, or indeed unimoda l. More impor-
+tantly, the hyper-parameter values selected by minimising the validation set error, and therefore the
+true generalisation performance, depends on the particular sample of data used to form the valida-
+tion set. Figure 6 shows that the variance of the split-sample estimator can result in models ranging
+from severely under-ﬁt (a) to severely over-ﬁt (f), with variations inbetween these extremes.
+Figure 7 (a) shows a scatter plot of the validation set and true error rates for kernel ridge re-
+gression classiﬁers for the synthetic benchmark, with split-sample based model selection using 100
+random realisations of the validation set. Clearly, the split-sample based model selection procedure
+normally performs well. However, there is also signiﬁcant variation in perfo rmance with different
+samples forming the validation set. We can also see that the validation set error is strongly biased,
+having been directly minimised during model selection, and (of course) shou ld not be used for
+performance estimation.
+2088
+
+===== PDF PAGE 11 =====
+OVERFITTING IN MODEL SELECTION AND SELECTION BIAS IN PERFORMANCE EVALUATION
+log 2η
+log 2λ
+−5 0 5
+−10 
+−8 
+−6 
+−4 
+−2 
+0
+2
+4
+6
+8
+log 2η
+log 2λ
+−5 0 5
+−10 
+−8 
+−6 
+−4 
+−2 
+0
+2
+4
+6
+8
+log 2η
+log 2λ
+−5 0 5
+−10 
+−8 
+−6 
+−4 
+−2 
+0
+2
+4
+6
+8
+(a) (b) (c)
+log 2η
+log 2λ
+−5 0 5
+−10 
+−8 
+−6 
+−4 
+−2 
+0
+2
+4
+6
+8
+log 2η
+log 2λ
+−5 0 5
+−10 
+−8 
+−6 
+−4 
+−2 
+0
+2
+4
+6
+8
+log 2η
+log 2λ
+−5 0 5
+−10 
+−8 
+−6 
+−4 
+−2 
+0
+2
+4
+6
+8
+(d) (e) (f)
+Figure 5: Contour plot of the split-sample estimate of the smoothed error rate fo r a kernel ridge
+regression machine as a function of the hyper-parameters, for six rand om realisations of
+the validation set. The minimum is shown by a cross, +.
+Note that in this section we have deliberately employed a split-sample based model s election
+strategy with a relatively high variance, due to the limited size of the validation set. A straightfor-
+ward way to reduce the variance of the model selection criterion is simply to increase the size of the
+validation sample over which it is evaluated. Figure 8 shows the optimal hyper- parameter settings
+obtained using 100 realisations of validation sets of 64 (a) and 256 (b) samp les. It can be clearly
+seen that the use of a larger validation set has resulted in a tighter clustering of hyper-parameter
+values around the true optimum, note also that the hyper-parameters are concentrated along the bot-
+tom of a broad valley in hyper-parameter space, so even when the selected values are different from
+the optimal value, they still lie in positions giving good generalisation. This is fur ther illustrated
+in Figure 7 (b), where the true smoothed error rates are much more tightly cluste red, with fewer
+outliers, for the larger validation sets than obtained using smaller validation sets, shown in Figure 7
+(a).
+The variation in performance for different realisations of the benchmarksuggests that evaluation
+of machine learning algorithms should always involve multiple partitions of the data to form train-
+ing/validation and test sets, as the sampling of data for a single partition of the data might arbitrarily
+favour one classiﬁer over another. This is illustrated in Figure 9, which shows the test error rates for
+Gaussian Process and Kernel Logistic Regression classiﬁers (GPC an d KLR respectively), for 100
+2089
+
+===== PDF PAGE 12 =====
+CAWLEY AND TALBOT
+x1
+x2
+−1.5 −1 −0.5 0 0.5 1−0.5 
+0
+0.5 
+1
+1.5 
+x1
+x2
+−1.5 −1 −0.5 0 0.5 1−0.5 
+0
+0.5 
+1
+1.5 
+x1
+x2
+−1.5 −1 −0.5 0 0.5 1−0.5 
+0
+0.5 
+1
+1.5 
+(a) (b) (c)
+x1
+x2
+−1.5 −1 −0.5 0 0.5 1−0.5 
+0
+0.5 
+1
+1.5 
+x1
+x2
+−1.5 −1 −0.5 0 0.5 1−0.5 
+0
+0.5 
+1
+1.5 
+x1
+x2
+−1.5 −1 −0.5 0 0.5 1−0.5 
+0
+0.5 
+1
+1.5 
+(d) (e) (f)
+Figure 6: Kernel ridge regression models of the synthetic benchmark, us ing hyper-parameters se-
+lected according to the smoothed error rate over six random realisations of the validation
+set (shown in Figure 5). The variance of the model selection criterion canresult in models
+ranging from under-ﬁt, (a) and (b), through well-ﬁtting, (c) and (d),to over-ﬁt (e) and (f).
+random realisations of thebanana benchmark data set used in R¨atsch et al. (2001) (see Section 5.1
+for details). On 64 realisations of the data GPC out-performs KLR, but on 3 6 KLR out-performs
+GPC, even though the GPC is better on average (although the difference is not statistically signif-
+icant in this case). If the classiﬁers had been evaluated on only one of the latter 36 realisations, it
+might incorrectly be concluded that the KLR classiﬁer is superior to the GPC f or that benchmark.
+However, it should also be noted that a difference in performance betwe en two algorithms is un-
+likely to be of practical signiﬁcance, even if it is statistically signiﬁcant, if it is smaller than the
+variation in performance due to the random sampling of the data, as it is proba ble that a greater
+improvement in performance would be obtained by further data collection than b y selection of the
+optimal classiﬁer.
+4.3 Is Over-ﬁtting in Model Selection Really a Genuine Concern in Practice ?
+In the preceding part of this section we have demonstrated the deleterious e ffects of the variance
+of the model selection criterion using a synthetic benchmark data set, however this is not sufﬁcient
+to establish that over-ﬁtting in model selection is actually a genuine concern in p ractical applica-
+tions or in the development of machine learning algorithms. Table 2 shows resu lts obtained using
+2090
+
+===== PDF PAGE 13 =====
+OVERFITTING IN MODEL SELECTION AND SELECTION BIAS IN PERFORMANCE EVALUATION
+0 0.05 0.1 0.15 0.2 0.25 0.18 
+0.2 
+0.22 
+0.24 
+0.26 
+0.28 
+0.3 
+0.32 
+0.34 
+0.36 
+0.38 
+validation SER 
+true SER 
+0 0.05 0.1 0.15 0.2 0.25 0.18 
+0.2 
+0.22 
+0.24 
+0.26 
+0.28 
+0.3 
+0.32 
+0.34 
+0.36 
+0.38 
+validation SER 
+true SER 
+(a) (b)
+Figure 7: Scatter plots of the true test smoothed error rate as a function of th e validation set
+smoothed error rate for 100 randomly generated validation sets of (a) 64 a nd (b) 256
+patterns.
+log 2η
+log 2λ
+−8 −6 −4 −2 0 2 4 6 8
+−10 
+−8 
+−6 
+−4 
+−2 
+0
+2
+4
+6
+8
+log 2η
+log 2λ
+−8 −6 −4 −2 0 2 4 6 8
+−10 
+−8 
+−6 
+−4 
+−2 
+0
+2
+4
+6
+8
+(a) (b)
+Figure 8: Contour plot of the mean validation set smoothed error rate over 100 randomly generated
+validation sets of (a) 64 and (b) 256 patterns. The minimum of the mean validation set
+error is marked by a large (yellow) cross, and the minimum for each realisatio n of the
+validation set marked by a small (red) cross.
+kernel ridge regression (KRR) classiﬁers, with RBF and ARD kernel f unctions over the thirteen
+benchmarks described in Section 3.2. In each case, model selection was p erformed independently
+for each realisation of each benchmark by minimising the PRESS statistic using the Nelder-Mead
+simplex method (Nelder and Mead, 1965). For the majority of the benchmarks,a signiﬁcantly lower
+2091
+
+===== PDF PAGE 14 =====
+CAWLEY AND TALBOT
+0.09 0.095 0.1 0.105 0.11 0.115 0.12 0.09 
+0.095 
+0.1 
+0.105 
+0.11 
+0.115 
+0.12 
+0.09 0.095 0.1 0.105 0.11 0.115 0.12 0.09 
+0.095 
+0.1 
+0.105 
+0.11 
+0.115 
+0.12 
+GPC error rate 
+KLR error rate 
+0.09 0.095 0.1 0.105 0.11 0.115 0.12 0.09 
+0.095 
+0.1 
+0.105 
+0.11 
+0.115 
+0.12 
+GPC error rate 
+KLR error rate 
+0.09 0.095 0.1 0.105 0.11 0.115 0.12 0.09 
+0.095 
+0.1 
+0.105 
+0.11 
+0.115 
+0.12 
+GPC error rate 
+KLR error rate 
+Figure 9: Scatter plots of the test set error for Gaussian process and K ernel Logistic regression
+classiﬁers (GPC and KLR respectively) for 100 realisations of thebanana benchmark.
+test error is achieved (according to the Wilcoxon signed ranks test) using the basic RBF kernel; the
+ARD kernel only achieves statistical superiority on one of the thirteen ( image). This is perhaps a
+surprising result as the models are nested, the RBF kernel being a specia l case of the ARD kernel,
+so the optimal performance that can be achieved with the ARD kernel is guar anteed to be at least
+equal to the performance achievable using the RBF kernel. The reason for the poor performance of
+the ARD kernel in practice is because there are many more kernel parameters to be tuned in model
+selection and so many degrees of freedom available in optimising the model selec tion criterion. If
+the criterion used has a non-negligible variance, this includes optimisations exploiting the statistical
+peculiarities of the particular sample of data over which it is evaluated, and hence there will be more
+scope for over-ﬁtting. Table 2 also shows the mean value of the PRESS statis tic, following model
+selection, the fact that the majority of ARD models display a lower value for the P RESS statistic
+than the corresponding RBF model, while exhibiting a higher test error rate, is a strong indication
+of over-ﬁtting the model selection criterion. This is a clear demonstration that over-ﬁtting in model
+selection can be a signiﬁcant problem in practical applications, especially w here there are many
+hyper-parameters or where only a limited supply of data is available.
+Table 3 shows the results of the same experiment performed using expectatio n-propagation
+based Gaussian process classiﬁers (EP-GPC) (Rasmussen and Williams, 2006), where the hyper-
+parameters are tuned independently for each realisation, for each benc hmark individually by max-
+imising the Bayesian evidence. While the leave-one-out cross-validation ba sed PRESS criterion
+is known to exhibit a high variance, the variance of the evidence (which is a lso evaluated over a
+ﬁnite sample of data) is discussed less often. We ﬁnd again here that the RBF covariance function
+often out-performs the more general ARD covariance function, and again the test error rate is often
+negatively correlated with the evidence for the models. This indicates that over-ﬁtting the evidence
+is also a signiﬁcant practical problem for the Gaussian process classiﬁer.
+2092
+
+===== PDF PAGE 15 =====
+OVERFITTING IN MODEL SELECTION AND SELECTION BIAS IN PERFORMANCE EVALUATION
+Data Set Test Error Rate PRESS
+RBF ARD RBF ARD
+banana 10.610 ± 0.051 10.638 ± 0.052 60.808 ± 0.636 60.957 ± 0.624
+breast cancer 26.727 ± 0.466 28.766 ± 0.391 70.632 ± 0.328 66.789 ± 0.385
+diabetis 23.293 ± 0.169 24.520 ± 0.215 146.143 ± 0.452 141.465 ± 0.606
+ﬂare solar 34.140 ± 0.175 34.375 ± 0.175 267.332 ± 0.480 263.858 ± 0.550
+german 23.540 ± 0.214 25.847 ± 0.267 228.256 ± 0.666 221.743 ± 0.822
+heart 16.730 ± 0.359 22.810 ± 0.411 42.576 ± 0.356 37.023 ± 0.494
+image 2.990 ± 0.159 2.188 ± 0.134 74.056 ± 1.685 44.488 ± 1.222
+ringnorm 1.613 ± 0.015 2.750 ± 0.042 28.324 ± 0.246 27.680 ± 0.231
+splice 10.777 ± 0.144 9.943 ± 0.520 186.814 ± 2.174 130.888 ± 6.574
+thyroid 4.747 ± 0.235 4.693 ± 0.202 9.099 ± 0.152 6.816 ± 0.164
+titanic 22.483 ± 0.085 22.562 ± 0.109 48.332 ± 0.622 47.801 ± 0.623
+twonorm 2.846 ± 0.021 4.292 ± 0.086 32.539 ± 0.279 35.620 ± 0.490
+waveform 9.792 ± 0.045 11.836 ± 0.085 61.658 ± 0.596 56.424 ± 0.637
+Table 2: Error rates of kernel ridge regression (KRR) classiﬁer ove r thirteen benchmark data sets
+(R¨atsch et al., 2001), using both standard radial basis function (RBF) and automatic rel-
+evance determination (ARD) kernels. Results shown in bold indicate an erro r rate that is
+statistically superior to that obtained with the same classiﬁer using the other kern el func-
+tion, or a PRESS statistic that is signiﬁcantly lower.
+Data Set Test Error Rate -Log Evidence
+RBF ARD RBF ARD
+banana 10.413 ± 0.046 10.459 ± 0.049 116.894 ± 0.917 116.459 ± 0.923
+breast cancer 26.506 ± 0.487 27.948 ± 0.492 110.628 ± 0.366 107.181 ± 0.388
+diabetis 23.280 ± 0.182 23.853 ± 0.193 230.211 ± 0.553 222.305 ± 0.581
+ﬂare solar 34.200 ± 0.175 33.578 ± 0.181 394.697 ± 0.546 384.374 ± 0.512
+german 23.363 ± 0.211 23.757 ± 0.217 359.181 ± 0.778 346.048 ± 0.835
+heart 16.670 ± 0.290 19.770 ± 0.365 73.464 ± 0.493 67.811 ± 0.571
+image 2.817 ± 0.121 2.188 ± 0.076 205.061 ± 1.687 123.896 ± 1.184
+ringnorm 4.406 ± 0.064 8.589 ± 0.097 121.260 ± 0.499 91.356 ± 0.583
+splice 11.609 ± 0.180 8.618 ± 0.924 365.208 ± 3.137 242.464 ± 16.980
+thyroid 4.373 ± 0.219 4.227 ± 0.216 25.461 ± 0.182 18.867 ± 0.170
+titanic 22.637 ± 0.134 22.725 ± 0.133 78.952 ± 0.670 78.373 ± 0.683
+twonorm 3.060 ± 0.034 4.025 ± 0.068 45.901 ± 0.577 42.044 ± 0.610
+waveform 10.100 ± 0.047 11.418 ± 0.091 105.925 ± 0.954 91.239 ± 0.962
+Table 3: Error rates of expectation propagation based Gaussian process classiﬁers (EP-GPC), using
+both standard radial basis function (RBF) and automatic relevance determin ation (ARD)
+kernels. Results shown in bold indicate an error rate that is statistically super ior to that
+obtained with the same classiﬁer using the other kernel function or evidence that is signif-
+icantly higher.
+2093
+
+===== PDF PAGE 16 =====
+CAWLEY AND TALBOT
+4.4 Avoiding Over-ﬁtting in Model Selection
+It seems reasonable to suggest that over-ﬁtting in model selection is possib le whenever a model
+selection criterion evaluated over a ﬁnite sample of data is directly optimised. Like over-ﬁtting in
+training, over-ﬁtting in model selection is likely to be most severe when the sample of data is small
+and the number of hyper-parameters to be tuned is relatively large. Likewis e, assuming additional
+data are unavailable, potential solutions to the problem of over-ﬁtting the model selection criterion
+are likely to be similar to the tried and tested solutions to the problem of over-ﬁtting th e training
+criterion, namely regularisation (Cawley and Talbot, 2007), early stopping ( Qi et al., 2004) and
+model or hyper-parameter averaging (Cawley, 2006; Hall and Robinson, 2009). Alternatively, one
+might minimise the number of hyper-parameters, for instance by treating kernel parameters as sim-
+ply parameters and optimising them at the ﬁrst level of inference and have a single regularisation
+hyper-parameter controlling the overall complexity of the model. For very sma ll data sets, where
+the problem of over-ﬁtting in both learning and model selection is greatest, the preferred approach
+would be to eliminate model selection altogether and opt for a fully Bayesian app roach, where the
+hyper-parameters are integrated out rather than optimised (e.g., Williams and B arber, 1998). An-
+other approach is simply to avoid model selection altogether using an ensemble approach, for exam-
+ple the Random Forest (RF) method (Breiman, 2001). However, while such methods often achieve
+state-of-the-art performance, it is often easier to build expert knowled ge into hierarchical models,
+for example through the design of kernel or covariance functions, so unfortunately approaches such
+as the RF are not a panacea.
+While the problem of over-ﬁtting in model selection is of the same nature as that of over-ﬁtting
+at the ﬁrst level of inference, the lack of mathematical tractability appears to have limited the the-
+oretical analysis of model selection via optimisation of a model selection criterion . For example,
+regarding leave-one-out cross-validation, Kulkarni et al. (1998) c omment “In spite of the practical
+importance of this estimate, relatively little is known about its properties. The available theory is
+especially poor when it comes to analysing parameter selection based on m inimizing the deleted
+estimate.” (our emphasis). While some asymptotic results are available (Stone, 1977; Shao, 1993;
+Toussaint, 1974), these are not directly relevant to the situation considered here, where over-ﬁtting
+occurs due to optimising the values of hyper-parameters using a model selection criterion evaluated
+over a ﬁnite, often quite limited, sample of data. Estimates of the variance of the cr oss-validation
+error are available for some models (Luntz and Brailovsky, 1969; Vapnik , 1982), however Bengio
+and Grandvalet (2004) have shown there is no unbiased estimate of the va riance of (k-fold) cross-
+validation. More recently bounds on the error of leave-one-out cross-validation based on the idea of
+stability have been proposed (Kearns and Ron, 1999; Bousquet and Elissee ff, 2002; Zhang, 2003).
+In this section, we have demonstrated that over-ﬁtting in model selection is a ge nuine problem in
+machine learning, and hence is likely to be an area that could greatly beneﬁtfrom further theoretical
+analysis.
+5. Bias in Performance Estimation
+Avoiding potentially signiﬁcant bias in performance evaluation, arising due toover-ﬁtting in model
+selection, is conceptually straightforward. The key is to treat both training and model selection
+together, as integral parts of the model ﬁtting procedure and ensure they are never performed sepa-
+rately at any point of the evaluation process. We present two examples ofpotentially biased evalua-
+tion protocols that do not adhere to this principle. The scale of the bias obse rved on some data sets
+2094
+
+===== PDF PAGE 17 =====
+OVERFITTING IN MODEL SELECTION AND SELECTION BIAS IN PERFORMANCE EVALUATION
+is much larger than the difference in performance between learning algorith ms, and so one could
+easily draw incorrect inferences based on the results obtained. This hig hlights the importance of
+this issue in empirical studies. We also demonstrate that the magnitude of the bias d epends on the
+learning and model selection algorithms involved in the comparison and that combinations that are
+more prone to over-ﬁtting in model selection are favored by biased protocols. This means that stud-
+ies based on potentially biased protocols are not internally consistent, even if it is acknowledged
+that a bias with respect to other studies may exist.
+5.1 An Unbiased Performance Evaluation Methodology
+We begin by describing an unbiased performance protocol, that correc tly accounts for any over-
+ﬁtting that may occur in model selection. Three classiﬁers are evaluated usin g an unbiased proto-
+col, in which model selection is performed separately for each realisation of each data set. This
+is termed the “internal” protocol as the model selection process is performed independently within
+each fold of the resampling procedure. In this way, the performance estimate includes a component
+properly accounting for the error introduced by over-ﬁtting the model selection criterion. The clas-
+siﬁers used were as follows: RBF-KRR—kernel ridge regression with aradial basis function kernel,
+with model selection based on minimisation of Allen’s PRESS statistic, as described in Section 2.
+RBF-KLR—kernel logistic regression with a radial basis function kerneland model selection based
+on an approximate leave-one-out cross-validation estimate of the log-likeliho od (Cawley and Tal-
+bot, 2008). EP-GPC—expectation-propagation based Gaussian process classiﬁer, with an isotropic
+squared exponential covariance function, with model selection based on maximising the marginal
+likelihood (e.g., Rasmussen and Williams, 2006). The mean error rates obtained using these classi-
+ﬁers under an unbiased protocol are shown in Table 4. In this case, the mean ranks of all methods
+are only minimally different, and so there is little if any evidence for a statistically signiﬁcant superi-
+ority of any of the classiﬁers over any other. Figure 10 shows a critical difference diagram (Demˇsar,
+2006), providing a graphical illustration of this result. A critical differenc e diagram displays the
+mean rank of a set of classiﬁers over a suite of benchmark data sets, with c liques of classiﬁers
+with statistically similar performance connected by a bar. The critical differen ce in average ranks
+required for a statistical superiority of one classiﬁer over another is also shown, labelled “CD”.
+CD 
+3 2 1 
+1.9231 RBF−KRR (internal) 
+2 EP−GPC (internal) 
+2.0769 RBF−KLR (internal) 
+Figure 10: Critical difference diagram (Dem ˇsar, 2006) showing the average ranks of three classi-
+ﬁers with internal model selection protocol.
+2095
+
+===== PDF PAGE 18 =====
+CAWLEY AND TALBOT
+Data Set GPC KLR KRR
+(internal) (internal) (internal)
+banana 10.413 ± 0.046 10.567 ± 0.051 10.610 ± 0.051
+breast cancer 26.506 ± 0.487 26.636 ± 0.467 26.727 ± 0.466
+diabetis 23.280 ± 0.182 23.387 ± 0.180 23.293 ± 0.169
+ﬂare solar 34.200 ± 0.175 34.197 ± 0.170 34.140 ± 0.175
+german 23.363 ± 0.211 23.493 ± 0.208 23.540 ± 0.214
+heart 16.670 ± 0.290 16.810 ± 0.315 16.730 ± 0.359
+image 2.817 ± 0.121 3.094 ± 0.130 2.990 ± 0.159
+ringnorm 4.406 ± 0.064 1.681 ± 0.031 1.613 ± 0.015
+splice 11.609 ± 0.180 11.248 ± 0.177 10.777 ± 0.144
+thyroid 4.373 ± 0.219 4.293 ± 0.222 4.747 ± 0.235
+titanic 22.637 ± 0.134 22.473 ± 0.103 22.483 ± 0.085
+twonorm 3.060 ± 0.034 2.944 ± 0.042 2.846 ± 0.021
+waveform 10.100 ± 0.047 9.918 ± 0.043 9.792 ± 0.045
+Table 4: Error rate estimates of three classiﬁers over a suite of thirteen ben chmark data sets: The
+results for each method are presented in the form of the mean error rate ov er test data for
+100 realisations of each data set (20 in the case of theimage andsplice data sets), along
+with the associated standard error.
+It is not unduly surprising that there should be little evidence for any statistic ally signiﬁcant
+superiority, as all three methods give rise to structurally similar models. The mod els though dif-
+fer signiﬁcantly in their model selection procedures, the EP-GPC is based o n stronger statistical
+assumptions, and so can be expected to excel where these assumptions ar e justiﬁed, but poorly
+where the model is mis-speciﬁed (e.g., the ringnorm benchmark). The cross-validation based model
+selection procedures, on the other hand, are more pragmatic and being ba sed on much weaker as-
+sumptions might be expected to provide a more consistent level of accuracy.
+5.2 An Example of Biased Evaluation Methodology
+The performance evaluation protocol most often used in conjunction with the suite of benchmark
+data sets, described in Section 3.2, seeks to perform model selection indep endently for only the
+ﬁrst ﬁve realisations of each data set. The median values of the hyper-pa rameters over these ﬁve
+folds are then determined and subsequently used to evaluate the error rates for each realisation. This
+“median” performance evaluation protocol was introduced in the same pape r that popularised this
+suite of benchmark data sets (R ¨atsch et al., 2001) and has been widely adopted (e.g., Mika et al.,
+1999; Weston, 1999; Billings and Lee, 2002; Chapelle et al., 2002; Chu et al., 2003; Stewart, 2003;
+Mika et al., 2003; Gold et al., 2005; Pe ˜na Centeno and D., 2006; Andeli ´c et al., 2006; An et al.,
+2007; Chen et al., 2009). The original motivation for this protocol was tha t the internal model
+selection protocol was prohibitively expensive using workstations availa ble (R ¨atsch et al., 2001),
+which was perfectly reasonable at the time, but is no longer true.3 The use of the median, however,
+can be expected to introduce an optimistic bias into the performance estimates obta ined using this
+“median” protocol. Firstly all of the training data comprising the ﬁrst ﬁve realis ations have been
+3. All of the experimental results presented in this paper were obtained using a single modern Linux workstation.
+2096
+
+===== PDF PAGE 19 =====
+OVERFITTING IN MODEL SELECTION AND SELECTION BIAS IN PERFORMANCE EVALUATION
+Data Set KRR KRR Bias
+(internal) (median)
+banana 10.610 ± 0.051 10.384 ± 0.042 0.226 ± 0.034
+breast cancer 26.727 ± 0.466 26.377 ± 0.441 0.351 ± 0.195
+diabetis 23.293 ± 0.169 23.150 ± 0.157 0.143 ± 0.074
+ﬂare solar 34.140 ± 0.175 34.013 ± 0.166 0.128 ± 0.082
+german 23.540 ± 0.214 23.380 ± 0.220 0.160 ± 0.067
+heart 16.730 ± 0.359 15.720 ± 0.306 1.010 ± 0.186
+image 2.990 ± 0.159 2.802 ± 0.129 0.188 ± 0.095
+ringnorm 1.613 ± 0.015 1.573 ± 0.010 0.040 ± 0.010
+splice 10.777 ± 0.144 10.763 ± 0.137 0.014 ± 0.055
+thyroid 4.747 ± 0.235 4.560 ± 0.200 0.187 ± 0.100
+titanic 22.483 ± 0.085 22.407 ± 0.102 0.076 ± 0.077
+twonorm 2.846 ± 0.021 2.868 ± 0.017 -0.022 ± 0.014
+waveform 9.792 ± 0.045 9.821 ± 0.039 -0.029 ± 0.020
+Table 5: Error rate estimates of three classiﬁers over a suite of thirteen ben chmark data sets: The
+results for each method are presented in the form of the mean error rate ov er test data for
+100 realisations of each data set (20 in the case of the image and splice data s ets), along
+with the associated standard error.
+used during the model selection process for the classiﬁers used in everyfold of the re-sampling. This
+means that some of the test data for each fold is no longer statistically “pure” a s it has been seen
+during model selection. Secondly, and more importantly, the median operation a cts as a variance
+reduction step, so the median of the ﬁve sets of hyper-parameters is likely to b e better on average
+than any of the ﬁve from which it is derived. Lastly, as the hyper-parameters are now ﬁxed, there is
+no longer scope for over-ﬁtting the model selection criterion due to peculiarities of the sampling of
+data for the training and test partitions in each realisation.
+We begin by demonstrating that the results using the internal and median protocols are not com-
+mensurate, and so the results obtained using different methods are not directly comparable. Table 5
+shows the error rate obtained using the RBF-KRR classiﬁer with the internal and median perfor-
+mance evaluation protocols and the resulting bias, that is, the difference be tween the mean error
+rates obtained with the internal and median protocols. It is clearly seen that th e median protocol
+introduces a positive bias on almost all benchmarks (twonorm andwaveform being the exceptions)
+and that the bias can be quite substantial on some benchmarks. Indeed, fo r several benchmarks,
+breast cancer, german, heart andthyroid in particular, the bias is larger than the typical dif-
+ference in performance between classiﬁers evaluated using an unbiase d protocol. Dem ˇsar (2006)
+recommends the Wilcoxon signed ranks test for determination of the statistical s igniﬁcance of the
+superiority of one classiﬁer over another over multiple data sets. Applying this test to the data shown
+for EP-GPC (internal), RBF-KLR (internal) and RBF-KRR (median), fro m Tables 4 and 5, reveals
+that the RBF-KRR (median) classiﬁer is statistically superior to the remaining classiﬁers, at the 95%
+level of signiﬁcance. A critical difference diagram summarising this result is shown in Figure 12.
+However, the difference in performance is entirely spurious as it is purely the result of reducing the
+effects of over-ﬁtting in model selection and does not reﬂect the true ope rational performance of
+the combination of classiﬁer and model selection method. It is clear then that results obtained using
+2097
+
+===== PDF PAGE 20 =====
+CAWLEY AND TALBOT
+the internal and median protocols are not directly comparable, and so reliab le inferences cannot be
+drawn by comparison of results from different studies, using biased and unbiased protocols.
+5.2.1 I S THE BIAS SOLELY DUE TO INADVERTENT RE-USE OF TEST SAMPLES ?
+One explanation for the observed bias of the median protocol is that some ofthe training samples for
+the ﬁrst ﬁve realisations of the benchmark, which have been used in tuning the hyper-parameters,
+also appear in the test sets for other realisations of the benchmark used fo r performance analysis.
+In this section, we demonstrate that this inadvertent re-use of test samples is not the only cause of
+the bias. One hundred replications of the internal and median protocol wer e performed using the
+synthetic benchmark, for which an inexhaustible supply of i.i.d. data is available. Howe ver, in
+this case in each realisation, 100 training sets of 64 patterns and a large testset of 4096 samples were
+generated, all mutually disjoint. This means the only remaining source of bias is th e amelioration
+of over-ﬁtting in model selection by the reduction of variance by taking the med ian of the hyper-
+parameters over the ﬁrst ﬁve folds (cf. Hall and Robinson, 2009). Fig ure 11 shows the mean test
+errors for the internal and median protocols over 100 replications, showing a very distinct optimistic
+bias in the median protocol (statistically highly signiﬁcant according to the Wilcox on signed ranks
+test, p < 0.001), even though there is absolutely no inadvertent re-use of test data.
+0.13 0.14 0.15 0.16 0.125 
+0.13 
+0.135 
+0.14 
+0.145 
+0.15 
+0.155 
+0.16 
+0.165 
+Error rate (internal) 
+Error rate (median) 
+Figure 11: Mean error rates for the internal and median evaluation protoc ols for the synthetic
+benchmark, without inadvertent re-use of test data.
+5.2.2 I S THE MEDIAN PROTOCOL INTERNALLY CONSISTENT ?
+Having established that the median protocol introduces an optimistic bias, and th at the results ob-
+tained using the internal and median protocols do not give comparable resu lts, we next turn our
+attention to whether the median protocol is internally consistent, that is, does the median protocol
+give the correct rank order of the classiﬁers? Table 6 shows the perf ormance of three classiﬁers
+evaluated using the median protocol; the corresponding critical difference diagram is shown in Fig-
+ure 13. In this case the difference in performance between classiﬁers is not statistically signiﬁcant
+according to the Friedman test, however it can clearly be seen that the bias o f the median protocol
+2098
+
+===== PDF PAGE 21 =====
+OVERFITTING IN MODEL SELECTION AND SELECTION BIAS IN PERFORMANCE EVALUATION
+Data Set EP-GPC RBF-KLR RBF-KRR
+(median) (median) (median)
+banana 10.371 ± 0.045 10.407 ± 0.047 10.384 ± 0.042
+breast cancer 26.117 ± 0.472 26.130 ± 0.474 26.377 ± 0.441
+diabetis 23.333 ± 0.191 23.300 ± 0.177 23.150 ± 0.157
+ﬂare solar 34.150 ± 0.170 34.212 ± 0.176 34.013 ± 0.166
+german 23.160 ± 0.216 23.203 ± 0.218 23.380 ± 0.220
+heart 16.400 ± 0.273 16.120 ± 0.295 15.720 ± 0.306
+image 2.851 ± 0.102 3.030 ± 0.120 2.802 ± 0.129
+ringnorm 4.400 ± 0.064 1.574 ± 0.011 1.573 ± 0.010
+splice 11.607 ± 0.184 11.172 ± 0.168 10.763 ± 0.137
+thyroid 4.307 ± 0.217 4.040 ± 0.221 4.560 ± 0.200
+titanic 22.490 ± 0.095 22.591 ± 0.135 22.407 ± 0.102
+twonorm 3.241 ± 0.039 3.068 ± 0.033 2.868 ± 0.017
+waveform 10.163 ± 0.045 9.888 ± 0.042 9.821 ± 0.039
+Table 6: Error rate estimates of three classiﬁers over a suite of thirteen ben chmark data sets: The
+results for each method are presented in the form of the mean error rate ov er test data for
+100 realisations of each data set (20 in the case of the image and splice data s ets), along
+with the associated standard error.
+has favored one classiﬁer, namely the RBF-KRR, much more strongly than th e others. It seems
+feasible then that the bias of the median protocol may be sufﬁcient in other cases to amplify a small
+difference in performance, due perhaps to an accidentally favorable choice of data sets, to the point
+where it spuriously appears to be statistically signiﬁcant. This suggests that the median protocol
+may be unreliable and perhaps should be deprecated.
+CD 
+3 2 1 
+1.2308 RBF−KRR (median) 
+2.3846 EP−GPC (internal) 
+2.3846 RBF−KLR (internal) 
+Figure 12: Critical difference diagram (Dem ˇsar, 2006) showing the average ranks of three clas-
+siﬁers, EP-GPC and RBF-KLR with internal model selection protocol and R BF-KLR
+using the optimistically biased median protocol (cf. Figure 10).
+Next, we perform a statistical analysis to determine whether there is a statistically signiﬁcant
+difference in the magnitude of the biases introduced by the median protocol for different classiﬁers,
+2099
+
+===== PDF PAGE 22 =====
+CAWLEY AND TALBOT
+Data Set RBF-KRR RBF-EP-GPC Wilcoxon
+bias bias p-value
+banana 0.226 ± 0.034 0.043 ± 0.012 < 0.05
+breast cancer 0.351 ± 0.195 0.390 ± 0.186 0.934
+diabetis 0.143 ± 0.074 -0.053 ± 0.051 < 0.05
+ﬂare solar 0.128 ± 0.082 0.050 ± 0.090 0.214
+german 0.160 ± 0.067 0.203 ± 0.051 0.458
+heart 1.010 ± 0.186 0.270 ± 0.120 < 0.05
+image 0.188 ± 0.095 -0.035 ± 0.032 0.060
+ringnorm 0.040 ± 0.010 0.006 ± 0.002 < 0.05
+splice 0.014 ± 0.055 0.002 ± 0.014 0.860
+thyroid 0.187 ± 0.100 0.067 ± 0.064 0.159
+titanic 0.076 ± 0.077 0.147 ± 0.090 0.846
+twonorm -0.022 ± 0.014 -0.180 ± 0.032 < 0.05
+waveform -0.029 ± 0.020 -0.064 ± 0.022 0.244
+Table 7: Results of a statistical analysis of the bias introduced by the median pr otocol into the test
+error rates for RBF-KRR and RBF-EP-GPC, using the Wilcoxon signed ranks test.
+CD 
+3 2 1 
+1.5385 RBF−KRR (median) 
+2.2308 EP−GPC (median) 
+2.2308 RBF−KLR (median) 
+Figure 13: Critical difference diagram showing the average ranks of th ree classiﬁers with the me-
+dian model selection protocol (cf. Figure 10).
+for each benchmark data set. 4 First the bias introduced by the use of the median protocol was
+computed for the RBF KRR and RBF EP-GPC classiﬁers as the difference between the test set error
+estimated by the internal and median protocols. The Wilcoxon signed rank test was then used to
+determine whether there is a statistically signiﬁcant difference in the bias, over the 100 realisations
+of the benchmark (20 in the case of the image and splice benchmarks) . The results obtained
+are shown in Table 7, the p-value is below 0.05 for ﬁve of the thirteen bench marks, indicating
+that in each case the median protocol is signiﬁcantly biased in favour of the R BF KRR classiﬁer.
+Clearly, as the median protocol does not impose a commensurate bias on the es timated test error
+rates for different classiﬁers, it does not provide a reliable protocol for comparing the performance
+of machine learning algorithms.
+4. We are grateful to an anonymous reviewer for suggesting this particular form of analysis.
+2100
+
+===== PDF PAGE 23 =====
+OVERFITTING IN MODEL SELECTION AND SELECTION BIAS IN PERFORMANCE EVALUATION
+2 4 6 8 10 12 14 16 18 20 1
+1.2 
+1.4 
+1.6 
+1.8 
+2
+2.2 
+2.4 
+2.6 
+2.8 
+3
+number of folds 
+mean rank 
+EP−GPC 
+RBF−KLR 
+RBF−KRR 
+2 4 6 8 10 12 14 16 18 20 1
+1.2 
+1.4 
+1.6 
+1.8 
+2
+2.2 
+2.4 
+2.6 
+2.8 
+3
+number of folds 
+mean rank 
+EP−GPC 
+RBF−KLR 
+RBF−KRR 
+(a) (b)
+Figure 14: Mean ranks of three classiﬁers as a function of the number of folds used in the re-
+peated split sample model selection procedure employed by the kernel ridge regression
+(RBF-KRR) machine, using (a) the unbiasedinternal protocol and (b) the biasedmedian
+protocol.
+In the ﬁnal illustration of this section, we show that the magnitude of the bias intro duced by
+the median protocol is greater for model selection criteria with a high variance . This means the
+median protocol favors most the least reliable model selection procedures and as a result does not
+provide a reliable indicator even of relative performance of classiﬁer-mo del selection procedures
+combinations. Again the RBF-KRR model is used as the base classiﬁer, howe ver in this case a
+repeated split-sample model selection criterion is used, where the data are repeatedly split at random
+to form disjoint training and validation sets in proportions 9:1, and the hyper- parameters tuned to
+optimise the average mean-squared error over the validation sets. In this wa y, the variance of the
+model selection criterion can be controlled by varying the number of repetition s, with the variance
+decreasing as the number of folds becomes larger. Figure 14 (a) shows a plot of the average ranks
+of EP-GPC and RBF-KLR classiﬁers, with model selection performed as in p revious experiments,
+and RBF-KRR with repeated split-sample model selection, as a function of the n umber of folds.
+In each case the unbiased internal evaluation protocol was used. Clear ly if the number of folds is
+small (ﬁve or less), the RBF-KRR model performs poorly, due to over-ﬁtting in model selection due
+to the high variance of the criterion used. However, as the number of folds increases, the variance
+of the model selection criterion falls, and the performances of all three algo rithms are very similar.
+Figure 14 (b) shows the corresponding result using the biased median pr otocol. The averaging of
+hyper-parameters reduces the apparent variance of the model selection criterion, and this disguises
+the poor performance of the RBF-KRR model when the number of folds is small. This demonstrates
+that the bias introduced by the median protocol favors most the worst model selection criterion,
+which is a cause for some concern.
+2101
+
+===== PDF PAGE 24 =====
+CAWLEY AND TALBOT
+Data Set External Internal Bias
+banana 10.355 ± 0.146 10.495 ± 0.158 0.140 ± 0.035
+breast cancer 26.280 ± 0.232 27.470 ± 0.250 1.190 ± 0.135
+diabetis 22.891 ± 0.127 23.056 ± 0.134 0.165 ± 0.050
+ﬂare solar 34.518 ± 0.172 34.707 ± 0.179 0.189 ± 0.051
+german 23.999 ± 0.117 24.217 ± 0.125 0.219 ± 0.045
+heart 16.335 ± 0.214 16.571 ± 0.220 0.235 ± 0.073
+image 3.081 ± 0.102 3.173 ± 0.112 0.092 ± 0.035
+ringnorm 1.567 ± 0.058 1.607 ± 0.057 0.040 ± 0.014
+splice 10.930 ± 0.219 11.170 ± 0.280 0.240 ± 0.152
+thyroid 3.743 ± 0.137 4.279 ± 0.152 0.536 ± 0.073
+titanic 22.167 ± 0.434 22.487 ± 0.442 0.320 ± 0.077
+twonorm 2.480 ± 0.067 2.502 ± 0.070 0.022 ± 0.021
+waveform 9.613 ± 0.168 9.815 ± 0.183 0.203 ± 0.064
+Table 8: Error rate estimates for kernel ridge regression over thirteen b enchmark data sets, for
+model selection schemes that are internal and external to the cross-validation process. The
+results for each approach and the relative bias are presented in the form of the mean error
+rate over for 100 realisations of each data set (20 in the case of the image a nd splice data
+sets), along with the associated standard error.
+5.3 Another Example of Biased Evaluation Methodology
+In a biased evaluation protocol, occasionally observed in machine learning studies, an initial model
+selection step is performed using all of the available data, often interactivelyas part of a “preliminary
+study”. The data are then repeatedly re-partitioned to form one or more pa irs of random, disjoint
+design and test sets. These are then used for performance evaluation using the same ﬁxed set of
+hyper-parameter values. This practice may seem at ﬁrst glance to be fairly innocuous, however the
+test data are no longer statistically pure, as they have been “seen” by the models in tuning the hyper-
+parameters. This would not present a serious problem were it not for th e danger of over-ﬁtting in
+model selection, which means that in practice the hyper-parameters will inevita bly be tuned to an
+extent in ways that take advantage of the statistical peculiarities of this particu lar set of data rather
+than only in ways that favor improved generalisation. As a result the hyper -parameter settings
+retain a partial “memory” of the data that now form the test partition. We shouldtherefore expect to
+observe an optimistic bias in the performance estimates obtained in this manner.
+Table 8 shows a comparison of 10-fold cross-validation estimates of the test error rate, for ker-
+nel ridge regression with a Gaussian radian basis function kernel, obtaine d using protocols where
+the model selection stage is either external or internal to the cross-validation procedure. In the ex-
+ternal protocol, model selection is performed once using the entire design s et, as described above.
+In the internal protocol, the model selection step is performed separately in e ach fold of the cross-
+validation. The internal cross-validation procedure therefore provide s a more realistic estimate of
+the performance of the combination of model selection and learning algorithm that is actually used
+to construct the ﬁnal model. The table also shows the relative bias (i.e., the mean difference between
+the internal and external cross-validation protocols). The external pr otocol clearly exhibits a con-
+sistently optimistic bias with respect to the more rigorous internal cross-validatio n protocol, over
+2102
+
+===== PDF PAGE 25 =====
+OVERFITTING IN MODEL SELECTION AND SELECTION BIAS IN PERFORMANCE EVALUATION
+all thirteen benchmarks. Furthermore, the bias is statistically signiﬁcant (i.e., la rger than twice the
+standard error of the estimate) for all benchmarks, apart fromsplice andtwonorm. In many cases,
+the bias is of similar magnitude to the typical difference observed between competitive learning al-
+gorithms (cf. Table 4). In some cases, for example,banana andthyroid benchmarks, the bias is of
+a surprising magnitude, likely to be large enough to conceal even the true dif ference between even
+state-of-the-art and uncompetitive learning algorithms. This clearly shows that the external cross-
+validation protocol exhibits a consistent optimistic bias, potentially of a very substantial magnitude
+even when the number of hyper-parameters is small (in this case only two), a nd so should not be
+used in practice.
+6. Conclusions
+In this paper, we have discussed the importance of bias and variance in model selection and perfor-
+mance evaluation, and demonstrated that a high variance can lead to over-ﬁtting in model selection,
+and hence poor performance, even when the number of hyper-parame ters is relatively small. Fur-
+thermore, we have shown that a potentially severe form of selection bias ca n be introduced into
+performance evaluation by protocols that have been adopted in a number of existing empirical stud-
+ies. Fortunately, it seems likely that over-ﬁtting in model selection can be overcome using methods
+that have already been effective in preventing over-ﬁtting during training, such as regularisation or
+early stopping. Little attention has so far been focused on over-ﬁtting in mode l selection, however
+in this paper we have shown that it presents a genuine pitfall in the practicalapplication of machine
+learning algorithms and in empirical comparisons. In order to overcome the bia s in performance
+evaluation, model selection should be viewed as an integral part of the modelﬁtting procedure, and
+should be conducted independently in each trial in order to prevent selec tion bias and because it
+reﬂects best practice in operational use. Rigorous performance evalu ation therefore requires a sub-
+stantial investment of processor time in order to evaluate performance over a wide range of data
+sets, using multiple randomised partitionings of the available data, with model selection performed
+separately in each trial. However, it is straightforward to fully automate thesesteps, and so requires
+little manual involvement. Performance evaluation according to these principles requires repeated
+training of models using different sets of hyper-parameter values on different samples of the avail-
+able data, and so is also well-suited to parallel implementation. Given the recent trend in processor
+design towards multi-core designs, rather than faster processor speed s, rigorous performance eval-
+uation is likely to become less and less time-consuming, and so there is little justiﬁcation for the
+continued use of potentially biased protocols.
+Acknowledgments
+The authors would like to thank Gareth Janacek, Wenjia Wang and the anony mous reviewers for
+their helpful comments on earlier drafts of this paper, and the organisers a nd participants of the
+WCCI-2006 Performance Prediction Challenge and workshop that provided the inspiration for our
+work on model selection and performance prediction. G. C. Cawley is supp orted by the Engineer-
+ing and Physical Sciences Research Council (EPSRC) grant EP/F010 508/1 - Advancing Machine
+Learning Methodology for New Classes of Prediction Problems.
+2103
+
+===== PDF PAGE 26 =====
+CAWLEY AND TALBOT
+References
+D. M. Allen. The relationship between variable selection and prediction. Technometrics, 16:125–
+127, 1974.
+C. Ambroise and G. J. McLachlan. Selection bias in gene extraction on the basis of microarray gene-
+expression data. Proceedings of the National Academy of Sciences , 99(10):6562–6566, May 14
+2002. doi: 10.1073/pnas.102102699.
+S. An, W. Liu, and S. Venkatesh. Fast cross-validation algorithms for lea st squares support vector
+machines and kernel ridge regression. Pattern Recognition, 40(8):2154–2162, August 2007. doi:
+10.1016/j.patcog.2006.12.015.
+E. Andeli´c, M. Schaff¨oner, M. Katz, S. E. Kr¨uger, and A. Wendermuth. Kernel least-squares models
+using updates of the pseudoinverse. Neural Computation, 18(12):2928–2935, December 2006.
+doi: 10.1162/neco.2006.18.12.2928.
+Y . Bengio and Y . Grandvalet. No unbiased estimator of the variance of k-f old cross-validation.
+Journal of Machine Learning Research, 5:1089–1105, 2004.
+S. A. Billings and K. L. Lee. Nonlinear Fisher discriminant analysis using a min imum squared
+error cost function and the orthogonal least squares algorithm. Neural Networks, 15(2):263–270,
+March 2002. doi: 10.1016/S0893-6080(01)00142-3.
+C. M. Bishop. Neural Networks for Pattern Recognition. Oxford University Press, 1995.
+L. Bo, L. Wang, and L. Jiao. Feature scaling for kernel Fisher discrimina nt analysis using leave-
+one-out cross validation. Neural Computation, 18(4):961–978, April 2006. doi: 10.1162/neco.
+2006.18.4.961.
+O. Bousquet and A. Elisseeff. Stability and generalization. Journal of Machine Learning Research,
+2:499–526, 2002.
+L. Breiman. Random forests. Machine Learning, 45(1):5–32, October 2001. doi: 10.1023/A:
+1010933404324.
+G. C. Cawley. Leave-one-out cross-validation based model selection c riteria for weighted LS-
+SVMs. In Proceedings of the IEEE/INNS International Joint Conference on Neur al Networks
+(IJCNN-06), pages 1661–1668, Vancouver, BC, Canada, July 16–21 2006. doi: 10.1109/IJCNN.
+2006.246634.
+G. C. Cawley and N. L. C. Talbot. Efﬁcient leave-one-out cross-valid ation of kernel Fisher dis-
+criminant classiﬁers. Pattern Recognition, 36(11):2585–2592, November 2003. doi: 10.1016/
+S0031-3203(03)00136-5.
+G. C. Cawley and N. L. C. Talbot. Preventing over-ﬁtting during model selec tion via Bayesian
+regularisation of the hyper-parameters. Journal of Machine Learning Research, 8:841–861, April
+2007.
+2104
+
+===== PDF PAGE 27 =====
+OVERFITTING IN MODEL SELECTION AND SELECTION BIAS IN PERFORMANCE EVALUATION
+G. C. Cawley and N. L. C. Talbot. Efﬁcient approximate leave-one-out c ross-validation for
+kernel logistic regression. Machine Learning , 71(2–3):243–264, June 2008. doi: 10.1007/
+s10994-008-5055-9.
+G. C. Cawley, G. J. Janacek, and N. L. C. Talbot. Generalised kernelmachines. In Proceedings of the
+IEEE/INNS International Joint Conference on Neural Networks (IJCN N-07), pages 1720–1725,
+Orlando, Florida, USA, August 12–17 2007. doi: 10.1109/IJCNN.2007 .4371217.
+O. Chapelle, V . Vapnik, O. Bousquet, and S. Mukherjee. Choosing multiple parameters for sup-
+port vector machines. Machine Learning, 46(1–3):131–159, January 2002. doi: 10.1023/A:
+1012450327387.
+H. Chen, P. Tino, and X. Yao. Probabilistic classiﬁcation vector machines. IEEE Transactions on
+Neural Networks, 20(6):901–914, June 2009. doi: 10.1109/TNN.2009.2014161.
+W. Chu, S. S. Keerthi, and C. J. Ong. Bayesian trigonometric support ve ctor classiﬁer. Neural
+Computation, 15(9):2227–2254, September 2003. doi: 10.1162/08997660332229 7368.
+J. Demˇsar. Statistical comparisons of classiﬁers over multiple data sets. Journal of Machine Learn-
+ing Research, 7:1–30, 2006.
+R. O. Duda, P. E. Hart, and D. G. Stork. Pattern Classiﬁcation. John Wiley and Sons, second
+edition, 2001.
+B. Efron and R. J. Tibshirani. Introduction to the Bootstrap. Monographs on Statistics and Applied
+Probability. Chapman & Hall, 1994.
+S. Geman, E. Bienenstock, and R. Doursat. Neural networks and the bias/variance dilemma. Neural
+Computation, 4(1):1–58, January 1992. doi: 10.1162/neco.1992.4.1.1.
+C. Gold, A. Holub, and P. Sollich. Bayesian approach to feature selection and parameter tuning
+for support vector machine classiﬁers. Neural Networks, 18(5):693–701, July/August 2005. doi:
+10.1016/j.neunet.2005.06.044.
+I. Guyon, A. Saffari, G. Dror, and G. Cawley. Model selection: Beyo nd the Bayesian/frequentist
+divide. Journal of Machine Learning Research, 11:61–87, 2009.
+P. Hall and A. P. Robinson. Reducing the variability of crossvalidation for smoothing parameter
+choice. Biometrika, 96(1):175–186, March 2009. doi: doi:10.1093/biomet/asn068.
+M. Kearns and D. Ron. Algorithmic stability and sanity-check bounds for lea ve-one-out
+cross-validation. Neural Computation , 11(6):1427–1453, August 1999. doi: 10.1162/
+089976699300016304.
+G. S. Kimeldorf and G. Wahba. Some results on Tchebychefﬁan spline func tions. Journal of
+Mathematical Analysis and Applications, 33:82–95, 1971.
+S. R. Kulkarni, G. Lugosi, and S. S. Venkatesh. Learning pattern class iﬁcation — a survey. IEEE
+Transactions on Information Theory, 44(6):2178–2206, October 1998.
+2105
+
+===== PDF PAGE 28 =====
+CAWLEY AND TALBOT
+P. A. Lachenbruch and M. R. Mickey. Estimation of error rates in discrimina nt analysis. Techno-
+metrics, 10(1):1–12, February 1968.
+A. Luntz and V . Brailovsky. On estimation of characters obtained in statisticalprocedure of recog-
+nition (in Russian). Techicheskaya Kibernetica, 3, 1969.
+D. J. C. MacKay. Bayesian interpolation. Neural Computation, 4(3):415–447, May 1992. doi:
+10.1162/neco.1992.4.3.415.
+J. Mercer. Functions of positive and negative type and their connection with the theory of integral
+equations. Philosophical Transactions of the Royal Society of London, Series A , 209:415–446,
+1909.
+S. Mika, G. R ¨atsch, J. Weston, B. Sch ¨olkopf, and K.-R. M ¨uller. Fisher discriminant analysis with
+kernels. In Neural Networks for Signal Processing IX, Proceedings of the 1999 I EEE Signal
+Processing Society Workshop , pages 41–48, Maddison, WI, USA, 21–25 August 1999. doi:
+10.1109/NNSP.1999.788121.
+S. Mika, G. R ¨atsch, J. Weston, B. Sch ¨olkpf, and K.-R. M ¨uller. Contructing descriptive and dis-
+criminative nonlinear features: Rayleigh coefﬁcients in kernel feature spaces. IEEE Transactions
+on Pattern Analysis and Machine Intelligence, 25(5):623–628, May 2003. doi: 10.1109/TPAMI.
+2003.1195996.
+J. A. Nelder and R. Mead. A simplex method for function minimization. Computer Journal, 7:
+308–313, 1965.
+T. Pe˜na Centeno and Lawrence N. D. Optimising kernel parameters and regular isation coefﬁcients
+for non-linear discriminant analysis. Journal of Machine Learning Research, 7:455–491, Febru-
+ary 2006.
+T. Poggio and F. Girosi. Networks for approximation and learning.Proceedings of the IEEE, 78(9):
+1481–1497, September 1990. doi: 10.1109/5.58326.
+Y . Qi, T. P. Minka, R. W. Picard, and Z. Ghahramani. Predictive automatic relevance determination
+by expectation propagation. In Proceedings of the Twenty First International Conference on
+Machine Learning (ICML-04), pages 671–678, Banff, Alberta, Canada, July 4–8 2004.
+C. E. Rasmussen and C. K. I. Williams. Gaussian Processes for Machine Learning . Adaptive
+Computation and Machine Learning. MIT Press, 2006.
+G. R ¨atsch, T. Onoda, and K.-R. M ¨uller. Soft margins for AdaBoost. Machine Learning, 42(3):
+287–320, March 2001. doi: 10.1023/A:1007618119488.
+R. M. Rifkin and R. A. Lippert. Notes on regularized least squares. Technical Report MIT-CSAIL-
+TR-2007-025, Computer Science and Artiﬁcial Intelligence Laboratory, MIT, May 2007.
+B. D. Ripley. Pattern Recognition and Neural Networks. Cambridge University Press, 1996.
+C. Saunders, A. Gammerman, and V . V ovk. Ridge regression learning algorithm in dual variables.
+In Proceedings of the Fifteenth International Conference on Machine Learning (ICML-98), pages
+515–521. Morgan Kaufmann, 1998.
+2106
+
+===== PDF PAGE 29 =====
+OVERFITTING IN MODEL SELECTION AND SELECTION BIAS IN PERFORMANCE EVALUATION
+J. Shao. Linear model selection by cross-validation. Journal of the American Statistical Society ,
+88:486–494, 1993.
+I. Stewart. On the optimal parameter choice for ν-support vector machines. IEEE Transactions
+on Pattern Analysis and Machine Intelligence, 25(10):1274–1284, October 2003. doi: 10.1109/
+TPAMI.2003.1233901.
+M. Stone. Cross-validatory choice and assessment of statistical predictio ns. Journal of the Royal
+Statistical Society, Series B (Statistical Methodology), 36(2):111–147, 1974.
+M. Stone. Asymptotics for and against cross-validation. Biometrika, 64(1):29–35, April 1977. doi:
+10.1093/biomet/64.1.29.
+J. A. K. Suykens, T. Van Gestel, J. De Brabanter, B. De Moor, and J. Vanderwalle. Least Squares
+Support Vector Machine. World Scientiﬁc Publishing Company, Singapore, 2002. ISBN 981-
+238-151-1.
+A. N. Tikhonov and V . Y . Arsenin.Solutions of Ill-posed Problems. John Wiley, New York, 1977.
+G. Toussaint. Bibliography on estimation of misclassiﬁcation. IEEE Transactions on Information
+Theory, IT-20(4):472–479, July 1974.
+V . N. Vapnik.Estimation of Dependences Based on Empirical Data. Springer, 1982.
+V . N. Vapnik. Statistical Learning Theory . Adaptive and learning systems for signal processing,
+communications and control series. Wiley, 1998.
+S. Weisberg. Applied Linear Regression. Probability and Mathematical Statistics. John Wiley &
+Sons, second edition, 1985.
+J. Weston. Leave-one-out support vector machines. In Proceedings of the Sixteenth International
+Joint Conference on Artiﬁcial Intelligence (IJCAI-99), pages 727–733, San Fransisco, CA, USA,
+1999. Morgan Kaufmann.
+C. K. I. Williams and D. Barber. Bayesian classiﬁcation with Gaussian proce sses. IEEE Trans-
+actions on Pattern Analysis and Machine Intelligence, 20(12):1342–1351, December 1998. doi:
+10.1109/34.735807.
+P. M. Williams. A Marquardt algorithm for choosing the step size in backpropagation learning with
+conjugate gradients. Technical Report CSRP-229, University of Sussex, February 1991.
+T. Zhang. Leave-one-out bounds for kernel machines.Neural Computation, 15(6):1397–1437, June
+2003. doi: 10.1162/089976603321780326.
+2107

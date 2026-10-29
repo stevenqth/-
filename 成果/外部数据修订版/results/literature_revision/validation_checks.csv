@@ -1,0 +1,36 @@
+check,pass
+fold rules frozen on unseen extreme validation values,True
+unseen extreme is not a newly invented repeated floor,True
+missing state separate from repeated floor state,True
+fold transforms finite,True
+nine independent outer fit selections,True
+all inner choices contain all six declared candidates,True
+OOF rows aligned,True
+"250 by 50 relative grades, finite integers 0 to 6",True
+input and checkpoint hashes unchanged,True
+no blanket raw concentration verification,True
+Top3 chemically grouped and unique,True
+fixed graph diversity constraints retained,True
+single-chemical Top3 excludes all 13 macro and derived fields,True
+half-sample probabilities valid,True
+all three heldout explanation folds and three repeats present,True
+negative conditional effects not silently clipped,True
+all Pareto files have matching rows,True
+numeric Pareto outputs finite,True
+stored Pareto sensory predictions match independent proxy evaluation,True
+independent final stale proxy non-worsening,True
+independent analysis scale non-worsening DMS,True
+independent analysis scale non-worsening X2.3.butanedione,True
+independent analysis scale non-worsening X4VG,True
+independent analysis scale non-worsening X.E..2.nonenal,True
+DMS assumed concentration threshold,True
+zero-calibrated source 4VG explicitly not physical non-worsening,True
+independent combined Pareto nondominance,True
+independent objective1 recomputation,True
+all four decision preferences refer to real Pareto rows,True
+known analytical NSGA-II test performed,True
+two provided papers and exactly five additional papers,True
+all new experimental modules parse,True
+revised paper includes all model chapters and references,True
+paper preserves important limitations,True
+paper pages contain no replacement glyph,True
