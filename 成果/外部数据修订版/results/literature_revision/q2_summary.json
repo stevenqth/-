@@ -1,0 +1,34 @@
+{
+  "subsamples": 100,
+  "sampling": "style-stratified approximate half-sampling without replacement",
+  "fixed_graph": true,
+  "stable_entries_at_0_8": 4,
+  "top3_mean_frequency": 0.26700000000000007,
+  "nodes": 231,
+  "edges": 641,
+  "maximum_mc_se": 0.05,
+  "single_chemical_candidates": 218,
+  "excluded_macro_or_derived": [
+    "kcalperc",
+    "esters_sum",
+    "aroma_hops_sum",
+    "acids_sum",
+    "sulfur_sum",
+    "pH",
+    "color.EBC.",
+    "betaglucan.mg.L.",
+    "protein.g.L.",
+    "bitterness",
+    "GFS",
+    "unfermentables",
+    "CO2.PSI."
+  ],
+  "conditional_importance": "training-selected correlated coordinates + held-out kNN donors; an approximation, not tree-cutpoint conditional importance",
+  "selector": "style-residualized rank association + graph-community diversity; no claim to reproduce U1 SGL-SHAP",
+  "error_control": "no PFER or FDR guarantee; exchangeability assumptions and original selector not established",
+  "source_ids": [
+    "U1",
+    "L2",
+    "L3"
+  ]
+}

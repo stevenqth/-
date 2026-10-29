@@ -1,0 +1,4433 @@
+===== PDF PAGE 1 =====
+© 2010 Royal Statistical Society 1369–7412/10/72417
+J. R. Statist. Soc. B (2010)
+72, Part 4, pp. 417–473
+Stability selection
+Nicolai Meinshausen
+University of Oxford, UK
+and Peter Bühlmann
+Eidgenössiche T echnische Hochschule Zürich, Switzerland
+[Read before The Royal Statistical Society at a meeting organized by the Research Section on
+Wednesday, February 3rd, 2010 , Professor D. M. Titteringtonin the Chair ]
+Summary. Estimation of structure, such as in variable selection, graphical modelling or clus-
+ter analysis, is notoriously difﬁcult, especially for high dimensional data. We introduce stability
+selection. It is based on subsampling in combination with (high dimensional) selection algo-
+rithms. As such, the method is extremely general and has a very wide range of applicability.
+Stability selection provides ﬁnite sample control for some error rates of false discoveries and
+hence a transparent principle to choose a proper amount of regularization for structure estim-
+ation. Variable selection and structure estimation improve markedly for a range of selection
+methods if stability selection is applied. We prove for the randomized lasso that stability selec-
+tion will be variable selection consistent even if the necessary conditions for consistency of the
+original lasso method are violated. We demonstrate stability selection for variable selection and
+Gaussian graphical modelling, using real and simulated data.
+Keywords: High dimensional data; Resampling; Stability selection; Structure estimation
+1. Introduction
+Estimation of discrete structure, such as graphs or clusters, or variable selection is an age-old
+problem in statistics. It has enjoyed increased attention in recent years due to the massive growth
+of data across many scientiﬁc disciplines. These large data sets often make estimation of discrete
+structures or variable selection imperative for improved understanding and interpretation. Most
+classical results do not cover the loosely deﬁned case of high dimensional data, and it is mainly
+in this area where we motivate the promising properties of our new stability selection.
+In the context of regression, for example, an active area of research is to study thep≫ n case,
+where the number of variables or covariatesp exceeds the number of observationsn; for an early
+overview see for example van de Geer and van Houwelingen (2004). In a similar spirit, graphical
+modelling with many more nodes than sample size has been the focus of recent research, and
+cluster analysis is another widely used technique to infer a discrete structure from observed data.
+Challenges with estimation of discrete structures include computational aspects, since corres-
+ponding optimization problems are discrete, as well as determining the right amount of regu-
+larization, e.g. in an asymptotic sense for consistent structure estimation. Substantial progress
+has been made over recent years in developing computationally tractable methods which have
+provable statistical (asymptotic) properties, even for the high dimensional setting with many
+more variables than samples. One interesting stream of research has focused on relaxations of
+Address for correspondence : Nicolai Meinshausen, Department of Statistics, University of Oxford, 1 South
+Parks Road, Oxford, OX1 3TG, UK.
+E-mail: meinshausen @ stats.ox.ac.uk
+
+
+===== PDF PAGE 2 =====
+418 N. Meinshausen and P . Bühlmann
+some discrete optimization problems, e.g. by l1-penalty approaches (Donoho and Elad, 2003;
+Meinshausen and Bühlmann, 2006; Zhao and Yu, 2006; Wainwright, 2009; Yuan and Lin, 2007)
+or greedy algorithms (Freund and Schapire, 1996; Tropp, 2004; Zhang, 2009). The practical use-
+fulness of such procedures has been demonstrated in various applications. However, the general
+issue of selecting a proper amount of regularization (for the procedures that were mentioned
+above and for many others) for obtaining a right-sized structure or model has largely remained
+a problem with unsatisfactory solutions.
+We address the problem of proper regularization with a very generic subsampling approach
+(bootstrapping would behave similarly). We show that subsampling can be used to determine the
+amount of regularization such that a certain familywise type I error rate in multiple testing can
+be conservatively controlled for ﬁnite sample size. Particularly for complex, high dimensional
+problems, a ﬁnite sample control is much more valuable than an asymptotic statement with the
+number of observations tending to ∞ . Beyond the issue of choosing the amount of regulariza-
+tion, the subsampling approach yields a new structure estimation or variable selection scheme.
+For the more specialized case of high dimensional linear models, we prove what we expect in
+greater generality: namely that subsampling in conjunction withl
+1-penalized estimation requires
+much weaker assumptions on the design matrix for asymptotically consistent variable selection
+than what is needed for the (non-subsampled) l
+1-penalty scheme. Furthermore, we show that
+additional improvements can be achieved by randomizing not only via subsampling but also in
+the selection process for the variables, bearing some resemblance to the successful tree-based
+random-forest algorithm (Breiman, 2001). Subsampling (and bootstrapping) has been primarily
+used so far for asymptotic statistical inference in terms of standard errors, conﬁdence intervals
+and statistical testing. Our work here is of a very different nature: the marriage of subsampling
+and high dimensional selection algorithms yields ﬁnite sample familywise error control and
+markedly improved structure estimation or selection methods.
+1.1. Preliminaries and examples
+In general, letβ be a p-dimensional vector, whereβ is sparse in the sense thats<p components
+are non-zero. In other words,∥β∥
+0 = s<p . Denote the set of non-zero values byS = {k :βk ̸= 0}
+and the set of variables with vanishing coefﬁcient by N = {k : βk = 0}. The goal of structure
+estimation is to infer the set S from noisy observations.
+As a ﬁrst supervised example, consider data .X.1/, Y .1//,..., .X.n/, Y .n// with univariate
+response variable Y and p-dimensional covariates X. We typically assume that .X.i/, Y .i//sa r e
+independent and identically distributed (IID). The vector β could be the coefﬁcient vector in a
+linear model
+Y = Xβ+ ", .1/
+where Y = .Y1,..., Yn/, X is the n × p design matrix and " = ."1,..., "n/ is the random noise
+whose components are IID. Thus, inferring the set S from data is the well-studied variable
+selection problem in linear regression. A main stream of classical methods proceeds to solve
+this problem by penalizing the negative log-likelihood with the l
+0-norm ∥β∥0 which equals the
+number of non-zero components ofβ. The computational task to solve such anl0-norm penal-
+ized optimization problem becomes quickly unfeasible if p is growing large, even when using
+efﬁcient branch-and-bound techniques. Alternatively, one can relax thel0-norm by the l1-norm
+penalty. This leads to the lasso estimator (Tibshirani, 1996; Chen et al., 2001),
+ˆβ
+λ
+= arg min
+β∈Rp
+(
+∥Y − Xβ∥2
+2 +λ
+p∑
+k=1
+|βk|
+)
+, .2/
+
+===== PDF PAGE 3 =====
+Stability Selection 419
+whereλ∈R+ is a regularization parameter and we typically assume that the covariates are on the
+same scale, i.e. ∥Xk∥2 = Σn
+i=1.X.i/
+k /2 = 1. An attractive feature of the lasso is its computational
+feasibility for large p since the optimization problem (2) is convex. Furthermore, the lasso can
+select variables by shrinking certain estimated coefﬁcients exactly to 0. We can then estimate the
+set S of non-zero β-coefﬁcients by ˆS
+λ
+= {k; ˆβ
+λ
+k ̸= 0}, which involves convex optimization only.
+Substantial understanding has been gained over the last few years about consistency of such
+lasso variable selection (Meinshausen and Bühlmann, 2006; Zhao and Yu, 2006; Wainwright,
+2009; Yuan and Lin, 2007), and we present the details in Section 3.1. Among the challenges are
+the issue of choosing a proper amount of regularization λ for consistent variable selection and
+the fact that restrictive design conditions are needed for asymptotically recovering the true set
+S of relevant covariates.
+AsecondexampleisonunsupervisedGaussiangraphicalmodelling.Thedataareassumedtobe
+X
+.1/,..., X.n/ IID
+∼ Nd .μ, Σ/: . 3/
+The goal is to infer conditional dependences among the d variables or components in X =
+.X1,..., Xd /. It is well known thatXj and Xk are conditionally dependent given all other com-
+ponents {X.l/; l̸= j, k} if and only if Σ−1
+jk ̸= 0, and we then draw an edge between nodes j and
+k in a corresponding graph (Lauritzen, 1996). The structure estimation is thus on the index set
+G = {.j, k/;1 ⩽ j<k ⩽ d} which has cardinality p=
+(d
+2
+)
+(and, of course, we can represent G as a
+p× 1 vector) and the set of relevant conditional dependences is S = {.j, k/∈ G; Σ−1
+jk ̸= 0}. Sim-
+ilarly to the problem of variable selection in regression, l0-norm methods are computationally
+very difﬁcult and become very quickly unfeasible for moderate or large values ofd. A relaxation
+with l1-type penalties has also proven to be useful in this context (Meinshausen and Bühlmann,
+2006). A recent proposal is the graphical lasso (Friedman et al., 2008):
+ˆΘ
+λ
+= arg min
+Θ nonneg:def :
+[−log{det.Θ/}+ tr.SΘ/+λ ∑
+j<k
+|Θjk|]:. 4/
+This amounts to an l1-penalized estimator of the Gaussian log-likelihood, partially maximized
+over the mean vectorμ, when minimizing over all non-negative deﬁnite symmetric matrices. The
+estimated graph structure is then ˆSλ = {.j, k/∈ G; ˆΘλ
+jk ̸= 0} which involves convex optimization
+only and is computationally feasible for large values of d.
+Another potential area of application is clustering. Choosing the correct number of clusters
+is a notoriously difﬁcult problem. Looking for clusters that are stable under perturbations or
+subsampling of the data can help to obtain a better sense of a meaningful number of clusters
+and to validate results. Indeed, there has been some activity in this area, most notably in the
+context of consensus clustering (Monti et al., 2003). For an early application see Bhattacharjee
+et al.(2005). Our proposed false discovery control can be applied to consensus clustering, yielding
+good estimates of the parameters of a suitable base clustering method for consensus clustering.
+1.2. Outline
+The use of resampling for validation is certainly not new; we merely try to put it into a more
+formal framework and to show certain empirical and theoretical advantages of doing so. It
+seems difﬁcult to give a complete coverage of all previous work in the area, as notions of sta-
+bility, resampling and perturbations are very natural in the context of structure estimation and
+variable selection. We reference and compare with previous work throughout the paper.
+The structure of the paper is as follows. The generic stability selection approach, its familywise
+type I multiple-testing error control and some representative examples from high dimensional
+
+===== PDF PAGE 4 =====
+420 N. Meinshausen and P . Bühlmann
+linear models and Gaussian graphical models are presented in Section 2. A detailed asymptotic
+analysis of the lasso and randomized lasso for high dimensional linear models is given in
+Section 3 and more numerical results are described in Section 4. After a discussion in Section 5,
+we collect all the technical proofs in Appendix A.
+2. Stability selection
+Stability selection is not a new variable selection technique. Its aim is rather to enhance and
+improve existing methods. First, we give a general description of stability selection and we pres-
+ent speciﬁc examples and applications later. We assume throughout this section that the data,
+which are denoted here by Z
+.1/,..., Z.n/, are IID (e.g. Z.i/ = .X.i/, Y .i// with covariate X.i/ and
+response Y .i/).
+For a generic structure estimation or variable selection technique, we assume that we have a
+tuning parameterλ∈Λ⊆ R+ that determines the amount of regularization. This tuning param-
+eter could be the penalty parameter inl1-penalized regression (see estimator (2)) or in Gaussian
+graphical modelling (see expression (4)), or it may be the number of steps in forward variable
+selection or orthogonal matching pursuit (OMP) (Mallat and Zhang, 1993) or the number of
+iterations in matching pursuit (Mallat and Zhang, 1993) or boosting (Freund and Schapire,
+1996); a large number of steps of iterations would have the opposite meaning from a large
+penalty parameter, but this does not cause conceptual problems. For every value λ∈ Λ,w e
+obtain a structure estimate ˆS
+λ
+⊆ {1 ,..., p}. It is then of interest to determine whether there is a
+λ∈Λ such that ˆS
+λ
+is identical to S with high probability and how to achieve that right amount
+of regularization.
+2.1. Stability paths
+We motivate the concept of stability paths in what follows, ﬁrst for regression. Stability paths
+are derived from the concept of regularization paths. A regularization path is given by the coefﬁ-
+cient value of each variable over all regularization parameters:{ ˆβ
+λ
+k ;λ∈Λ, k=1 ,..., p}. Stability
+paths (which are deﬁned below) are, in contrast, the probability for each variable to be selected
+when randomly resampling from the data. For any given regularization parameter λ∈ Λ, the
+selected set ˆS
+λ
+is implicitly a function of the samples I = {1 ,..., n}. We write ˆS
+λ
+= ˆS
+λ
+.I/ where
+necessary to express this dependence.
+Deﬁnition 1 (selection probabilities). Let I be a random subsample of{1 ,..., n} of size⌊n=2⌋,
+drawn without replacement. For every setK⊆ {1 ,..., p}, the probability of being in the selected
+set ˆS
+λ
+.I/ is
+ˆΠ
+λ
+K = PÅ{K ⊆ ˆS
+λ
+.I/}:. 5/
+Remark 1. The probabilityPÅ in equation (5) is with respect to both the random subsampling
+and other sources of randomness if ˆSλ is a randomized algorithm; see Section 3.1.
+The sample size of⌊n=2⌋ is chosen as it resembles most closely the bootstrap (Freedman, 1977;
+Büchlmann and Yu, 2002) while allowing computationally efﬁcient implementation. Note that
+random subsampling can be viewed as a computational short cut for computing the relative
+frequency for K⊆ ˆS
+λ.Ib/ over all
+(n
+m
+)
+subsets Ib, b= 1 ...,
+(n
+m
+)
+, of size m=⌊ n=2⌋, which itself is
+a U-statistic of order m=⌊ n=2⌋. Subsampling has also been advocated in a related context in
+Valdar et al. (2009).
+
+===== PDF PAGE 5 =====
+Stability Selection 421
+For every variablek= 1 ,..., p, the stability path is given by the selection probabilitiesˆΠλ
+k ,λ∈
+Λ. It is a complement to the usual path plots that show the coefﬁcients of all variablesk=1 ,..., p
+as a function of the regularization parameter. It can be seen in Fig. 1 that this simple path plot
+is potentially very useful for improved variable selection for high dimensional data.
+In the remainder of the paper, we look at the selection probabilities of individual variables.
+The deﬁnition above covers sets of variables also. We could monitor the selection probability of
+a set of functionally related variables, say, by asking how often at least one variable in this set
+is chosen or how often all variables in the set are chosen.
+2.2. Example I: variable selection in regression
+We apply stability selection to the lasso that is deﬁned in equation (2). We work with a gene
+expression data set for illustration which was kindly provided by DSM Nutritional Products
+(Switzerland). For n= 115 samples, there is a continuous response variable measuring the log-
+arithm of riboﬂavin (vitamin B2) production rate of bacillus subtilis , and we have p = 4088
+continuous covariates measuring the logarithm of gene expressions from essentially the whole
+genome of bacillus subtilis . Certain mutations of genes are thought to lead to higher vita-
+min concentrations and the challenge is to identify those relevant genes via a linear regression
+analysis, i.e. we consider a linear model as in equation (1) and want to infer the set S = {k;
+β
+k ̸= 0}.
+Instability of the selected set of genes has been noted before (Ein-Dor et al., 2005; Michiels
+et al., 2005), if either using marginal association or variable selection in a regression or classiﬁ-
+cation model. Daviset al. (2006) were close in spirit to our approach by arguing for ‘consensus’
+gene signatures which assess the stability of selection, whereas Zucknicket al. (2008) proposed
+to measure stability of so-called ‘molecular proﬁles’ by the Jaccard index.
+To see how the lasso and the related stability path cope with noise variables, we randomly per-
+mute all except six of the 4088 gene expressions across the samples, using the same permutation
+to keep the dependence structure between the permuted gene expressions intact. The set of six
+unpermuted genes has been chosen randomly among the 200 genes with the highest marginal
+association with the response. The lasso path { ˆβ
+λ
+;λ∈ Λ} is shown in Fig. 1(a), as a function
+of the regularization parameter λ (rescaled so that λ= 1 is the minimal λ-value for which the
+null model is selected and λ= 0 amounts to the basis pursuit solution). Three of the ‘relevant’
+(unpermuted) genes stand out, but all remaining three variables are hidden within the paths of
+noise (permuted) genes. Fig. 1(b) shows the stability path. At least four relevant variables stand
+out much clearer now than they did in the regularization path plot. Fig. 1(c) shows the stability
+plot for the randomized lasso which will be introduced in Section 3.1: now all six unpermuted
+variables stand above the permuted variables and the separation between (potentially) relevant
+variables and irrelevant variables is even better.
+Choosing the right regularization parameter is very difﬁcult for the original path. The pre-
+diction optimal and cross-validated choices include too many variables (Meinshausen and
+Bühlmann, 2006; Leng et al., 2006) and the same effect can be observed in this example, where
+14 permuted variables are included in the model that was chosen by cross-validation. Fig. 1
+motivates that choosing the right regularization parameter is much less critical for the stability
+path and that we have a better chance of selecting truly relevant variables.
+2.3. Stability selection
+In a traditional setting, variable selection would amount to choosing one element of the set of
+models
+
+===== PDF PAGE 6 =====
+422 N. Meinshausen and P . Bühlmann
+1.0
+–0.5 0.0 0.5
+0.8 0.6 0.4
+λ
+β
+0.0 0.60.4 0.20.8
+Π
+0.1 0.00.6 0.4 0.3 0.20.5
+Π
+0.2 0.0 1.0 0. 8 0.6 0.4
+λ
+0.2 0.0 1.0 0. 8 0.6 0.4
+λ
+0.2 0.0
+Fig. 1. (a) Lasso path for the vitamin gene expression data set ( , paths of six non-permuted genes; -------, paths of the 4082 permuted genes;
+selecting a model with all six unpermuted genes invariably means selecting a large number of irrelevant noise variables), (b) stability path of the lasso (the
+ﬁrst four variables chosen with stability selection are truly non-permuted variables) and (c) stability path for the randomized lasso with weakness αD 0:2,
+introduced in Section 3.1 (now all six non-permuted variables are chosen before any noise variable enters the model)
+
+===== PDF PAGE 7 =====
+Stability Selection 423
+{ ˆSλ;λ∈ Λ}, .6/
+where Λ is again the set of regularization parameters considered, which can be either continuous
+or discrete. There are typically two problems: ﬁrst, the correct model S might not be a member
+of set (6). Second, even if it is a member, it is typically very difﬁcult for high dimensional data
+to determine the right amount of regularizationλ to select exactly S, or to select at least a close
+approximation.
+With stability selection, we do not simply select one model in the list (6). Instead the data are
+perturbed (e.g. by subsampling) many times and we choose all structures or variables that occur
+in a large fraction of the resulting selection sets.
+Deﬁnition 2 (stable variables). For a cut-off π
+thr with 0 <πthr < 1 and a set of regularization
+parameters Λ, the set of stable variables is deﬁned as
+ˆS
+stable
+= {k : max
+λ∈Λ
+. ˆΠ
+λ
+k / ⩾πthr}:. 7/
+We keep variables with a high selection probability and disregard those with low selection
+probabilities. The exact cut-offπthr with 0 <πthr < 1 is a tuning parameter but the results vary
+surprisingly little for sensible choices in a range of the cut-off. Nor do results depend strongly
+on the choice of regularization λ or the regularization region Λ. See Fig. 1 for an example.
+Before we present some guidance on how to choose the cut-off parameter and the regular-
+ization region Λ below, it is worthwhile to point out that there have been related ideas in the
+literature on Bayesian model selection. Barbieri and Berger (2004) showed certain predictive
+optimality results for the so-calledmedian probability model, consisting of variables which have
+posterior probability of being in the model of
+1
+2 or greater (as opposed to choosing the model
+with the highest posterior probability). Lee et al. (2003) or Sha et al. (2004) are examples of
+more applied papers considering Bayesian variable selection in this context.
+2.4. Choice of regularization and error control
+When trying to recover the setS, a natural goal is to include as few variables of the setN of noise
+variables as possible. The choice of the regularization parameter is hence crucial. An advantage
+of our stability selection is that the choice of the initial set of regularization parametersΛ typi-
+cally has not a very strong inﬂuence on the results, as long asΛ is varied within reason. Another
+advantage, which we focus on below, is the ability to choose this set of regularization parameters
+in a way that guarantees, under stronger assumptions, a certain bound on the expected number
+of false selections.
+Deﬁnition 3 (additional notation). Let ˆS
+Λ
+=∪ λ∈Λ ˆS
+λ
+be the set of selected structures or vari-
+ables if varying the regularization λ in the set Λ. Let qΛ be the average number of selected
+variables, qΛ = E.| ˆS
+Λ
+.I/|/. Deﬁne V to be the number of falsely selected variables with stability
+selection,
+V =| N ∩ ˆSstable|:
+In general, it is very difﬁcult to control E.V/, as the distribution of the underlying estimator
+ˆβ depends on many unknown quantities. Exact control is only possible under some simplifying
+assumptions.
+Theorem 1 (error control). Assume that the distribution of {1{k∈ ˆSλ}, k ∈ N} is exchangeable
+for all λ∈ Λ. Also, assume that the original procedure is not worse than random guessing,
+i.e.
+
+===== PDF PAGE 8 =====
+424 N. Meinshausen and P . Bühlmann
+E.|S ∩ ˆSΛ|/
+E.|N ∩ ˆS
+Λ
+|/
+⩾ |S|
+|N| :. 8/
+The expected number V of falsely selected variables is then bounded forπthr ∈ .1
+2 ,1 / by
+E.V/ ⩽ 1
+2πthr − 1
+q2
+Λ
+p :. 9/
+We shall discuss below how to make constructive use of the value q2
+Λ which is in general
+an unknown quantity. The expected number of falsely selected variables is sometimes called
+the per-family error rate or, if divided by p, the per-comparison error rate in multiple testing
+(Dudoit et al., 2003). Choosing fewer variables (reducing q
+Λ) or increasing the threshold πthr
+for selection will, unsurprisingly, reduce the expected number of falsely selected variables, with
+a minimal achievable non-trivial value of 1=p2 (for πthr = 1 and qΛ = 1) for the per-family error
+rate. This seems sufﬁciently low for all practical purposes as long as p> 10, say.
+The exchangeability assumption involved is perhaps stronger than we would wish, but there
+does not seem to be a way of achieving error control in the same generality without mak-
+ing similar assumptions. In recent independent work, Fan et al. (2009) made use of a similar
+condition for error control in regression. In regression and classiﬁcation, the exchangeability
+assumption is fulﬁlled for all reasonable procedures ˆS (whose results do not depend on the
+ordering of variables) if the design is random and the distribution of .Y, X
+S, XN / is invariant
+under permutations of variables in N. The simplest example is independence between each
+Xk, k ∈ N, and all other variables, including Y. To give another example for regression in
+model (1), the condition is satisﬁed if the error has a normal distribution and the variable X
+has a joint normal distribution where it holds true for all pairs k, k′ ∈ N that cov.Xk, Xl/ =
+cov.Xk′ , Xl/ for all l= 1 ,..., p. For real data, we have no guarantee that the assumption is ful-
+ﬁlled but the numerical examples in Section 4 show that the bound holds up very well for real
+data.
+Note also that the assumption of exchangeability is only needed to prove theorem 1. All other
+beneﬁts of stability selection that are shown in this paper do not rely on this assumption. Besides
+exchangeability, we needed another, quite harmless, assumption, namely that the original pro-
+cedure is not worse than random guessing. One would certainly hope that this assumption is
+fulﬁlled. If it is not, the results below are still valid with slightly weaker constants. The assump-
+tion seems so weak, however, that we do not pursue this further.
+The threshold value π
+thr is a tuning parameter whose inﬂuence is very small. For sensible
+values in the range of, say, πthr ∈ .0:6, 0:9/, results tend to be very similar. Once the thresh-
+old has been chosen at some default value, the regularization region Λ is determined by the
+error control desired. Speciﬁcally, for a default cut-off value πthr = 0:9, choosing the regulari-
+zation parameters Λ such that say qΛ =√ .0:8p/ will control E.V/ ⩽ 1, or choosing Λ such that
+qΛ =√ .0:8αp/ controls the familywise error rate at levelα, i.e. P.V >0/ ⩽α. Of course, we can
+proceed the other way round by ﬁxing the regularization region Λ and choosing πthr such that
+E.V/ is controlled at the desired level.
+To do this, we need knowledge aboutqΛ. This can be easily achieved by regularization of the
+selection procedure ˆS = ˆS
+q
+in terms of the number of selected variables q, i.e. the domain Λ for
+the regularization parameter λ determines the number q of selected variables, i.e.q= q.Λ/.F o r
+example, with l1-norm penalization as in expressions (2) or (4), the number q is given by the
+variables which enter ﬁrst in the regularization path when varying from a maximal value λmax
+to some minimal value λmin. Mathematically, λmin is such that |∪λmax⩾λ⩾λmin
+ˆSλ| ⩽ q.
+
+===== PDF PAGE 9 =====
+Stability Selection 425
+Without stability selection, the regularization parameter λ invariably must depend on the
+unknown noise level of the observations. The advantages of stability selection are that
+(a) exact error control is possible and
+(b) the method works ﬁne even though the noise level is unknown.
+This is a real advantage in high dimensional problems withp≫ n, as it is very difﬁcult to estimate
+the noise level in these settings.
+2.4.1. Pointwise control
+For some applications, evaluation of subsampling replicates of ˆSλ is already computationally
+very demanding for a single value ofλ. If this single valueλ is chosen such that some overﬁtting
+occurs and the set ˆSλ is rather too large, in the sense that it containsS with high probability, the
+same approach as above can be used and is in our experience very successful. Results typically
+do not depend strongly on the regularization λ utilized. See the example below for graphical
+modelling. Setting Λ= {λ}, we can immediately transfer all the results above to the case of what
+we here call pointwise control. For methods which select structures incrementally, i.e. for which
+ˆS
+λ⊆ ˆSλ′
+for all λ⩾λ′, pointwise control and control with Λ= [λ,∞ / are equivalent since ˆΠλ
+k is
+then monotonically increasing with decreasing λ for all k = 1 ,..., p.
+2.5. Example II: graphical modelling
+Stability selection is also promising for graphical modelling. Here we focus on Gaussian graph-
+ical models as described in Section 1.1 around formulae (3) and (4).
+The pattern of non-zero entries in the inverse covariance matrixΣ−1 corresponds to the edges
+between the corresponding pairs of variables in the associated graph and is equivalent to a non-
+zero partial correlation (or conditional dependence) between such pairs of variables (Lauritzen,
+1996).
+There has been interest recently in usingl
+1-penalties for model selection in Gaussian graphical
+models due to their computational efﬁciency for moderate and large graphs (Meinshausen and
+Bühlmann, 2006; Yuan and Lin, 2007; Friedman et al., 2008; Banerjee and El Ghaoui, 2008;
+Bickel and Levina, 2008; Rothman et al., 2008). Here we work with the graphical lasso (Fried-
+man et al., 2008), as applied to the data from 160 randomly selected genes from the vitamin gene
+expression data set (without the response variable) that was introduced in Section 2.2. We want
+to infer the set of non-zero entries in the inverse covariance matrix Σ
+−1. Part of the resulting
+regularization path of the graphical lasso showing graphs for various values of the regulariza-
+tion parameter λ, i.e. { ˆS
+λ;λ∈ Λ} where ˆSλ = {.j, k/; . ˆΣ−1/λ
+jk ̸= 0}, are shown in Figs 2(a)–2(f).
+For reasons of display, variables (genes) are ordered ﬁrst using hierarchical clustering and are
+symbolized by nodes arranged in a circle. Stability selection is shown in Figs 2(g)–2(l). We pur-
+sue a pointwise control approach. For each value ofλ, we select the thresholdπ
+thr to guarantee
+that E.V/ ⩽ 30, i.e. we expect fewer than 30 wrong edges among the 12720 possible edges in the
+graph. The set ˆSstable varies remarkably little for the majority of the path and the choice of q
+(which is implied by λ) does not seem to be critical, as already observed for variable selection
+in regression.
+Next, we permute the variables (expression values) randomly, using a different permutation
+for each variable (gene). The true graph is now the empty graph. As can be seen from Fig. 3,
+stability selection selects now just very few edges or none at all (as it should). Figs 3(a)–3(f)
+show the corresponding graphs estimated with the graphical lasso, which yields a much poorer
+selection of edges.
+
+===== PDF PAGE 10 =====
+426 N. Meinshausen and P . Bühlmann
+Graphical LassoStability Selection
+(a)( b) (c) (d) (e) (f)
+(g) (h) (i) (j) (k) (l)
+Fig. 2. Vitamin gene expression data set—(a)–(f) regularization path of the graphical lasso and (g)–(l)
+the corresponding pointwise stability-selected models: (a), (g) λD 0:46; (b), (h) λD 0:448; (c), (i) λD 0:436;
+(d), (j) λD0:424; (e), (k) λD0:412; (f), (l) λD0:4
+Graphical LassoStability Selection
+(a)( b) (c) (d) (e) (f)
+(g) (h) (i) (j) (k) (l)
+Fig. 3. Same plots as in Fig. 2 but with the variables (expression values of each gene) permuted inde-
+pendently (the empty graph is the true model; with stability selection, only a few errors are made, as guar-
+anteed by the error control made): (a), (g) λD 0:065; (b), (h) λD 0:063; (c), (i) λD 0:061; (d), (j) λD 0:059;
+(e), (k) λD0:057; (f), (l) λD0:055
+
+===== PDF PAGE 11 =====
+Stability Selection 427
+2.6. Computational requirements
+Stability selection demands that we rerun{ ˆS
+λ
+;λ∈Λ} multiple times. Evaluating selection prob-
+abilities over 100 subsamples seems sufﬁcient in practice. The algorithmic complexity of the
+lasso in expression (2) or in expression (13) in Section 3.1 is of the order O{np min.n, p/}; see
+Efron et al. (2004). In the p>n regime, running the full lasso path on subsamples of sizen=2i s
+hence a quarter of the cost of running the algorithm on the full data set and running 100 simula-
+tions is 25 times the cost of running a single ﬁt on the full data set. This cost could be compared
+with the cost of cross-validation, as this is what we must resort to often in practice to select the
+regularization parameter. Running tenfold cross-validation uses approximately 10× 0:9
+2 = 8:1
+as many computational resources as the single ﬁt on the full data set. Stability selection is thus
+roughly three times more expensive than tenfold cross-validation. This analysis is based on
+the fact that the computational complexity scales like O.n
+2/ with the number of observations
+(assuming that p>n ). If computational costs would scale linearly with sample size (e.g. for the
+lasso with p<n ), this factor would increase to roughly 5.5.
+Stability selection with the lasso (using 100 subsamples) for a data set with p = 1000 and
+n = 100 takes about 10 s on a 2.2-GHz processor, using the implementation of Friedman
+et al. (2007). Computational costs of this order would often seem worthwhile, given the potential
+beneﬁts.
+3. Consistent variable selection
+Stability selection is a general technique, which is applicable to a wide range of applications,
+some of which we have discussed above. Here, we want to discuss advantages and properties
+of stability selection for the speciﬁc application of variable selection in regression with high
+dimensional data, which is a well-studied topic nowadays (Meinshausen and Bühlmann, 2006;
+Zhao and Yu, 2006; Wainwright, 2009). We consider a linear model as in equation (1) with
+Gaussian noise,
+Y = Xβ+ ", .10/
+with ﬁxed n× p design matrix X and "
+1,..., "n IID N .0,σ2/. The predictor variables are nor-
+malized with ∥Xk∥2 = {Σn
+i=1.X.i/
+k /2}1=2 = 1 for all k∈{1 ,..., p}. We allow for high dimensional
+settings where p≫ n.
+Stability selection is attractive for two reasons. First, the choice of a proper regularization
+parameter for variable selection is crucial and notoriously difﬁcult, especially because the noise
+level is unknown. With stability selection, results are much less sensitive to the choice of the
+regularization. Second, we shall show that stability selection makes variable selection consistent
+in settings where the original methods fail.
+We give general conditions under which consistent variable selection is achieved with stability
+selection. Consistent variable selection for a procedure ˆS is understood to be equivalent to
+P. ˆS = S/→ 1,
+n→∞ : .11/
+It is clearly of interest to know under which conditions consistent variable selection can be
+achieved. In the high dimensional context, this places a restriction on the growth of the
+number p of variables and sparsity |S|, typically of the form |S|log.p/ = o.n/ (Meinshausen
+and Bühlmann, 2006; Zhao and Yu, 2006; Wainwright, 2009). Although this assumption is
+often realistic, there are stronger assumptions on the design matrix that need to be satisﬁed
+
+===== PDF PAGE 12 =====
+428 N. Meinshausen and P . Bühlmann
+for consistent variable selection. For the lasso, it amounts to the ‘neighbourhood stability’
+condition (Meinshausen and Bühlmann, 2006), which is equivalent to the ‘irrepresentable con-
+dition’ (Zhao and Yu, 2006; Zou, 2006; Yuan and Lin, 2007). For OMP (which is essentially
+forward variable selection), the so-called ‘exact recovery criterion’ (Tropp, 2004; Zhang, 2009)
+is sufﬁcient and necessary for consistent variable selection.
+Here, we show that these conditions can be circumvented more directly by using stability
+selection, also giving guidance on the proper amount of regularization. For brevity, we shall
+only discuss in detail the case of the lasso whereas the analysis of OMP is just alluded to.
+An interesting aspect is that stability selection with the original procedures alone often yields
+very large improvements already. Moreover, adding some extra sort of randomness in the spirit
+of random forests (Breiman, 2001) weakens considerably the conditions that are needed for
+consistent variables selection as discussed next.
+3.1. Lasso and randomized lasso
+The lasso (Tibshirani, 1996; Chen et al., 2001) estimator is given in expression (2).
+For consistent variable selection using ˆS
+λ = {k; ˆβλ
+k ̸= 0}, it turns out that the design needs to
+satisfy some assumptions, the strongest of which is arguably the so-called neighbourhood sta-
+bility condition (Meinshausen and Bühlmann, 2006) which is equivalent to the irrepresentable
+condition (Zhao and Yu, 2006; Zou, 2006; Yuan and Lin, 2007):
+max
+k∈N
+|sgn.βS /T.XT
+S XS /−1XT
+S Xk| < 1:. 12/
+Condition (12) is sufﬁcient and (almost) necessary (the word ‘almost’ refers to the fact that a
+necessary relationship uses ‘ ⩽’ instead of ‘ <’). If this condition is violated, all that we can
+hope for is recovery of the regression vector β in an l2-sense of convergence by achieving
+∥ ˆβλ − β∥2 → p 0f o rn→∞ . The main assumption here is bounds on the sparse eigenvalues as
+discussed below. This type ofl2-convergence can be used to achieve consistent variable selection
+in a two-stage procedure by thresholding or, preferably, the adaptive lasso (Zou, 2006; Huang
+et al., 2008). The disadvantage of such a two-step procedure is the need to choose several tuning
+parameters without proper guidance on how these parameters can be chosen in practice. We
+propose the randomized lasso as an alternative. Despite its simplicity, it is consistent for variable
+selection even though the irrepresentable condition (12) is violated.
+The randomized lasso is a new generalization of the lasso. Whereas the lasso penalizes the
+absolute value |β
+k| of every component with a penalty term proportional toλ, the randomized
+lasso changes the penalty λ to a randomly chosen value in the range [λ,λ=α].
+For the randomized lasso with weaknessα∈.0, 1], letWk be IID random variables in [α,1 ]f o r
+k = 1 ,..., p. The randomized lasso estimator ˆβλ,W for regularization parameter λ∈ R is then
+ˆβλ,W = arg min
+β∈Rp
+(
+∥Y − Xβ∥2
+2 +λ
+p∑
+k=1
+|βk|
+Wk
+)
+:. 13/
+A proposal for the distribution of the weights Wk is described below, just before theorem 2.
+The word ‘weakness’ is borrowed from the terminology of weak greedy algorithms (Temlyakov,
+2000) which are loosely related to our randomized lasso. Implementation of estimator (13) is
+straightforward by appropriate rescaling of the predictor variables (with scale factorW
+k for the
+kth variable). Using these rescaled variables, the standard lasso is solved, using for example
+the algorithm LARS (Efronet al., 2004) or fast co-ordinatewise approaches (Meieret al., 2008;
+Friedman et al., 2007). The perturbation of the penalty weights is reminiscent of the reweighting
+in the adaptive lasso (Zou, 2006). Here, however, the reweighting is not based on any previous
+
+===== PDF PAGE 13 =====
+Stability Selection 429
+estimate but is simply chosen at random! As such, it is very simple to implement. However,
+it seems nonsensical at ﬁrst sight since we surely cannot expect any improvement from such a
+random perturbation. If applied only with one random perturbation, the randomized lasso is
+not very useful. However, applying the randomized lasso many times and looking for variables
+that are chosen often will turn out to be a very powerful procedure.
+3.1.1. Consistency for randomized lasso with stability selection
+For stability selection with the randomized lasso, we can do without the irrepresentable condi-
+tion (12) but need only a condition on the sparse eigenvalues of the design (Candes and Tao,
+2007; van de Geer, 2008; Meinshausen and Yu, 2009; Bickelet al., 2009), which was also called
+the sparse Riesz condition in Zhang and Huang (2008).
+Deﬁnition 4 (sparse eigenvalues). For any K ⊆ {1 ,..., p}, let X
+K be the restriction of X to
+columns in K. The minimal sparse eigenvalue φmin is then deﬁned for k ⩽ p as
+φmin.k/= inf
+a∈R⌈k⌉,K⊆ {1,:::,p}:|K|⩽⌈k⌉
+( ∥XKa∥2
+∥a∥2
+)
+, .14/
+and analogously for the maximal sparse eigenvalue φmax.
+We must constrain sparse eigenvalues to succeed.
+Assumption 1 (sparse eigenvalues). There are some C> 1 and some κ⩾ 9 such that
+φmax.Cs2/
+φ3=2
+min.Cs2/
+<√ C=κ, s=| S|:. 15/
+Assumption (15) is related to the sparse Riesz condition in Zhang and Huang (2008). The
+equivalent condition there requires the existence of some ¯C> 0 such that
+φmax{.2+ 4 ¯C/s + 1}
+φmin{.2+ 4 ¯C/s + 1} < ¯C; .16/
+compare with remark 2 in Zhang and Huang (2008). This assumption essentially requires that
+maximal and minimal eigenvalues, for a selection of orders variables, are bounded away from 0
+and ∞ respectively. In comparison, our assumption is signiﬁcantly stronger than condition (16),
+but at the same time typically much weaker than the standard assumption of the irrepresentable
+condition that is necessary to obtain results that are comparable with ours.
+We have not speciﬁed the exact form of perturbations that we shall be using for the random-
+ized lasso (13). For what follows we consider the randomized lasso (13), where the weights W
+k
+are sampled independently as Wk =α with probability pw ∈ .0, 1/ and Wk = 1 otherwise. Other
+perturbations are certainly possible and often work just as well in practice.
+Theorem 2. Consider model (10). For the randomized lasso, let the weakness α be given by
+α2 =νφmin.m/=m, for anyν∈..7=κ/2,1 =√ 2/, and m= Cs2. Let an be a sequence withan →∞
+for n→∞ . Let λmin = 2σ{√ .2C/s+ 1}√ {log.p∨ an/=n}. Assume that p> 10 and s ⩾ 7 and
+that the sparse eigenvalue assumption 1 is satisﬁed. Then there is some δ=δs ∈ .0, 1/ such
+that, for allπthr ⩾1− δ, stability selection with the randomized lasso satisﬁes on a setΩA with
+P.ΩA/ ⩾ 1− 5=.p∨ an/ that no noise variables are selected,
+N ∩ ˆS
+stable
+λ =∅, .17/
+
+===== PDF PAGE 14 =====
+430 N. Meinshausen and P . Bühlmann
+where ˆSstable
+λ = {k : ˆΠλ
+k ⩾πthr} with λ⩾λmin. On the same set ΩA,
+.S \ Ssmall;λ/⊆ ˆSstable
+λ .18/
+where Ssmall;λ = {k :|βk| ⩽ 0:3.Cs/3=2λ}. This implies that all variables with sufﬁciently large
+regression coefﬁcient are selected.
+Remark 2. Under the condition that the minimal non-zero regression coefﬁcient is bounded
+from below by mink∈S |βk| ⩾ .Cs/3=2.0:3λ/, as a consequence of theorem 2,
+P.S = ˆSstable
+λ / ⩾ 1− 1=.p∨ an/,
+i.e. consistent variable selection for p∨ an →∞ .p→∞ or n→∞ ) in the sense of expression
+(11) even if the irrepresentable condition (12) is violated. If no such lower bound holds, the set
+of selected variables might miss variables with too small regression coefﬁcients, which are, by
+deﬁnition, in the set S
+small;λ.
+Remark 3. Theorem 2 is valid for all λ⩾λmin. This is noteworthy as it means that, even if
+the value of λ is chosen too large (i.e. considerably larger than λmin), no noise variables will
+be selected and expression (17) holds true. Only some important variables might be missed.
+This effect has been seen in the empirical examples as stability selection is very insensitive to
+the choice of λ. In contrast, a hard thresholded solution of the lasso with a value of λ too
+large will lead to the inclusion of noise variables. Thus, stability selection with the randomized
+lasso exhibits an important property of being conservative and guarding against false positive
+selections.
+Remark 4. Theorem 2 is derived under random perturbations of the weights. Although this
+achieves good empirical results, it seems more advantageous in combination with subsampling
+of the data. The results extend directly to this case. Let ˜Π
+λ
+k be the selection probability of var-
+iable k ∈ S\Ssmall;λ, while doing both random weight perturbations and subsampling n=2 out
+of n observations. The probability that ˜Πλ
+k is above the threshold πthr ∈ .0, 1/ is bounded by a
+Markov-type inequality from below by
+P. ˜Π
+λ
+k ⩾πthr/ ⩾ E. ˜Π
+λ
+k /− πthr
+1− πthr
+⩾ 1− 5
+.p∨ an=2/.1− πthr/,
+having used that E. ˜Π
+λ
+k / ⩾ 1 − 5=.p ∨ an=2/ as a consequence of theorem 2. If 5 =.p ∨ an=2/ is
+sufﬁciently small in comparison with 1 − πthr, this elementary inequality implies that important
+variables in S\Ssmall;λ are still chosen by stability selection (subsampling and random-weights
+perturbation) with very high probability. A similar argument shows that noise variables are also
+still not chosen with very high probability. Empirically, combining random-weight perturba-
+tions with subsampling yields very competitive results and this is what we recommend to use.
+There is an inherent trade-off when choosing the weakness α. A negative consequence of a
+low α is that the design can become closer to singularity and can thus lead to unfavourable
+conditioning of the weighted design matrix. However, a low value ofα makes it less likely that
+irrelevant variables are selected. This is a surprising result but rests on the fact that irrelevant
+variables can only be chosen if the corresponding irrepresentable condition (12) is violated.
+By randomly perturbing the weights with a low α, this condition is bound to fail sometimes,
+lowering the selection probabilities for such variables. A low value ofα will thus help stability
+selection to avoid selecting noise variables with a violated irrepresentable condition (12). In
+practice, choosing α in the range .0:2, 0:8/ gives very useful results.
+
+===== PDF PAGE 15 =====
+Stability Selection 431
+3.1.2. Relation to other work
+In related and very interesting work, Bach (2008) has proposed the ‘bolasso’ (for bootstrapped
+enhanced lasso) and shown that using a ﬁnite number of subsamples of the original lasso proce-
+dure and applying basically stability selection with π
+thr = 1 yield consistent variables selection
+under the condition that the penalty parameterλ vanishes faster than typically assumed, at rate
+n−1=2, and that the model dimension p is ﬁxed. Although the latter condition could possibly be
+technical only, the ﬁrst distinguishes it from our results. Applying stability selection to the ran-
+domized lasso, no false variable is selected for all sufﬁciently large values of λ; see remark 3. In
+other words, ifλis chosen ‘too large’ with the randomized lasso, only truly relevant variables are
+chosen (though a few might be missed). Ifλ is chosen too large with the bolasso, noise variables
+might be picked up. Fig. 4 is a good illustration. Picking the regularization in Fig. 4(a) (without
+extra randomness) to select the correct model is much more difﬁcult than in Fig. 4(c), where
+extra randomness is added. The same distinction can be made with two-stage procedures like
+the adaptive lasso (Zou, 2006) or hard thresholding (Candes and Tao, 2007; Meinshausen and
+Yu, 2009), where variables are thresholded. Pickingλ too large (andλ is notoriously difﬁcult to
+choose), false variables will invariably enter the model. In contrast, stability selection with the
+randomized lasso does not pick wrong variables ifλ is chosen too large.
+3.2. Example
+We illustrate the results on the randomized lasso with a small simulation example: p= n= 200
+and the predictor variables are sampled from an N .0, Σ/ distribution, where Σ is the identity
+matrix, except for the entriesΣ
+13 = Σ23 =ρand their symmetrical counterparts. We use a regres-
+sion vector β= .1 ,1 ,0 ,0 ,...,0 /. The response Y is obtained from the linear model Y = Xβ+ "
+in equation (1), where "1,..., "n are IID N .0, 1
+4 /.F o rρ> 0:5, the irrepresentable condition (12)
+is violated and the lasso cannot correctly identify the ﬁrst two variables as the truly important
+variables, since it always includes the third variable superﬂuously as well. Using the random-
+ized version for the lasso, the two relevant variables are still chosen with probability close to
+1, whereas the irrelevant third variable is chosen only with much lower probability; the corres-
+ponding probabilities are shown for the randomized lasso in Fig. 4. This allows us to separate
+relevant and irrelevant variables. And, indeed, the randomized lasso is consistent under stability
+selection.
+3.3. Randomized orthogonal matching pursuit
+Interesting alternatives to the lasso or greedy forward search in this context are the recently pro-
+posed forward–backward search (Zhang, 2008) and the MC+ algorithm (Zhang, 2007), which
+both provably lead to consistent variable selection under weak conditions on sparse eigenvalues,
+despite being greedy solutions to non-convex optimization problems. It will be very interesting
+to explore the effect of stability selection on these algorithms, but this is beyond the scope of
+this paper.
+Here, we look instead at OMP, a greedy forward search in the variable space. The iterative
+sure independence screening procedure (Fan and Lv, 2008) entails OMP as a special case. We
+shall examine the effect of stability selection under subsampling and additional randomization.
+To have a clear deﬁnition of randomized OMP, with weakness 0 <α < 1 and q iterations, we
+deﬁne it as follows.
+(a) Set R
+1 = Y. Set m= 0 and ˆS
+0
+=∅.
+(b) For m= 1 ,..., q:
+(i) ﬁnd ρmax = max1⩽k⩽p |XT
+k Rm|;
+
+===== PDF PAGE 16 =====
+432 N. Meinshausen and P . Bühlmann
+1.0 0. 8
+(a)( b) (c)
+0.6 0.4 0.2 0.0
+0.0 0.2 0.40.6 0.81.0
+λλ
+Π
+1.0 0. 8 0.6 0.4 0.2 0.0
+0.0 0.2 0.40.60.81.0
+λλ
+ΠΠ
+1.0 0. 8 0.6 0.4 0.2 0.0
+0.00.2 0.4 0.60.81.0
+λλ
+ΠΠ
+Fig. 4. Stability paths for the randomized lasso with stability selection by using weakness parameters (a) αD 1 (identical to the original lasso), (b) αD 0:5
+and (c) αD0:2( , coefﬁcients of the ﬁrst two (relevant) variables; , coefﬁcient of the third (irrelevant) variable; ....... , coefﬁcients from all other
+(irrelevant) variables): introducing the randomized version helps to avoid choosing the third (irrelevant) predictor variable
+
+===== PDF PAGE 17 =====
+Stability Selection 433
+(ii) deﬁne K = {k :|XT
+k Rm| ⩾αρmax};
+(iii) select randomly a variable ksel in the set K and set ˆS
+m
+= ˆS
+m−1
+∪ {ksel};
+(iv) let Rm+1 = Y − PmY, where the projection Pm is given by X ˆSm .XT
+ˆSm X ˆSm /−1XT
+ˆSm .
+(c) Return the selected sets ˆS
+1
+⊂ ˆS
+2
+⊂ ... ⊂ ˆS
+q
+.
+A drawback of OMP is clearly that conditions for consistent variable selection are quite
+strong. Following Tropp (2004), the exact recovery condition for OMP is deﬁned as
+max
+k∈N
+{∥.XT
+S XS /−1XT
+S Xk∥1} < 1:. 19/
+This is a sufﬁcient condition for consistent variable selection. If it is not fulﬁlled, there are
+regression coefﬁcients that cause OMP or its weak variant to fail in recovery of the exact set S
+of relevant variables. Surprisingly, this condition is quite similar to the irrepresentable (Zhao
+and Yu, 2006) or neighbourhood stability condition (Meinshausen and Bühlmann, 2006).
+In the spirit of theorem 2, we have also a proof that stability selection for randomized OMP
+is asymptotically consistent for variable selection in linear models, even if the right-hand side
+in condition (19) is not bounded by 1 but instead by a possibly large constant (assuming that
+the weakness α is sufﬁciently low). This indicates that stability selection has a more general
+potential for improved structure estimation, beyond the case for the lasso that was presented
+in theorem 2. It is noteworthy that our proof involves artiﬁcial adding of noise covariates. In
+practice, this seems to help often but a more involved discussion is beyond the scope of this paper.
+We shall give empirical evidence for the usefulness of stability selection under subsampling and
+additional randomization for OMP in the numerical examples below.
+4. Numerical results
+To investigate further the effects of stability selection, we focus here on the application of sta-
+bility selection to the lasso and randomized lasso for both regression and the natural extension
+to binary classiﬁcation. The effect on OMP and randomized OMP will also be examined.
+For regression (the lasso and OMP), we generate observations by Y = Xβ+ ". For binary
+classiﬁcation, we use the logistic linear model under the binomial family. To generate the design
+matrices X , we use two real and ﬁve simulated data sets.
+(a) Independent predictor variables: all p=1000 predictor variables are IID standard normal
+distributed; sample size n= 100 and n= 1000.
+(b) Block structure with 10 blocks: the p= 1000-dimensional predictor variable follows an
+N .0, Σ/ distribution, where Σ
+km = 0 for all pairs .k, m/ except if mod10.k/= mod10.m/,
+for which Σkm = 0:5; sample size n= 200 and n= 1000.
+(c) Toeplitz design: the p= 1000-dimensional predictor variable follows anN .0, Σ/ distribu-
+tion, where Σkm =ρ|k− m| and ρ= 0:99; sample size n= 200 and n= 1000.
+(d) Factor model with two factors: let φ1 and φ2 be two latent variables following IID stan-
+dard normal distributions. Each predictor variable Xk,f o rk = 1 ,..., p, is generated as
+Xk = fk,1φ1 + fk,2φ2 +ηk, where fk,1, fk,2 and ηk have IID standard normal distributions
+for all k = 1 ,..., p; sample sizes are n= 200 and n= 1000, and p= 1000.
+(e) Data set (e) identical to (d) but with 10 instead of two factors.
+(f) Motif regression data set: this is a data set (p=660 and n=2587) about ﬁnding transcrip-
+tion factor binding sites (motifs) in DNA sequences. The real-valued predictor variables
+are abundance scores forp candidate motifs (for each of the genes). Our data set is from a
+heat shock experiment with yeast. For a general description and motivation about motif
+regression we refer to Conlon et al. (2003).
+
+===== PDF PAGE 18 =====
+434 N. Meinshausen and P . Bühlmann
+(g) This data set is the vitamin gene expression data (with p= 4088 and n= 158) that were
+described in Section 2.2.
+We do not use the response values from the real data sets, however, as we need to know which
+variables are truly relevant or irrelevant. For this, we create sparse regression vectors by setting
+β
+k = 0 for all k= 1 ,..., p, except for a randomly chosen setS of coefﬁcients, where βk is chosen
+independently and uniformly in [0, 1] for all k ∈ S. The size s =| S| of the active set is varied
+between 4 and 50, depending on the data set. For regression, the noise vector ."1,..., "n/ is
+chosen IID N .0,σ2=n/, where the rescaling of the variance with n is due to the rescaling of the
+predictor variables to unit norm, i.e.∥X.k/∥2 = 1. The noise level σ2 is chosen to achieve signal-
+to-noise ratios of 0.5 and 2. For binary classiﬁcation, we scale the vector β to achieve a given
+Bayes misclassiﬁcation rate, either 1
+8 or 1
+3 . Each of the 64 scenarios is run 100 times: once using
+the standard procedure (the lasso or OMP), once using stability selection with subsampling and
+once using stability selection with subsampling and additional randomization ( α= 0:5 for the
+randomized lasso and α= 0:9 for randomized OMP). The methods are thus in total evaluated
+on about 20000 simulations each.
+The solution of stability selection cannot be reproduced by simply selecting the right penalty
+with the lasso, since stability selection provides a fundamentally new solution. To compare the
+power of both approaches, we look at the probability thatγs of the s relevant variables can be
+recovered without error, whereγ∈{0:1, 0:4}. A set ofγs variables is said to be recovered success-
+fully for the lasso or OMP selection, if there is a regularization parameter such that at least⌈γs⌉
+variables in S have a non-zero regression coefﬁcient and all variables in N = {1 ,..., p}\ S have
+a zero regression coefﬁcient. For stability selection, recovery without error means that the⌈γs⌉
+variables with highest selection probability max
+λ⩾λmin . ˆβ
+λ
+k / are all in S. The valueλmin is chosen
+such that at most √ .0:8p/ variables are selected in the whole path of solutions for λ⩾ λmin.
+Note that this notion neglects the fact that the most advantageous regularization parameter is
+selected automatically here for the lasso and OMP but not for stability selection.
+Results are shown in Fig. 5 for the lasso applied to regression, and in Fig. 6 for OMP applied
+to regression and the lasso applied to binary classiﬁcation. In Fig. 5, we also give the median
+number of variables violating the irrepresentable condition (denoted by ‘violations’) and the
+average of the maximal correlation between a randomly chosen variable and all other variables
+(‘max cor’) as two measures of the difﬁculty of the problem.
+Stability selection identiﬁes as many as or more correct variables than the underlying method
+itself. In some settings (e.g. in (a) or in (b) and (f) when the number s of relevant variables is
+very small), stability selection does not improve and yields comparable results with those of
+the underlying method. That stability selection is not helping for scenario (a) is to be expected
+as the design is nearly orthogonal (very weak empirical correlations between variables), thus
+almost decomposing into p univariate decisions and we would not expect stability selection to
+help in a univariate framework. However, the gain of stability selection under subsampling is
+often substantial, irrespective of the sparsity of the signal and the signal-to-noise-ratio. Addi-
+tional randomization helps in cases where there are many variables violating the irrepresentable
+condition, e.g. in setting (e). This is in line with our theory.
+Instead of giving full receiver operating characteristic curves for each simulation setting, we
+look at the number of falsely chosen variables when selecting 20% and 80% of alls relevant vari-
+ables. The mean number of falsely selected variables in each of these two cases is shown in Fig. 7
+for the lasso and Fig. 8 for OMP . When using the lasso, stability selection with subsampling can
+increase the number of falsely selected edges when there is a large number of relevant variables
+(s= 50) and we are looking to identify a large proportion (80%) of these. Y et all methods fail
+
+===== PDF PAGE 19 =====
+Stability Selection 435
+data
+p
+n
+snr
+s
+violations
+max cor
+0
+1/4
+1/2
+3/4
+1
+P(first 0.1s correct)
+X
+0.5
+4
+100
+1000
+(a)
+0
+0.34
+X
+2
+X
+0.5
+10
+2
+X
+2
+X
+0.5
+20
+1000
+0
+0.11
+X
+2
+X
+0.5
+50
+0
+X
+2
+X
+0.5
+4
+200
+1000
+(b)
+0
+0.6
+X
+2
+X
+0.5
+10
+5
+X
+2
+X
+0.5
+20
+1000
+1
+0.54
+X
+2
+X
+0.5
+50
+44
+X
+2
+X
+0.5
+4
+200
+1000
+(c)
+14
+0.99
+X
+2
+X
+0.5
+10
+108
+X
+2
+X
+0.5
+20
+1000
+131
+0.99
+X
+2
+X
+0.5
+50
+302
+X
+2
+X
+0.5
+10
+200
+100
+(d)
+1
+0.7
+X
+2
+X
+0.5
+30
+4
+X
+2
+X
+0.5
+4
+200
+1000
+2
+0.69
+X
+2
+X
+0.5
+10
+11
+X
+2
+X
+0.5
+20
+1000
+0
+0.69
+X
+2
+X
+0.5
+50
+2
+X
+2
+X
+0.5
+10
+200
+200
+(e)
+66
+0.73
+X
+2
+X
+0.5
+30
+37
+X
+2
+X
+0.5
+4
+200
+1000
+103
+0.78
+X
+2
+X
+0.5
+10
+342
+X
+2
+X
+0.5
+20
+1000
+259
+0.77
+X
+2
+X
+0.5
+50
+62
+X
+2
+X
+0.5
+4
+2587
+660
+(f)
+0
+0.48
+X
+2
+X
+0.5
+10
+4
+X
+2
+X
+0.5
+20
+70
+X
+2
+X
+0.5
+50
+159
+X
+2
+X
+0.5
+4
+115
+4088
+(g)
+118
+0.82
+X
+2
+X
+0.5
+10
+477
+X
+2
+0
+1/4
+1/2
+3/4
+1
+P(first 0.4s correct)
+X
+X
+X
+X
+X X
+X
+X
+X
+X
+X
+X
+X
+X
+X X X
+X
+X X X X X X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X X X
+X
+X
+X
+X
+X
+X X
+X X X X
+X
+X
+X X X
+X
+X X
+Fig. 5. Probability of selecting 0 :1s and 0 :4s important variables without selecting a noise variable with the lasso in the regression setting ( ) and
+stability selection under subsampling ( ) for the 64 different settings: /STX, results for stability selection under additional randomization (αD0:5)
+
+===== PDF PAGE 20 =====
+436 N. Meinshausen and P . Bühlmann
+data
+p
+n
+bayes       
+s
+0
+1/4
+1/2
+3/4
+1
+P(first 0.1s correct)
+X
+1
+3
+4
+100
+1000
+(a)
+(a)
+X
+1
+8
+X
+1
+3
+10
+X
+1
+8
+X
+1
+3
+20
+1000
+X
+1
+8
+X
+1
+3
+50
+X
+1
+8 X
+1
+3
+4
+200
+1000
+(b)
+X
+1
+8
+X
+1
+3
+10
+X
+1
+8
+X
+1
+3
+20
+1000
+X
+1
+8
+X
+1
+3
+50
+X
+1
+8
+X
+1
+3
+4
+200
+1000
+(c)
+X
+1
+8
+X
+1
+3
+10
+X
+1
+8
+X
+1
+3
+20
+1000
+X
+1
+8
+X
+1
+3
+50
+X
+1
+8 X
+1
+3
+10
+200
+100
+(d)
+X
+1
+8
+X
+1
+3
+30
+X
+1
+8
+X
+1
+3
+4
+200
+1000
+X
+1
+8
+X
+1
+3
+10
+X
+1
+8
+X
+1
+3
+20
+1000
+X
+1
+8
+X
+1
+3
+50
+X
+1
+8
+X
+1
+3
+10
+200
+200
+(e)
+X
+1
+8
+X
+1
+3
+30
+X
+1
+8
+X
+1
+3
+4
+200
+1000
+X
+1
+8
+X
+1
+3
+10
+X
+1
+8
+X
+1
+3
+20
+1000
+X
+1
+8
+X
+1
+3
+50
+X
+1
+8
+X
+1
+3
+4
+2587
+660
+(f)
+X
+1
+8
+X
+1
+3
+10
+X
+1
+8
+X
+1
+3
+20
+X
+1
+8
+X
+1
+3
+50
+X
+1
+8
+X
+1
+3
+4
+115
+4088
+(g)
+X
+1
+8
+X
+1
+3
+10
+X
+1
+8
+0
+1/4
+1/2
+3/4
+1
+P(first 0.4s correct)
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X X X X X
+X
+X X X X X X
+X
+X
+X X
+X
+X
+X
+X
+X X X X X
+X
+X X X
+X
+X X X X X X
+X X
+X
+X
+X
+X
+X X X
+X
+X X
+Fig. 6. Equivalent plot to Fig. 5 for the lasso applied to (a) binary classiﬁcation and (b) OMP applied to regression
+
+===== PDF PAGE 21 =====
+Stability Selection 437
+(b)
+data
+p
+n
+snr
+s
+0
+1/4
+1/2
+3/4
+1
+P(first 0.1s correct)
+X
+0.5
+4
+100
+1000
+(a)
+X
+2
+X
+0.5
+10
+X
+2
+X
+0.5
+20
+1000
+X
+2
+X
+0.5
+50
+X
+2
+X
+0.5
+4
+200
+1000
+(b)
+X
+2
+X
+0.5
+10
+X
+2
+X
+0.5
+20
+1000
+X
+2
+X
+0.5
+50
+X
+2
+X
+0.5
+4
+200
+1000
+(c)
+X
+2
+X
+0.5
+10
+X
+2
+X
+0.5
+20
+1000
+X
+2
+X
+0.5
+50
+X
+2
+X
+0.5
+10
+200
+100
+(d)
+X
+2
+X
+0.5
+30
+X
+2
+X
+0.5
+4
+200
+1000
+X
+2
+X
+0.5
+10
+X
+2
+X
+0.5
+20
+1000
+X
+2
+X
+0.5
+50
+X
+2
+X
+0.5
+10
+200
+200
+(e)
+X
+2
+X
+0.5
+30
+X
+2
+X
+0.5
+4
+200
+1000
+X
+2
+X
+0.5
+10
+X
+2
+X
+0.5
+20
+1000
+X
+2
+X
+0.5
+50
+X
+2
+X
+0.5
+4
+2587
+660
+(f)
+X
+2
+X
+0.5
+10
+X
+2
+X
+0.5
+20
+X
+2
+X
+0.5
+50
+X
+2
+X
+0.5
+4
+115
+4088
+(g)
+X
+2
+X
+0.5
+10
+X
+2
+0
+1/4
+1/2
+3/4
+1
+P(first 0.4s correct)
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X X X X X X X X X X
+X
+X
+X X
+X
+X
+X
+X
+X
+X
+X
+X
+X X X X X
+X
+X X X X X X
+X X
+X
+X
+X
+X
+X X X X X X
+Fig. 6 (continued)
+
+===== PDF PAGE 22 =====
+438 N. Meinshausen and P . Bühlmann
+data
+p
+n
+snr
+s
+0
+1010
+aver. # FALSE POSITIVES
+for 0.2s correct positives
+X
+0.5
+4
+100
+1000
+(a)
+(a)
+(b)
+X
+2
+X
+0.5
+10
+X
+2
+X
+0.5
+20
+1000
+X
+2
+X
+0.5
+50
+X
+2
+0
+1010
+X
+0.5
+4
+200
+1000
+(b)
+X
+2
+X
+0.5
+10
+X
+2
+X
+0.5
+20
+1000
+X
+2
+X
+0.5
+50
+X
+2
+0
+20
+50
+80
+100
+X
+0.5
+4
+200
+1000
+(c)
+X
+2
+X
+0.5
+10
+X
+2
+X
+0.5
+20
+1000
+X
+2
+X
+0.5
+50
+X
+2
+0
+1010
+X
+0.5
+10
+200
+100
+(d)
+X
+2
+X
+0.5
+30
+X
+2
+X
+0.5
+4
+200
+1000
+X
+2
+X
+0.5
+10
+X
+2
+X
+0.5
+20
+1000
+X
+2
+X
+0.5
+50
+X
+2
+0
+10
+20
+30
+40
+X
+0.5
+10
+200
+200
+(e)
+X
+2
+X
+0.5
+30
+X
+2
+X
+0.5
+4
+200
+1000
+X
+2
+X
+0.5
+10
+X
+2
+X
+0.5
+20
+1000
+X
+2
+X
+0.5
+50
+X
+2
+0
+10
+2020
+X
+0.5
+4
+2587
+660
+(f)
+X
+2
+X
+0.5
+10
+X
+2
+X
+0.5
+20
+X
+2
+X
+0.5
+50
+X
+2
+0
+10
+20
+30
+40
+X
+0.5
+4
+115
+4088
+(g)
+X
+2
+X
+0.5
+10
+X
+2
+0
+50
+100
+150
+200
+aver. # FALSE POSITIVES
+for 0.8s correct positives
+X
+X
+X
+X
+X
+X
+X
+X
+rep(1, 2)
+0
+150
+300
+450
+600
+X
+X
+X
+X
+X
+X
+X
+X
+rep(1, 2)
+0
+200
+400
+600
+800
+X
+X
+X
+X
+X
+X
+X
+X
+rep(1, 2)
+rep(1, 2)
+0
+150
+300
+450
+600
+X
+X
+X X
+X
+X
+X
+X
+X
+X
+X
+X
+rep(1, 2)
+0
+150
+300
+450
+600
+X
+X
+X X
+X
+X
+X
+X
+X
+X
+X
+X
+rep(1, 2)
+rep(1, 2)
+0
+100
+200
+300
+400
+X X X X
+X
+X
+X
+X
+0
+50
+100
+150
+200
+X
+X
+X X
+Fig. 7. Average number of falsely chosen variables in the regression setting when selecting (a) 20% or (b) 80% of alls correct variables: , lasso results;
+, stability selection under subsampling; /STX, results for stability selection under additional randomization (αD0:5)
+
+===== PDF PAGE 23 =====
+Stability Selection 439
+data
+p
+n
+snr
+s
+0
+20
+50
+80
+100
+aver. # FALSE POSITIVES
+for 0.2s correct positives
+X
+0.5
+4
+100
+1000
+(a)
+X
+2
+X
+0.5
+10
+X
+2
+X
+0.5
+20
+1000
+X
+2
+X
+0.5
+50
+2
+0
+50
+100
+150
+200
+X
+0.5
+4
+200
+1000
+(b)
+X
+2 0.5
+10
+X
+2
+X
+0.5
+20
+1000
+X
+2
+X
+0.5
+50
+X
+2
+0
+250
+500
+750
+1000
+X
+0.5
+4
+200
+1000
+(c)
+X
+2
+X
+0.5
+10
+X
+2
+X
+0.5
+20
+1000
+X
+2
+X
+0.5
+50
+X
+2
+0
+(a)
+(b)
+20
+50
+80
+100
+X
+0.5
+10
+200
+100
+(d)
+X
+2
+X
+0.5
+30
+X
+2
+X
+0.5
+4
+200
+1000
+X
+2
+X
+0.5
+10
+X
+2
+X
+0.5
+20
+1000
+X
+2
+X
+0.5
+50
+X
+2
+0
+200
+400
+600
+800
+X
+0.5
+10
+200
+200
+(e)
+X
+2
+X
+0.5
+30
+X
+2
+X
+0.5
+4
+200
+1000
+X
+2
+X
+0.5
+10
+X
+2
+X
+0.5
+20
+1000
+X
+2
+X
+0.5
+50
+X
+2
+0
+20
+50
+80
+100
+X
+0.5
+4
+2587
+660
+(f)
+X
+2
+X
+0.5
+10
+X
+2
+X
+0.5
+20
+X
+2
+X
+0.5
+50
+X
+2
+0
+50
+100
+150
+200
+X
+0.5
+4
+115
+4088
+(g)
+X
+2
+X
+0.5
+10
+X
+2
+0
+250
+500
+750
+1000
+aver. # FALSE POSITIVES
+for 0.8s correct positives
+X
+X
+X X X
+X
+X
+X
+0
+250
+500
+750
+1000
+X
+X
+X
+X
+X
+X
+X
+X
+0
+250
+500
+750
+1000
+X X X X
+X
+X
+X
+X
+0
+250
+500
+750
+1000
+X X X X
+X
+X
+X X
+X
+X
+X
+X
+rep(1, 2)
+rep(1, 2)
+0
+250
+500
+750
+1000
+X
+X
+X X
+X X X X
+X
+X
+X
+X
+rep(1, 2)
+rep(1, 2)
+0
+200
+400
+600
+800
+X
+X X
+X
+X
+X
+X
+X
+0
+50
+100
+150
+200
+X X X X
+Fig. 8. Equivalent plot to Fig. 7 when using OMP instead of the lasso
+
+===== PDF PAGE 24 =====
+440 N. Meinshausen and P . Bühlmann
+number of wrongly selected variables
+proportion of relevant variables selected
+02 0
+(a) (b)
+40 60
+0.0 0.2 0.4 0.6 0.81.0
+number of wrongly selected variables
+proportion of relevant variables selected
+02 0 4 0 6 0
+0.00.20.4 0.6 0.81.0
+Fig. 9. Comparison of stability selection (for the randomized lasso with (a)αD0:5 and (b)αD1) (▲) with cross-validation (for the standard lasso) (/SI) for the
+real data sets (f) and (g), showing the average proportion of correctly identiﬁed relevant variables versus the average number of falsely selected variables:
+each /SI–▲ pair corresponds to a simulation setting (some speciﬁed signal-to-noise ratio and s); , value at which the number of wrongly selected variables
+is controlled, namely E.V / ⩽ 2:5; looking at stability selection, the proportion of correctly identiﬁed relevant variables is very close to the cross-validation
+solution, whereas the number of falsely selected variables is reduced dramatically
+
+===== PDF PAGE 25 =====
+Stability Selection 441
+somehow when trying to recover such a large number of relevant variables, yielding often hun-
+dreds of false positive results. In all other settings, stability selection seems advantageous, select-
+ing often substantially fewer variables falsely than the standard lasso. For OMP, the gains are
+even more pronounced.
+Next, we test how well the error control of theorem 1 holds up for these data sets. For the
+motif regression data set (f) and the vitamin gene expression data set (g), the lasso is applied,
+with randomization and without. For both data sets, the signal-to-noise ratio is varied between
+0.5, 1 and 2. The number of non-zero coefﬁcients s is varied in steps of 1 between 1 and 12,
+with a standard normal distribution for the randomly chosen non-zero coefﬁcients. Each of
+the 72 settings is run 20 times. We are interested in the comparison between the cross-validated
+solution and stability selection. For stability selection, we choseq
+Λ =√ .0:8p/ and thresholds of
+πthr = 0:6, corresponding to a control ofE.V/ ⩽ 2:5, where V is the number of wrongly selected
+variables. The control is mathematically derived under the assumption of exchangeability for
+the distribution of noise variables; see theorem 1. This assumption is most probably not fulﬁlled
+for the given data set and it is of interest to see how well the bound holds up for real data.
+Results are shown in Fig. 9. Stability selection reduces the number of falsely selected variables
+dramatically, while maintaining almost the same power to detect relevant variables. The number
+of falsely chosen variables is remarkably well controlled at the level desired, giving empirical
+evidence that the error control derived is useful beyond the setting of exchangeability discussed.
+Stability selection thus helps to select a useful amount of regularization.
+5. Discussion
+Stability selection addresses the notoriously difﬁcult problem of structure estimation or variable
+selection, especially for high dimensional problems. Cross-validation fails often for high dimen-
+sional data: sometimes spectacularly. Stability selection is based on subsampling in combination
+with (high dimensional) selection algorithms. The method is extremely general and we demon-
+strate its applicability for variable selection in regression and Gaussian graphical modelling.
+Stability selection provides ﬁnite sample familywise multiple-testing error control (or control
+of other error rates of false discoveries) and hence a transparent principle to choose a proper
+amount of regularization for structure estimation or variable selection. Furthermore, the solu-
+tion of stability selection depends surprisingly little on the initial regularization chosen. This is
+an additional great beneﬁt besides error control.
+Another property of stability selection is the improvement over a prespeciﬁed selection
+method. Often computationally efﬁcient algorithms for high dimensional selection are inconsis-
+tent, even in rather simple settings. We prove for the randomized lasso that stability selection will
+be variable selection consistent even if the necessary conditions for consistency of the original
+method are violated. And, thus, stability selection will asymptotically select the right model in
+scenarios where the lasso fails.
+In short, stability selection is the marriage of subsampling and high dimensional selection
+algorithms, yielding ﬁnite sample familywise error control and markedly improved structure
+estimation. Both of these main properties have been demonstrated on simulated and real data.
+Acknowledgements
+We thank Bin Yu and Peter Bickel for inspiring discussions and the referees for many help-
+ful comments and suggestions which greatly helped to improve the manuscript. NM thanks
+the Forschungsinstitut für Mathematik at Eidgenössiche Technische Hochschule Zürich for
+generous support and hospitality.
+
+===== PDF PAGE 26 =====
+442 N. Meinshausen and P . Bühlmann
+Appendix A
+A.1. Sample splitting
+An alternative to subsampling is sample splitting. Instead of observing whether a given variable is selected
+for a random subsample, we can look at a random split of the data into two non-overlapping samples
+of equal size ⌊n=2⌋ and see whether the variable is chosen in both sets simultaneously. Let I
+1 and I2 be
+two random subsets of {1 ,..., n} with |Ii|=⌊ n=2⌋ for i= 1, 2 and I1 ∩ I2 =∅. Deﬁne the simultaneously
+selected set as the intersection of ˆSλ.I1/ and ˆSλ.I2/:
+ˆSsimult,λ = ˆSλ.I1/∩ ˆSλ.I2/:
+Deﬁnition 5 (simultaneous selection probability). Deﬁne the simultaneous selection probabilities ˆΠ for
+any set K ⊆ {1 ,..., p} as
+ˆΠ
+simult,λ
+K = PÅ.K ⊆ ˆS
+simult,λ
+/, .20/
+where the probability PÅ is with respect to the random sample splitting (and any additional randomness
+if ˆS
+λ
+is a randomized algorithm).
+We work with the selection probabilities that are based on subsampling but the following lemma lets us
+convert these probabilities easily into simultaneous selection probabilities based on sample splitting; the
+latter is used for the proof of theorem 1. The bound is rather tight for selection probabilities that are close
+to 1.
+Lemma 1 (lower bound for simultaneous selection probabilities) . For any set K ⊆ {1 ,..., p},al o w e r
+bound for the simultaneous selection probabilities is, for everyω∈ Ω,g i v e nb y
+ˆΠ
+simult,λ
+K ⩾ 2 ˆΠ
+λ
+K − 1:. 21/
+Proof. Let I1 and I2 be the two random subsets in sample splitting of {1 ,..., n} with |Ii|=⌊ n=2⌋ for
+i=1, 2 andI1 ∩ I2 =∅. Denote bysK .{1, 1}/ the probabilityPÅ[{K⊆ ˆSλ.I1/}∩ {K⊆ ˆSλ.I2/}]. Note that the
+two events are not independent as the probability is only with respect to a random split of the ﬁxed samples
+{1 ,..., n} into I
+1 and I2. The probabilitiessK .{1, 0}/, sK .{0, 1}/ and sK .{0, 0}/ are deﬁned equivalently by
+PÅ[{K⊆ ˆSλ.I1/}∩ {K ⊈ ˆSλ.I2/}], PÅ[{K ⊈ ˆSλ.I1/}∩ {K⊆ ˆSλ.I2/}] and PÅ[{K ⊈ ˆSλ.I1/}∩ {K ⊈ ˆSλ.I2/}].
+Note that ˆΠsimult,λ
+K = sK .{1, 1}/ and
+ˆΠ
+λ
+K = sK .{1, 0}/+ sK .{1, 1}/= sK .{0, 1}/+ sK .{1, 1}/,
+1− ˆΠ
+λ
+K = sK .{0, 1}/+ sK .{0, 0}/= sK .{1, 0}/+ sK .{0, 0}/:
+It is obvious that sK .{1, 0}/ = sK .{0, 1}/.A s sK .{0, 0}/ ⩾ 0, it also follows that sK .{1, 0}/ ⩽ 1 − ˆΠ
+λ
+K.
+Hence
+ˆΠ
+simult,λ
+K = sK .{1, 1}/= ˆΠ
+λ
+K − sK .{1, 0}/ ⩾ 2 ˆΠ
+λ
+K − 1,
+which completes the proof.
+A.2. Proof of theorem 1
+The proof uses mainly lemma 2. We ﬁrst show that P.k ∈ ˆSΛ/ ⩽ qΛ=p for all k ∈ N, using the made deﬁni-
+tions ˆSΛ =∪λ∈Λ ˆSλ and qΛ = E.| ˆSΛ|/. Deﬁne furthermore NΛ = N ∩ ˆSΛ to be the set of noise variables (inN)
+which appear in ˆSΛ and analogously UΛ = S ∩ ˆSΛ. The expected number of falsely selected variables can
+be written as E.|NΛ|/= E.| ˆSΛ|/− E.|UΛ|/= qΛ − E.|UΛ|/. Using assumption (8) (which asserts that the
+method is not worse than random guessing), it follows thatE.|UΛ|/ ⩾ E.|NΛ|/|S|=|N|. Putting this together,
+.1+| S|=|N|/E .|NΛ|/ ⩽ qΛ and hence|N|−1E.|NΛ|/ ⩽ qΛ=p. Using the exchangeability assumption, we have
+P.k∈ ˆSΛ/= E.|NΛ|/=|N| for all k∈N and hence, for k∈N, it holds that P.k∈ ˆSΛ/ ⩽ qΛ=p, as desired. Note
+that this result is independent of the sample size that is used in the construction of ˆSλ, λ∈ Λ. Now using
+lemma 2 below, it follows that P{maxλ∈Λ. ˆΠsimult, q
+k / ⩾ ξ} ⩽ .qΛ=p/2=ξ for all 0 < ξ< 1 and k ∈ N. Using
+lemma 1, it follows thatP{maxλ∈Λ. ˆΠλ
+k / ⩾πthr } ⩽ P[{maxλ∈Λ. ˆΠsimult,λ/+ 1}=2 ⩾πthr] ⩽ .qΛ=p/2=.2πthr − 1/.
+Hence
+
+===== PDF PAGE 27 =====
+Stability Selection 443
+E.V/= ∑
+k∈N
+P{max
+λ∈Λ
+. ˆΠ
+λ
+k / ⩾πthr } ⩽ q2
+Λ=p.2πthr − 1/,
+which completes the proof.
+Lemma 2. Let K ⊂ {1 ,..., p} and ˆSλ the set of selected variables based on a sample size of ⌊n=2⌋.I f
+P.K ⊆ ˆSλ/ ⩽ ", then
+P. ˆΠ
+simult,λ
+K ⩾ξ/ ⩽ "2=ξ:
+If P.K ⊆∪ λ∈Λ ˆS
+λ
+/ ⩽ " for some Λ⊆ R+, then
+P{max
+λ∈Λ
+. ˆΠ
+simult,λ
+K / ⩾ξ} ⩽ "2=ξ:
+Proof. Let I1, I2 ⊆ {1 ,..., n} be, as above, the random split of the samples {1 ,..., n} into two disjoint
+subsets, where both |Ii|=⌊ n=2⌋ for i = 1, 2. Deﬁne the binary random variable Hλ
+K for all subsets K ⊆
+{1 ,..., p} as Hλ
+K := 1{K ⊆ { ˆSλ.I1/∩ ˆSλ.I2/}}: Denote the data (the n samples) by Z. The simultaneous
+selection probability ˆΠsimult,λ
+K , as deﬁned in expression (20), is then ˆΠsimult,λ
+K = EÅ.Hλ
+K /= E.Hλ
+K|Z/, where the
+expectation EÅ is with respect to the random split of then samples into sets I1 and I2 (and additional ran-
+domness if ˆSλ is a randomized algorithm). To prove the ﬁrst part, the inequalityP{K⊆ ˆSλ} ⩽ " (for a sample
+size ⌊n=2⌋) implies that P.Hλ
+K = 1/ ⩽ P{K ⊆ ˆSλ.I1/}2 ⩽ "2 and hence E.Hλ
+K / ⩽ "2. Therefore, E.Hλ
+K / =
+E{E.Hλ
+K|Z/} = E. ˆΠsimult,λ
+K / ⩽ "2. Using a Markov-type inequality, ξP. ˆΠsimult,λ
+K ⩾ ξ/ ⩽ E. ˆΠsimult,λ
+K / ⩽ "2:
+Thus P. ˆΠsimult,λ
+K ⩾ξ/ ⩽ "2=ξ, completing the proof of the ﬁrst claim. The proof of the second part follows
+analogously.
+A.3. Proof of theorem 2
+Instead of working directly with form (13) of the randomized lasso estimator, we consider the equivalent
+formulation of the standard lasso estimator, where all variables have initially unit norm and are then
+rescaled by their random weights W.
+Deﬁnition 6 (additional notation). For weights W as in expression (13), let X
+w be the matrix of rescaled
+variables, withXw
+k = Xk Wk for eachk=1 ,..., p. Letφw
+max and φw
+min be the maximal and minimal eigenvalues
+analogous to expression (14) for Xw instead of X.
+The proof rests mainly on the twofold effect that a weaknessα < 1 has on the selection properties of the
+lasso. The ﬁrst effect is that the singular values of the design can be distorted if working with the reweighted
+variables X
+w instead of X itself. A bound on the ratio between largest and smallest eigenvalue is derived
+in lemma 3, effectively yielding a lower bound for useful values ofα. The following lemma 4 then asserts,
+for such values of α, that the relevant variables in S are chosen with high probability under any random
+sampling of the weights. The next lemma 5 establishes the key advantage of the randomized lasso as it
+shows that the irrepresentable condition (12) is sometimes fulﬁlled under randomly sampled weights, even
+though it is not fulﬁlled for the original data. Variables which are wrongly chosen because condition (12)
+is not satisﬁed for the original unweighted data will thus not be selected by stability selection. The ﬁnal
+result is established in lemma 7 after a bound on the noise contribution in lemma 6.
+Lemma 3. Deﬁne ¯C by .2+ 4 ¯C/s+ 1= Cs
+2 and assume thats ⩾ 7. Let W be weights generated randomly
+in [α, 1], as in expression (13), and letXw be the corresponding rescaled predictor variables, as in deﬁni-
+tion 6. For α2 ⩾νφmin.Cs2/=Cs2, with ν∈ R+, it holds under assumption 1 for all random realizations
+W that
+φw
+max.Cs2/
+φw
+min.Cs2/ ⩽ 7 ¯C
+κ√ ν:. 22/
+Proof. Using assumption 1,
+φmax.Cs2/
+φ3=2
+min.Cs2/
+<
+√ C
+κ = .Cs2/−1=2 {.2+ 4 ¯C/s + 1}=s
+κ ⩽ .Cs2/−1=2 3+ 4 ¯C
+κ ,
+
+===== PDF PAGE 28 =====
+444 N. Meinshausen and P . Bühlmann
+where the ﬁrst inequality follows by assumption 1, the equality by .2 + 4 ¯C/s + 1 = Cs2 and the second
+inequality by s ⩾ 1. It follows that
+φmax.Cs2/
+φmin.Cs2/ ⩽ 3+ 4 ¯C
+κ
+√{ φmin.Cs2/
+Cs2
+}
+:. 23/
+Now, let W be again the p× p diagonal matrix with diagonal entries Wkk = Wk for all k = 1 ,..., p and 0
+on the non-diagonal elements. Then Xw = XW and, taking suprema over all W with diagonal entries in
+[α, 1],
+φw
+max.m/2 ⩽ sup
+W
+sup
+v∈Rp:∥v∥0 ⩽m
+{.∥Xwv∥2=∥v∥2/2}
+= sup
+W
+sup
+v∈Rp:∥v∥0 ⩽m
+{.vTWTXTXWv/=vTv} ⩽φmax.m/2,
+where the last step follows by a change of variable transform ˜v= Wv and the fact that ∥v∥0 =∥ Wv∥0 as
+well as vTv=˜vTW−1,T W−1 ˜v and thus ˜vT ˜v ⩽ vTv ⩽α−2 ˜vT ˜v for all W with diagonal entries in [ α, 1]. The
+corresponding argument forφmin.m/ yields the boundφw
+min.m/ ⩾αφ min.m/ for allm∈N. Claim (22) follows
+by observing that ¯C ⩾ 1f o rs ⩾ 7, since C ⩾ 1 by assumption 1 and hence 3+ 4 ¯C ⩽ 7 ¯C.
+Lemma 4. Let ˆAλ, W be the set {k : ˆβλ, W ̸= 0} of selected variables of the randomized lasso with weak-
+ness α∈.0, 1] and randomly sampled weightsW. Suppose that the weaknessα2 ⩾ .7=κ/2 φmin.Cs2/=Cs2.
+Under the assumptions of theorem 2, there is a set Ω0 in the sample space of Y with P.Y ∈ Ω0/ ⩾
+1− 3=.p∨ an/, such that for all realizations W = w,f o rp ⩾ 5, if Y ∈ Ω0,
+| ˆA
+λ, w
+∪ S| ⩽ Cs2 and .S\Ssmall;λ/⊆ ˆA
+λ, w
+, .24/
+where Ssmall;λ is deﬁned as in theorem 2.
+Proof. The proof follows mostly from theorem 1 in Zhang and Huang (2008). For this, set c0 = 0i n
+their notation. We also have Cs2 ⩽ .2 + 4 ¯C/s + 1, as, by deﬁnition, .2 + 4 ¯C/s + 1 = Cs2, as in lemma 3.
+The quantity C = cÅ=cÅ in Zhang and Huang (2008) is identical to our notation φw
+max.Cs2/=φw
+min.Cs2/.I t
+is bounded for all random realizations of W = w, as long as α2 ⩾ .7=κ/2 φmin.Cs2/=Cs2, using lemma 3, by
+φw
+max{.2+ 4 ¯C/s + 1}
+φw
+min{.2+ 4 ¯C/s + 1} ⩽ ¯C:
+Hence all assumptions of theorem 1 in Zhang and Huang (2008) are fulﬁlled, with η1 = 0, for any random
+realization W = w. Using expressions (2.20)–(2.24) in Zhang and Huang (2008), it follows that there is a
+set Ω0 in the sample space of Y with P.Y ∈Ω0/ ⩾ 2− exp{2=.p∨ an/}− 2=.p∨ an/2 ⩾ 1− 3=.p∨ an/ for all
+p ⩾ 5, such that if Y ∈ Ω0, from expression (2.21) in Zhang and Huang (2008),
+| ˆA
+λ, w
+∪ S| ⩽ .2+ 4 ¯C/s ⩽ Cs2, .25/
+and, from expression (2.23) in Zhang and Huang (2008),
+∑
+k∈S
+|βk|2 1{k=∈ ˆA
+λ, w
+} ⩽
+( 2
+3
+¯C+ 28
+9
+¯C
+2
++ 16
+9
+¯C
+3
+)
+sλ2 ⩽ 5:6 ¯C
+3
+s3λ2 ⩽ {0:3.Cs/3=2λ}2, .26/
+having used for the ﬁrst inequality that, in the notation of Zhang and Huang (2008), 1=cÅcÅ ⩽ cÅ=cÅ. The
+n−2-factor has been omitted to account for our different normalization. For the second inequality, we used
+4 ¯C ⩽ Cs. The last inequality implies, by deﬁnition of Ssmall;λ in theorem 2, that S \ Ssmall;λ ⊆ ˆAλ, w, which
+completes the proof.
+Lemma 5. Set m= Cs2. Let k ∈ {1 ,..., p} and let K.w/⊆ {1 ,..., p} be a set which can depend on the
+random weight vectorW. Suppose thatK.w/ satisﬁes |K.w/| ⩽ m and k=∈K.w/ for all realizationsW = w.
+Suppose furthermore thatK.w/= A for some A⊆ {1 ,..., p} implies that K.v/= A for all pairsw, v∈Rp
+of weights that fulﬁl vj ⩽ wj for allj∈{1 ,..., p}, with equality for allj∈A. Then, forα2 ⩽φmin.m/=m√ 2,
+Pw[∥{.Xw
+K.w//TXw
+K.w/}−1.Xw
+K.w//TXw
+k ∥1 ⩽ 2−1=4] ⩾ pw.1− pw/m, .27/
+where the probability Pw is with respect to random sampling of the weights W and pw is, as above, the
+probability of choosing weight α for each variable and 1− pw the probability of choosing weight 1.
+
+===== PDF PAGE 29 =====
+Stability Selection 445
+Proof. Let ˜w be the realization of W for which ˜wk =α and ˜wj = 1 for all other j ∈ {1 ,..., p}\ k. The
+probability of W =˜w is clearly pw.1 − pw/p−1 under the sampling scheme that is used for the weights.
+Let A := K. ˜w/ be the selected set of variables under these weights. Let now W ⊆ {1, α}p be the set of all
+weights for which wk =α and wj = 1 for all j ∈ A, and arbitrary values in {α,1 } for all wj with j=∈ A∪ k.
+The probability for a random weight being in this set isPw.w∈W/= pw.1− pw/|A|. By the assumption on
+K, it holds that K.w/= A for all w∈ W, since wj ⩽ ˜wj for all j ∈ {1 ,..., p} with equality for j ∈ A. For all
+weights w∈ W, it follows moreover that
+{.Xw
+A/TXw
+A}−1.Xw
+A/TXw
+k =α.XT
+AXA/−1XT
+AXk :
+Using the bound on α, it hence only remains to be shown that, if∥Xl∥2 = 1 for all l∈ {1 ,..., p},
+sup
+A:|A|⩽m
+sup
+k=∈A
+{
+∥.XT
+AXA/−1XT
+AXk∥2
+1
+}
+⩽ m=φmin.m/: . 28/
+Since ∥γ∥1 ⩽∥γ∥2
+√ |A| for any vectorγ∈ R|A|, it is sufﬁcient to show, for γ:= .XT
+AXA/−1XT
+AXk,
+sup
+A:|A|⩽m
+sup
+k=∈A
+.∥γ∥2
+2/ ⩽ 1=φmin.m/:
+As XAγis the projection ofXk into the space that is spanned byXA and ∥Xk∥2
+2 =1, it holds that∥XAγ∥2
+2 ⩽1.
+Using ∥XSγ∥2
+2 =γT.XT
+AXA/γ⩾φmin.|A|/∥γ∥2
+2, it follows that ∥γ∥2
+2 ⩽ 1=φmin.|A|/, which shows result (28)
+and thus completes the proof.
+Lemma 6. Let PA = XA.XT
+AXA/−1XT
+A be the projection into the space that is spanned by all variables
+in subset A⊆ {1 ,..., p}. Suppose that p> 10. Then there is a set Ω1 with P.Ω1/ ⩾ 1− 2=.p∨ an/, such
+that, for all ω∈ Ω1,
+sup
+A:|A|⩽m
+sup
+k=∈A
+|XT
+k .1− PA/"| < 2σ{√ .2m/+ 1}√ {log.p∨ an/=n}:. 29/
+Proof. Let Ω′
+1 be the event that max k∈{1,:::, p} |XT
+k "| ⩽ 2σ√ {log.p∨ an/=n}. As entries in " are IID
+N .0, σ2/, P.Ω′
+1/ ⩾ 1− 1=.p∨ an/ for all δ∈ .0, 1/. Note that, for all A⊂ {1 ,..., p} and k=∈ A, |XT
+k PA"| ⩽
+∥PA"∥2. Deﬁne Ω′′
+1 as
+sup
+|A|⩽m
+.∥PA"∥2/ ⩽ 2σ√ {2mlog.p∨ an/=n}:. 30/
+It is now sufﬁcient to show that P.Ω′′
+1 / ⩾ 1− 1=.p∨ an/, showing that this bound is related to a bound in
+Zhang and Huang (2008), and we repeat a similar argument. Each termn1=2∥PA"∥2=σ has a χ2
+|A|-distribu-
+tion as long asXA is of full rank|A|. Hence, using the same standard tail bound as in the proof of theorem
+3 of Zhang and Huang (2008),
+P[n∥PA"∥2
+2=σ2 ⩾|A|{1+ 4l o g.p∨ an/}] ⩽ [.p∨ an/−4{1+ 4l o g.p∨ an/}]|A|=2 ⩽ .p∨ an/−3|A|=2,
+having used 1+ 4l o g.p∨ an/ ⩽ p∨ an for all p> 10 in the last step and thus, using
+(p
+|A|
+)
+⩽ p|A|=|A|!,
+P.Ω′′
+1 / ⩾ 1−
+m∑
+|A|=2
+( p
+|A|
+)
+.p∨ an/−3|A|=2 ⩾ 1−
+m∑
+|A|=2
+.p∨ an/−| A|=2=.|A|/! ⩾ 1− 1=.p∨ an/,
+which completes the proof by settingΩ1 = Ω′
+1 ∩ Ω′′
+1 and concluding thatP.Ω1/ ⩾1− 2=.p∨ an/ for allp> 10.
+Lemma 7. Let δw = pw.1− pw/Cs2
+and ˆΠ
+λ
+k = Pw.k∈ ˆA
+λ, W
+/ be again the probability for variablek of being
+in the selected subset, with respect to random sampling of the weightsW. Then, under the assumptions
+of theorem 2, for all k=∈ S and p> 10, there is a set ΩA with P.ΩA/ ⩾ 1− 5=.p∨ an/ such that, for all
+ω∈ ΩA and λ⩾λmin,
+max
+k∈N
+. ˆΠλ
+k /< 1− δw, .31/
+min
+k∈S\Ssmall;λ
+. ˆΠλ
+k / ⩾ 1− δw, .32/
+where Ssmall;λ is deﬁned as in theorem 2.
+
+===== PDF PAGE 30 =====
+446 N. Meinshausen and P . Bühlmann
+Proof. We let ΩA = Ω0 ∩ Ω1, where Ω0 is the event that is deﬁned in lemma 4 and event Ω1 is deﬁned in
+lemma 6. Since, using these two lemmas,
+P.Ω0 ∩ Ω1/ ⩾ 1− P.Ωc
+0/− P.Ωc
+1/ ⩾ 1− 3=.p∨ an/− 2=.p∨ an/= 1− 5=.p∨ an/,
+it is sufﬁcient to show inequalities (31) and (32) for allω∈Ω0 ∩ Ω1. We begin with inequality (31). A variable
+k=∈ S is in the selected set ˆAλ, W only if
+|.Xw
+k /T.Y − Xw
+− k ˆβλ, W,− k /| ⩾λ, .33/
+where ˆβλ, W,− k is the solution to expression (13) with the constraint that ˆβλ, W,− k
+k = 0, which is compara-
+ble with the analysis in Meinshausen and Bühlmann (2006). Let ˆAλ, W,− k := {j : ˆβλ, W,− k
+j ̸= 0} be the set of
+non-zero coefﬁcients and ˆBλ, W,− k := ˆAλ, W,− k ∪ S be the set of regression coefﬁcients which are either truly
+non-zero or estimated as non-zero (or both). We shall use ˆB as a shorthand notation for ˆBλ, W,− k. Let Pw
+ˆB
+be the projection operator into the space that is spanned by all variables in the set ˆB. For all W = w, this
+is identical to
+Pw
+ˆB = Xw
+ˆB{.Xw
+ˆB/TXw
+ˆB}−1Xw
+ˆB = X ˆB.XT
+ˆBX ˆB/−1X ˆB = P ˆB:
+Then, splitting the term .Xw
+k /T.Y − Xw
+− k ˆβλ, W,− k / in condition (33) into the two terms
+.Xw
+k /T.1− Pw
+ˆB /.Y − Xw
+− k ˆβλ, W,− k /+ .Xw
+k /TPw
+ˆB .Y − Xw
+− k ˆβλ, W,− k /, .34/
+it holds for the right-hand term in expression (34) that
+.Xw
+k /TPw
+ˆB .Y − Xw
+− k ˆβλ, W,− k / ⩽ .Xw
+k /TXw
+ˆB{.Xw
+ˆB/TXw
+ˆB}−1 sgn. ˆβλ, W,− k /λ
+⩽∥{.Xw
+ˆB/TXw
+ˆB}−1.Xw
+ˆB/TXw
+k ∥1λ:
+Looking at the left-hand term in expression (34), sinceY ∈Ω0, we know by lemma 4 that| ˆB| ⩽ Cs2 and, by
+deﬁnition of ˆB above, S ⊆ ˆB. Thus the left-hand term in expression (34) is bounded from above by
+.Xw
+k /T.1− Pw
+ˆB /" ⩽ sup
+A:|A|⩽Cs2
+sup
+k=∈A
+{|XT
+k .1− P ˆB/"|∥ Xw
+k ∥2=∥Xk∥2}
+<λmin∥Xw
+k ∥2=∥Xk∥2,
+having used lemma 6 in the last step and λmin = 2σ{√ .2C/s+ 1}√ {log.p∨ an/=n}. Putting this together,
+the two terms in expression (34) are bounded, for allω∈ Ω0 ∩ Ω1,b y
+λmin∥Xw
+k ∥2=∥Xk∥2 +∥ {.Xw
+ˆB/TXw
+ˆB}−1.Xw
+ˆB/TXw
+k ∥1λ:
+We now apply lemma 5 to the rightmost term. The setˆB is a function of the weight vector and satisﬁes for
+every realization of the observations Y ∈ Ω0 the conditions in lemma 5 on the set K.w/. First, | ˆB| ⩽ Cs2.
+Second, by deﬁnition of ˆB above, k=∈ ˆB for all weights w. Third, it follows by the Karush–Kuhn–Tucker
+conditions for the lasso that the set of non-zero coefﬁcients ofˆβλ, w,− k and ˆβλ, v,− k is identical for two weight
+vectors w and v, as long as vj = wj for all j ∈ ˆAλ, W,− k and vj ⩽ wj for all j=∈ ˆAλ, W,− k (increasing the penalty
+on zero coefﬁcients will leave them zero, if the penalty for non-zero coefﬁcients is kept constant). Hence
+there is a setΩ
+w in the sample space ofW with Pw.Ωw/ ⩾1− δw such that∥{.Xw
+ˆB/TXw
+ˆB}−1.Xw
+ˆB/TXw
+k ∥1 ⩽2−1=4.
+Moreover, for the same set Ωw,w eh a v e∥Xw
+k ∥2=∥Xk∥2 =α ⩽ 1=s ⩽ 1=7. Hence, for all ω∈ Ω0 ∩ Ω1 and, for
+all ω∈Ωw, the left-hand side of condition (33) is bounded from above byλmin=7+ 2−1=4λ<λ and variable
+k=∈ S is hence not part of the set ˆAλ, W . It follows that maxλ∈Λ. ˆΠλ
+k /< 1− δw with δw = pw.1− pw/Cs2
+for all
+k=∈ S. This completes the ﬁrst part (31) of the proof.
+For the second part (32), we need to show that, for all ω ∈ Ω0 ∩ Ω1, all variables k in S are chosen
+with probability at least 1 − δw (with respect to random sampling of the weights W ), except possibly for
+variables in Ssmall;λ ⊆ S, deﬁned in theorem 2. For all ω∈ Ω0, however, it follows directly from lemma 4
+that .S\Ssmall;λ/⊆ ˆAλ, W . Hence, for all k ∈ S\Ssmall;λ, the selection probability satisﬁes ˆΠλ
+k = 1 for all Y ∈ Ω0,
+which completes the proof.
+Since the statement in lemma 7 is a reformulation of the assertion of theorem 2, the proof of the latter
+is complete.
+
+===== PDF PAGE 31 =====
+Stability Selection 447
+References
+Bach, F . (2008) Bolasso: model consistent lasso estimation through the bootstrap. InProc. 25th Int. Conf. Machine
+Learning, pp. 33–40. New Y ork: Association for Computing Machinery.
+Banerjee, O. and El Ghaoui, L. (2008) Model selection through sparse maximum likelihood estimation for
+multivariate gaussian or binary data. J. Mach. Learn. Res., 9, 485–516.
+Barbieri, M. and Berger, J. (2004) Optimal predictive model selection. Ann. Statist., 32, 870–897.
+Bhattacharjee, A., Richards, W ., Staunton, J., Li, C., Monti, S., Vasa, P ., Ladd, C., Beheshti, J., Bueno, R., Gil-
+lette, M., Loda, M., Weber, G., Mark, E., Lander, E., Wong, W ., Johnson, B., Golub, T., Sugarbaker, D. and
+Meyerson, M. (2005) Classiﬁcation of human lung carcinomas by mRNA expression proﬁling reveals distinct
+adenocarcinoma subclasses. Bioinformatics, 21, 3301–3307.
+Bickel, P . and Levina, E. (2008) Regularized estimation of large covariance matrices.Ann. Statist., 36, 199–227.
+Bickel, P ., Ritov, Y . and Tsybakov, A. (2009) Simultaneous analysis of Lasso and Dantzig selector.Ann. Statist.,
+37, 1705–1732.
+Breiman, L. (2001) Random Forests.Mach. Learn., 45, 5–32.
+Bühlmann, P . and Yu, B. (2002) Analyzing bagging.Ann. Statist., 30, 927–961.
+Candes, E. and Tao, T. (2007) The Dantzig selector: statistical estimation when p is much larger than n. Ann.
+Statist., 35, 2312–2351.
+Chen, S., Donoho, S. and Saunders, M. (2001) Atomic decomposition by basis pursuit. SIAM Rev., 43, 129–
+159.
+Conlon, E., Liu, X., Lieb, J. and Liu, J. (2003) Integrating regulatory motif discovery and genome-wide expression
+analysis. Proc. Natn. Acad. Sci. USA , 100, 3339–3344.
+Davis, C., Gerick, F ., Hintermair, V ., Friedel, C., Fundel, K., Kuffner, R. and Zimmer, R. (2006) Reliable gene
+signatures for microarray classiﬁcation: assessment of stability and performance.Bioinformatics, 22, 2356–2363.
+Donoho, D. and Elad, M. (2003) Optimally sparse representation in general (nonorthogonal) dictionaries via
+l
+1-minimization. Proc. Natn. Acad. Sci. USA , 100, 2197–2202.
+Dudoit, S., Shaffer, J. and Boldrick, J. (2003) Multiple hypothesis testing in microarray experiments.Statist. Sci.,
+18, 71–103.
+Efron, B., Hastie, T., Johnstone, I. and Tibshirani, R. (2004) Least angle regression.Ann. Statist., 32, 407–451.
+Ein-Dor, L., Kela, I., Getz, G., Givol, D. and Domany, E. (2005) Outcome signature genes in breast cancer: is
+there a unique set? Bioinformatics, 21, 171–178.
+Fan, J. and Lv, J. (2008) Sure independence screening for ultrahigh dimensional feature space (with discussion).
+J. R. Statist. Soc. B, 70, 849–911.
+Fan, J., Samworth, R. and Wu, Y . (2009) Ultrahigh dimensional variable selection: beyond the linear model.
+J. Mach. Learn. Res., 10, 1989–2014.
+Freedman, D. (1977) A remark on the difference between sampling with and without replacement.J. Am. Statist.
+Ass., 72, 681.
+Freund, Y . and Schapire, R. (1996) Experiments with a new boosting algorithm. InProc. 13th Int. Conf. Machine
+Learning, pp. 148–156. San Francisco: Morgan Kaufmann.
+Friedman, J., Hastie, T., Hoeﬂing, H. and Tibshirani, R. (2007) Pathwise coordinate optimization. Ann. Appl.
+Statist., 1, 302–332.
+Friedman, J., Hastie, T. and Tibshirani, R. (2008) Sparse inverse covariance estimation with the graphical lasso.
+Biostatistics, 9, 432–441.
+van de Geer, S. (2008) High-dimensional generalized linear models and the lasso. Ann. Statist., 36, 614–645.
+van de Geer, S. and van Houwelingen, H. (2004) High-dimensional data: p≫ n in mathematical statistics and
+bio-medical applications. Bernoulli, 10, 939–943.
+Huang, J., Ma, S. and Zhang, C.-H. (2008) Adaptive lasso for sparse high-dimensional regression models.Statist.
+Sin., 18, 1603–1618.
+Lauritzen, S. (1996) Graphical Models. Oxford: Oxford University Press.
+Lee, K., Sha, N., Dougherty, E., Vannucci, M. and Mallick, B. (2003) Gene selection: a Bayesian variable selection
+approach. Bioinformatics, 19, 90–97.
+Leng, C., Lin, Y . and Wahba, G. (2006) A note on the lasso and related procedures in model selection. Statist.
+Sin., 16, 1273–1284.
+Mallat, S. and Zhang, Z. (1993) Matching pursuits with time-frequency dictionaries.IEEE Trans. Signal Process.,
+41, 3397–3415.
+Meier, L., van de Geer, S. and Bühlmann, P . (2008) The group lasso for logistic regression.J. R. Statist. Soc. B,
+70, 53–71.
+Meinshausen, N. and Bühlmann, P . (2006) High dimensional graphs and variable selection with the lasso.Ann.
+Statist., 34, 1436–1462.
+Meinshausen, N. and Yu, B. (2009) Lasso-type recovery of sparse representations from high-dimensional data.
+Ann. Statist., 37, 246–270.
+Michiels, S., Koscielny, S. and Hill, C. (2005) Prediction of cancer outcome with microarrays: a multiple random
+validation strategy.Lancet, 365, 488–492.
+
+===== PDF PAGE 32 =====
+448 Discussion on the Paper by Meinshausen and Bühlmann
+Monti, S., Tamayo, P ., Mesirov, J. and Golub, T. (2003) Consensus clustering: a resampling-based method for
+class discovery and visualization of gene expression microarray data.Mach. Learn., 52, 91–118.
+Rothman, A., Bickel, P ., Levina, E. and Zhu, J. (2008) Sparse permutation invariant covariance estimation.
+Electron. J. Statist., 2, 494–515.
+Sha, N., Vannucci, M., Tadesse, M., Brown, P ., Dragoni, I., Davies, N., Roberts, T., Contestabile, A., Salmon,
+M., Buckley, C. and Falciani, F . (2004) Bayesian variable selection in multinomial probit models to identify
+molecular signatures of disease stage. Biometrics, 60, 812–819.
+Temlyakov, V . (2000) Weak greedy algorithms.Adv. Computnl Math., 12, 213–227.
+Tibshirani, R. (1996) Regression shrinkage and selection via the lasso. J. R. Statist. Soc. B, 58, 267–288.
+Tropp, J. (2004) Greed is good: algorithmic results for sparse approximation. IEEE Trans. Inform. Theory , 50,
+2231–2242.
+Valdar, W ., Holmes, C., Mott, R. and Flint, J. (2009) Mapping in structured populations by resample model
+averaging. Genetics, 182, 1263–1277.
+Wainwright, M. (2009) Sharp thresholds for high-dimensional and noisy recovery of sparsity.IEEE Trans. Inform.
+Theor ., 55, 2183–2202.
+Yuan, M. and Lin, Y . (2007) Model selection and estimation in the gaussian graphical model. Biometrika, 94,
+19–35.
+Zhang, C.-H. (2007) Penalized linear unbiased selection. Technical Report 2007-003. Department of Statistics,
+Rutgers University, Piscataway.
+Zhang, T. (2008) Adaptive forward-backward greedy algorithm for sparse learning with linear models. In Proc.
+Neural Information Processing Systems. Boston: MIT Press .
+Zhang, T. (2009) On the consistency of feature selection using greedy least squares regression. J. Mach. Learn.
+Res., 10, 555–568.
+Zhang, C. and Huang, J. (2008) The sparsity and bias of the lasso selection in high-dimensional linear regression.
+Ann. Statist., 36, 1567–1594.
+Zhao, P . and Yu, B. (2006) On model selection consistency of lasso.J. Mach. Learn. Res., 7, 2541–2563.
+Zou, H. (2006) The adaptive lasso and its oracle properties.J. Am. Statist. Ass., 101, 1418–1429.
+Zucknick, M., Richardson, S. and Stronach, E. A. (2008) Comparing the characteristics of gene expression proﬁles
+derived by univariate and multivariate classiﬁcation methods. Statist. Appl. Genet. Molec. Biol. , 7, article 7.
+Discussion on the paper by Meinshausen and Bühlmann
+Sylvia Richardson (Imperial College London)
+This stimulating paper on combining resampling with l1-selection algorithms makes important contri-
+butions for the analysis of high dimensional data. What I found particularly appealing in this paper is
+that it puts on a ﬁrm footing the idea of using the stability under resampling to select a set of variables,
+by
+(a) estimating for each variable X
+k its inclusion probability ˆΠ
+λ
+k in resampled subsets and
+(b) formulating a selection rule based on the maximum of these over a regularization domain Λ.
+Using inclusion probabilities in resampled subsets had been discussed in an informal way for a consid-
+erable time in applied work, in particular in genomics. Early work on extracting prognostic signatures
+from gene expression data was soon questioned as it was noticed that such signatures had little repro-
+ducibility. The idea of intersecting or combining resampled signatures followed. For example Zucknick
+et al. (2008) investigated the stability of gene expression signature in ovarian cancer derived by different
+supervised learning procedures including the lasso, the elastic net and random forests by computing
+their inclusion frequencies under resampling for proﬁles of different sizes (see Fig. 2 of Zucknick et al.
+(2008)).
+I shall focus my discussion on the variable selection aspect rather than the graphical modelling, and
+speciﬁcally I shall comment on two aspects:
+(a) trying to understand better the applicability of the bound in theorem 1 and the performance of this
+method beyond the reported simulations;
+(b) putting ‘stability’ into a broader context and relating or comparing it with other approaches.
+The focus of theorem 1 is on the control of the familywise error rate, control which depends on two quan-
+tities: the thresholdπ
+thr and the average number of selected variables over the regularization domainqΛ.I t
+is informative to work out the bounds that are obtained as successive variables are selected for particular
+thresholds. On the vitamin data set, using the recommendedq
+Λ = p√ 0:8= 57, maxλ∈Λ. ˆΠλ
+k / reaches 0.9 for
+only one variable, with a boundE.V/ ⩽ 1. Loweringπthr to 0.6 selects three variables with a smallqΛ = 3:9,
+
+===== PDF PAGE 33 =====
+Discussion on the Paper by Meinshausen and Bühlmann 449
+λ
+(a)( b) (c)
+0.0 0.2 0.4 0.6 0. 8 1.0
+λ
+0.0 0.2 0.4 0.6 0. 8 1.0
+λ
+0.0 0.2 0.4 0.6 0. 8 1.0
+0.0 0.2 0.4 0.6 0.81.0
+Π
+0.0 0.2 0.4 0.6 0.81.0
+Π
+0.0 0.20.40.60.81.0
+Π
+*
+E(V)
+qΛ 13.1
+0.052
+*
+0.019
+3.9
+*
+3.73
+55.3
+*
+3.84
+39.6
+Fig. 10. Stability paths for the vitamin data set: (a) illustration of the bounds of theorem 1 for various values ofqΛ and πthr for the lasso; (b)αD0:5; (c)αD0:2
+
+===== PDF PAGE 34 =====
+450 Discussion on the Paper by Meinshausen and Bühlmann
+and hence a useful bound E.V/ ⩽ 0:02. But the bound on E.V/ reaches 3.8 if the domain is extended till a
+fourth variable is included. Hence, in this example, the bounds of theorem 1 would restrict the selection
+to three variables (Fig. 10(a)). If the practical use of the stability plots is extended to a ranking of the
+features according to the values of max
+λ∈Λ. ˆΠλ
+k / as suggested in the simulations, the bounds of theorem 1
+thus appear to be quite conservative for deriving a cut-off.
+With respect to the randomized lasso, the relevant quantities in the consistency theorem 2 are the
+threshold δand the bound on the βk s. Unfortunately, these quantities do not seem amenable to explicit
+computations. The authors seem to rely instead on a semiqualitative interpretation of the plots described
+in terms such as ‘variables standing out’, ‘better separated’, . . . without giving quantitative guidelines on
+how to judge such a separation. However, the values ofˆΠ
+λ
+k are clearly inﬂuenced by the choice of weakness
+α (see Figs 10(b) and 10(c)), indicating that the thresholds for stability selection should be adapted with
+respect to α. Besides the elegant theoretical results of theorem 2, it is thus not entirely clear how to use the
+randomized stability paths in practice.
+0.0 0.1 0.2 0. 3 0.4 0.5
+0.0 0.2 0.4 0.6 0. 8 1.0
+Se
+0.0 0.2 0.4 0.6 0. 8 1.0
+Se
+01 0 2 0
+Number of signals
+1-Sp
+0.0 0.1 0.2 0. 3 0.4 0.5
+1-Sp
+304 05 0 0 1 02 0
+Number of signals
+(a)( b)
+304 05 0
+0.0 0.2 0.4 0.6 0. 8 1.0
+FDR
+0.0 0.2 0.4 0.6 0. 8 1.0
+FDR
+Fig. 11. Receiver operating characteristic curves comparing stability selection (with (– – –, αD 0:5) and
+without ( ) randomization) and Bayesian variable selection using either stochastic shotgun search
+(/SOH- /SOH- /SOH-) or evolutionary stochastic search (....... , E.p/ D 5) (variables are ranked by marginal probabilities
+of inclusion (Bayesian methods) or by max λ2Λ. ˆπλ
+k/; results are averaged over 25 simulated data sets and
+details of the simulation set-up can be found in Bottolo and Richardson (2010)): (a)p D300, nD120, s D16
+and average maximum correlation 0.68; (b) HapMap data example, p D 775, n D 120, s D 10 and average
+maximum correlation 0.88
+
+===== PDF PAGE 35 =====
+Discussion on the Paper by Meinshausen and Bühlmann 451
+Broadly speaking, stability selection and machine learning methods can both be viewed as ‘ensemble
+learning’ procedures following Hastieet al. (2009). Counting the number of times that a variable is selected
+in each of the resampledn=2 subsets for particular values ofλis just one way of combining the information
+of a collection of lasso learners. In this respect, it is a little surprising that the authors have not opened up the
+discussion on connections between their approach and ensemble methods such as ‘bagging’ or ‘stacking’.
+Exploiting this connection could potentially lead to revisiting some of the choices made in their procedure,
+such as the set of learners that are combined (e.g. involving learners with more complex penalties such as
+in the elastic net) and the size of the subsamples, and to investigate the performance of combination rules
+that would exploit more than the marginal information, e.g. the order, or the stability of subsets.
+Linking stability selection to Bayesian approaches provides further intriguing questions. It is well known
+that the penalty λ can be viewed as a parameter in a Laplace prior on the regressions coefﬁcients β.T o
+‘stabilize’ inference, the authors take the maximum of ˆΠ
+λ
+k over a domain Λ. From a Bayesian perspective,
+the choice of using the maximum rather than some form of integration over Λ is questionable. Have the
+authors considered alternative choices to the maximum and would some of their results carry over?
+This naturally leads me to discuss the connection with the Bayesian variable selection (BVS) context,
+where stability and predictive performance are achieved, not by resampling the data but by allowing
+parameter and model uncertainty. In this light, model averaging for BVS could be viewed as an ensemble
+method. There are several strategies for BVS, differing in their prior model of the regression coefﬁcients
+and the model search strategy. One way (but by no means the only way) to exploit the output of the BVS
+search is to compute marginal probabilities of inclusion for each variable, averaging over the space of
+models that are visited. In the large p, small n paradigm, ranking the posterior probabilities of inclusion
+to select relevant variables is commonly done. Of course, when the covariates are dependent, joint rather
+than marginal thresholding should be also considered.
+To understand better the power and sensitivity of stability selection, and to investigate further the claim
+that is made by the authors of empirical evidence of good performance even when the ‘irrepresentable
+condition’ is violated, we have implemented their procedure on a set of simulated examples under two
+scenarios of large p, small n, the ﬁrst inspired by classical test cases for variable selection that were devised
+by George and McCullogh (1997) and the second based on phased genotype data from the HapMap
+project. In both cases, a few of the regressors have strong correlation with the noise variables. In parallel,
+we have run two Bayesian stochastic search algorithms, shotgun stochastic search (Hanset al., 2007) and
+evolutionary stochastic search (Bottolo and Richardson, 2010), on the same data sets. Receiver operating
+characteristic curves and false discovery rate curves averaged over 25 replicates are presented in Fig. 11.
+It is clear from the plots that, in these two cases of large p, small n, good power for stability selection is
+only achieved at the expense of selecting a large number of false positive discoveries, a fact that can also
+be clearly seen in Fig. 7 of the paper. The Bayesian stochastic algorithms outperform stability selection
+procedures in the two scenarios. By their capacity to explore efﬁciently important parts of the parameter
+and model space and to perform averaging according to the support of each model, here Bayesian learners
+have an enhanced performance.
+As can be surmised from my comments, I have found this paper enjoyable, thought provoking and rich
+for future research directions, and I heartily congratulate the authors.
+John Shawe-Taylor and Shiliang Sun (University College London)
+We congratulate the authors on a paper with an exciting mix of novel theoretical insights and practical
+experimental testing and veriﬁcation of the ideas. We provide a personal view of the developments that
+were introduced by the paper, mentioning some areas where further work might be usefully undertaken,
+before presenting some results assessing the generalization performance of stability selection on a medical
+data set.
+The paper introduces a general method for assessing the reliability of including component features in
+a model. They independently follow a similar line to that proposed by Bach (2008), in which the author
+proposed to run the lasso algorithm using boostrap samples and only included features that occur in all the
+models thus created. Meinshausen and Bühlmann reﬁne this idea by assessing the probability that a feature
+is included in models created with random subsets of ⌊n=2⌋ training examples. Features are included if
+this probability exceeds a threshold π
+thr.
+Theorem 1 provides a theoretical bound on the expected number of falsely selected variables in terms of
+πthr and qΛ, the expected number of features to be included in the models for a ﬁxed subset of the training
+data, but a range of values of the regularization parameterλ∈Λ. The theorem is quite general, but makes
+one non-trivial assumption: that the distribution over the inclusion of false variables is exchangeable.
+
+===== PDF PAGE 36 =====
+452 Discussion on the Paper by Meinshausen and Bühlmann
+In their evaluation of this bound on a range of real world training sets, albeit with artiﬁcial regression
+functions, they demonstrate a remarkable agreement between the bound value (chosen to equal 2.5) and
+the true number of falsely included variables.
+We would have liked to have seen further assessment of the reliability of the bound in different regimes,
+i.e. bound values as ﬁxed by different q
+Λ and πthr. The experimental results indicate that in the data sets
+that were considered the exchangeability assumption either holds or, if it fails to hold, does not adversely
+affect the quality of the bound. We believe that it would have been useful to explore in greater detail which
+of these explanations is more probable.
+One relatively minor misﬁt between the theory and practical experiments was the fact that the theoretical
+results are in terms of the expected value of the quantities over random subsets, whereas in practice a small
+sample is used to estimate the features to include as well as quantities such as q
+Λ. Perhaps ﬁnite sample
+methods for estimating ﬁt with the assumption of exchangeability could also be considered. This might
+lead to an on-line approach where samples are generated until the required accuracy is achieved.
+Theorem 2 provides a more reﬁned analysis in that it also provides guarantees that relevant examples
+are included provided that they play a signiﬁcant part in the true model, which is something that theorem
+1 does not address. Though stability selection as deﬁned refers to the use of random subsampling and all
+the experiments make use of this strategy, theorem 2 analyses the effect of a ‘randomized lasso’ algorithm
+that randomly rescales the features before training on the full set. Furthermore, the proof of theorem 2
+does not make it easy for the reader to gain an intuitive understanding of the key ideas behind the result.
+Our ﬁnal suggestion for further elucidation of the usefulness of the ideas that are presented in the paper
+is to look at the effects of stability selection on the generalization performance of the resulting models.
+As an example we have applied the approach to a data set that is concerned with predicting the level of
+cholesterol of subjects on the basis of risk factors and single-nucleotide polymorphism genotype features.
+The data set includes 1842 subjects or examples. The feature set (input) includes six risk factors (age,
+smo, bmi, apob, apoa, hdl) and 787 genotypes. Each genotype takes a value in{1, 2, 3}. As preprocessing,
+each risk factor is normalized to have mean 0 and variance 1. For each example, its output is the averaged
+level of cholesterol over ﬁve successive years. The whole data were divided into a training set of 1200
+examples and a test set of the remaining 642 examples. We shall report the test performance averaged
+across 10 different random divisions of training and test sets. The performance is evaluated through the
+root-mean-square error. In addition to standard ‘stability selection’ we report performance for a variant
+in which complementary pairs of subsets are used.
+We report results for four methods:
+(a) ridge regression with the original features (method M1);
+(b) the lasso with the original features (method M2);
+(c) ridge regression with the features identiﬁed by stability selection (method M3);
+(d) the lasso with the features identiﬁed by stability selection (method M4).
+The variants of M3 and M4 based on complementary pairs of subsets are denoted M3c and M4c. The
+performances of the ﬁrst two methods are independent of π
+thr and provide a baseline given in Table 1.
+For the two methods involving stability selection we experiment with values ofπthr from the set{0:2, 0, 25,
+0:3, 0:35, 0:4, 0:45, 0:5}. The results for various values ofπthr for methods M3 and M4 using standard sub-
+sampling and the ranadomized lasso are given in Table 2, whereas using the complementary sampling
+gives the results of Table 3.
+The results suggest that stability selection has not improved the generalization ability of the resulting
+regressors, though clearly the lasso methods outperform ridge regression. The performance is remarkably
+Table 1. Mean (and standard deviations in parentheses)
+of the test performance and number of retained features for
+methods M1 and M2
+Results for Results for
+method M1 method M2
+Root-mean-square error 0.752 (0.017) 0.707 (0.017)
+Number of retained features 792 (0.66) 109 (5.22)
+
+===== PDF PAGE 37 =====
+Discussion on the Paper by Meinshausen and Bühlmann 453
+Table 2. Mean (and standard deviations in parentheses)
+of the test performance and number of retained features for
+methods M3 and M4
+πthr Number of Results for Results for
+features method M3 method M4
+0.20 117.4 (6.2) 0.722 (0.017) 0.716 (0.017)
+0.25 86.8 (5.2) 0.720 (0.016) 0.715 (0.016)
+0.30 64.7 (4.1) 0.719 (0.017) 0.715 (0.017)
+0.35 45.3 (4.1) 0.716 (0.016) 0.715 (0.017)
+0.40 27.3 (3.8) 0.714 (0.016) 0.713 (0.016)
+0.45 17.7 (1.9) 0.712 (0.016) 0.710 (0.016)
+0.50 11.4 (1.6) 0.714 (0.019) 0.713 (0.019)
+Table 3. Mean (and standard deviations in parentheses)
+of the test performance and number of retained features for
+methods M3c and M4c
+πthr Number of Results for Results for
+features method M3c method M4c
+0.20 116.5 (4.4) 0.721 (0.017) 0.715 (0.017)
+0.25 83.8 (3.0) 0.720 (0.017) 0.715 (0.017)
+0.30 62.4 (3.6) 0.718 (0.017) 0.714 (0.016)
+0.35 44.2 (3.2) 0.717 (0.015) 0.716 (0.016)
+0.40 27.4 (3.4) 0.714 (0.015) 0.713 (0.015)
+0.45 18.2 (1.7) 0.714 (0.012) 0.710 (0.013)
+0.50 11.8 (1.8) 0.715 (0.014) 0.713 (0.014)
+stable across different values ofπthr despite the number of stable variables undergoing an order of magni-
+tude reduction.
+The vote of thanks was passed by acclamation.
+Tso-Jung Yen (Academia Sinica, Taipei) and Yu-Min Yen (London School of Economics and Political
+Science)
+We congratulate the authors for tackling a challenging statistical problem with an effective and easily im-
+plementable method. Our comments and interest in the paper are as follows. First, the authors claim that,
+under the method, tuning parameterλis insensitive to the ﬁnal result. However, we have found that it may
+still be affected by its range, particularly in the p ⩽ m situation, where m is the subsampling size. In this
+situation, whenλ→ 0, the subsampling estimation results of the lasso will approach those of ordinary least
+squares. Consequently,λ
+min → 0 will lead to maxλ∈Λ. ˆΠλ
+K /→ 1 for all {1 ,..., p}∈K with high probability.
+The authors suggest the use ofm= n=2. Although p ⩽ n=2 is not a common case in current genomic and
+genetic studies, it is often seen in other research disciplines. By using the diabetes data that were presented
+in Efron et al. (2004), we then demonstrate that unsuitableλ
+min limits the use of equation (9) when p ⩽ m.
+We use
+ˆqΛ = 1
+B
+B∑
+i=1
+ˆS
+Λ
+.Ii/
+to estimate qΛ, where Ii is the index of the ith subsample. We ﬁx λmax = 100 and B = 200 with m= n=2.
+Fig. 12 shows the estimation results of ˆqΛ with the lasso whenλmin varies. Suppose that we requireE.V/ ⩽2;
+then, with λmin = 10:11, the corresponding ˆqΛ ≈ 4:57. Calibrating the value into equation (9) we obtain an
+unfeasible value πthr = 1:022 > 1.
+
+===== PDF PAGE 38 =====
+454 Discussion on the Paper by Meinshausen and Bühlmann
+1086420
+0.01 10.11 20.21 30.31 50.51
+Min_lambda
+Number of Selected Variables
+60.61 70.71 80.8140.41
+Fig. 12. Boxplots for the estimated number of selected variables ( ,ˆqΛ, average values of 200 sub-
+sampling estimations of ˆSΛ): the data set used is the diabetes data presented in Efron et al. (2004), with
+p D10 and nD442; the method used is the lasso and λmin is varied at nine different levels
+Fig. 13. Result of stability selection for the diabetes data with πthr D 0:9( – – – ) , p D 10, qÅ D 2:828,
+ˆλmax D 45:160 ( ) and ˆλmin D 9:090 ( ); the method used is the randomized lasso with Wk 2 [0:5,1]I the plot
+indicates that stability selection will only select variables with paths falling in region H
+
+===== PDF PAGE 39 =====
+Discussion on the Paper by Meinshausen and Bühlmann 455
+We propose a solution to this problem by directly estimating the regularization region Λ= [λmin, λmax]
+by ˆλmax = maxj |n−1xT
+j y| and
+ˆλmin = arg max
+λ
+{|ˆλmax − λ| :0 ⩽λ⩽ ˆλmax,ˆq[λ, ˆλmax] = qÅ}:
+Given E.V/ ⩽ 2, πthr = 0:9 and p = 10, we have qÅ = 4, ˆλmax = 45:160 and ˆλmin = 9:090. The estimation
+results with the randomized lasso are shown in Fig. 13, which indicates that only paths falling in region H
+(two variables) are selected.
+Secondly, in addition to E.V/=p, we may be also interested in controlling the false discovery rate
+E.V=| ˆS
+stable|/. Conventionally, the quantity may be approximated by E.V/=E.| ˆSstable|/, but it is unknown
+whether such an approximation works well in regression-based variable selection.
+Finally, we are interested in what the relationship between qΛ and the degrees of freedom of the lasso
+.dflasso/ is. As indicated in Efron et al. (2004) and Zou et al. (2007), E.| ˆSλ|/= dflasso. E.| ˆSλ.I/|/= qΛ by
+deﬁnition. They are different: | ˆSλ| relies on a single λ and the whole sample, but | ˆSλ.I/|/ depends on Λ
+and the subsample set I. We are wondering whether they will have some common features, and this may
+be useful to link the method with other traditional methods such as Cp, Akaike’s information criterion
+and the Bayes information criterion.
+Rajen Shah and Richard Samworth (University of Cambridge)
+We congratulate the authors for their innovative and thought-provoking paper. Here we propose a minor
+variant of the subsampling algorithm that is the basis of stability selection. Instead of drawing individual
+subsamples at random, we advocate drawing disjoint pairs of subsamples at random. This variant appears
+to have favourable properties.
+Below, we use the same notation as the paper. Our method of subsampling involves splitting{1 ,..., n}
+into two halves at random and picking a subset of size ⌊n=2⌋ in each half. Repeating this M times, we
+obtain a sequence of subsets I
+1,..., I2M with I2i ∩ I2i−1 =∅, i= 1 ,..., M.F o rk ∈ {1 ,..., p}, deﬁne
+˜Πλ
+k, M = 1
+2M
+2M∑
+i=1
+1{k ∈ ˆSλ.Ii/}:
+Similarly to the stability selection algorithm, we select variable k when maxλ∈Λ. ˜Πλ
+k, M / ⩾πthr.
+(a) Letting VM be the number of falsely selected variables E.VM / satisﬁes the same upper bound as in
+theorem 1 of the paper. Brieﬂy, deﬁning
+˜Π
+simult,λ
+k, M = 1
+M
+M∑
+i=1
+1{k ∈ ˆSλ.I2i−1/∩ ˆSλ.I2i/},
+the result corresponding to lemma 1 of the paper is
+0 ⩽ 1
+M
+M∑
+i=1
+[1− 1{k ∈ ˆSλ.I2i−1/}][1− 1{k ∈ ˆSλ.I2i/}]= 1− 2 ˜Πλ
+k, M + ˆΠ
+simult,λ
+k, M :
+The arguments of lemma 2 and theorem 1 follow through since E. ˆΠ
+simult,λ
+k, M /= E. ˆΠsimult,λ
+k /. Thus we
+have the same error control as in the paper even for ﬁniteM, as well as the inﬁnite subsampling case.
+(b) Simulations suggest that we obtain a slight decrease in the Monte Carlo variance. A heuristic ex-
+planation is that, when n is even, each observation is contained in the same number of subsamples.
+This minimizes the sum of the pairwise intersection sizes of our subsamples.
+(c) With essentially no extra computational cost, we obtain estimates of simultaneous selection proba-
+bilities, which can also be useful for variable selection; see Fanet al. (2009).
+(d) If,inadditiontotheassumptionsoftheorem1,wealsoassumethatthedistributionofmax λ∈Λ. ˆΠ
+simult,λ
+k /
+is unimodal, we obtain improved bounds:
+E.VM / ⩽
+⎧
+⎪⎪
+⎪
+⎨
+⎪⎪
+⎪
+⎩
+1
+2.2πthr − 1− 1=2M/
+q2
+Λ
+p if πthr ∈ .q2
+Λ=p2 + 1
+2 , 3
+4 ];
+4.1− πthr + 1=2M/
+1+ 1=M
+q2
+Λ
+p if πthr ∈ . 3
+4 , 1].
+
+===== PDF PAGE 40 =====
+456 Discussion on the Paper by Meinshausen and Bühlmann
+0.6 0.7 0. 8 0.9 1.0
+012 3 45
+πthr
+Error bound
+Fig. 14. Factor multiplying q2
+Λ=p against πthr for each of the bounds: the bound of theorem 1 (-------) and
+the new bound with M D1 ( )
+For a visual comparison between this bound and that of theorem 1, see Fig. 14. The improvement
+suggests that using sample splitting with this bound can lead to more accurate error control than
+using standard stability selection.
+(e) This new bound gives guidance about the choice ofM. For instance, whenπ
+thr =0:6 choosing M> 52
+ensures that the bound onE.VM / is within 5% of its limit asM →∞ . Whenπthr =0:9, choosingM> 78
+has the same effect.
+Christian Hennig (University College London)
+Stability selection seems to be a fruitful idea.
+As usually done with variable selection, the authors present it as a mathematical problem in which the
+task is to pick a few variables with truly non-zero coefﬁcients out of many variables with trueβk = 0. How-
+ever, in reality we do not believe model assumptions to be precisely fulﬁlled, and in most cases we believe
+that the (in some sense) closest linear regression approximation to reality does not have any regression
+coefﬁcients precisely equal to zero.
+It is of course ﬁne to have theory about the idealized situation with many zero coefﬁcients, but in
+more realistic situations the quality of a variable selection method cannot be determined by considering
+models and data alone. It would be necessary to specify ‘costs’ for including or excluding variables
+with ‘small’ true β
+k, which may depend on whether we would rather optimize the predictive quality
+or rather favour models with small numbers of variables enabling simple interpretations. We may even
+be interested in stability of the selection in its own right. Accepting the dependence of the choice of
+a method on the aim of data analysis, it would be very useful for promising methods such as sta-
+bility selection to have a ‘proﬁle’ of potential aims for which this is particularly suited, or rather not
+preferable.
+Considering the author’s remark at the end of Section 1.1, in Hennig (2010) it is illustrated in which sense
+the problem of ﬁnding the correct number of clusters s cannot be decided on the basis of models and data
+alone, and also in some simulation set-ups given there it turns out thats is not necessarily estimated most
+stable if it is chosen by a subsampling method looking for stable clusterings given s (based on ‘prediction
+strength’; Tibshirani and Walther (2005)).
+Paul D. W . Kirk, Alexandra M. Lewin and Michael P . H. Stumpf(Imperial College London)
+We consider stability selection when several of therelevant variables are correlated with one another. Like
+the authors, we are interested in variable relevance, rather than prediction; hence we wish to select all
+relevant variables.
+To illustrate, we use a simulated example, which is similar to that of the authors, in whichp=500, n=50,
+the predictors are sampled from an N .0, Σ/ distribution and the response is given by Y = Σ
+i=1,:::,8 Xi + ",
+where " is a zero-centred Gaussian noise term with variance 0.1. Here Σ is the identity matrix except for
+the elements Σ1,2 = Σ3,4 = Σ4,5 = Σ3,5 =0:8 and their symmetrical counterparts. Thus two sets of predictors
+are correlated: {X1, X2} and {X3, X4, X5}.
+
+===== PDF PAGE 41 =====
+Discussion on the Paper by Meinshausen and Bühlmann 457
+The problem
+For variables that are correlated with each other, different realizations of the simulation example above
+result in different stability paths; for example some realizations will stably selectX
+1 with high probability
+but not X2, some will stably select X2 but not X1 (as in Fig. 15(a)) and others will select both variables
+with lower probability, and hence may not select either with sufﬁciently high probability to be chosen in
+the ﬁnal analysis. In fact there is a clear relationship between the marginal selection probabilities for X
+1
+and X2, as shown in Fig. 15(b), which shows these probabilities for 1000 realizations.
+Solution 1
+One approach is to use the lasso as before, but to calculate selection probabilities for sets of correlated pre-
+dictors. Fig. 15(c) shows the stability paths for grouped predictors for the same realization as in Fig. 15(a),
+Selection probability for X1 , Π  
+λ(X1)
+Regularization parameter, λ
+1.0 0. 8 0.6 0.4 0.2
+0.0 0.2 0.4 0.6 0. 8 1.0
+1.0 0. 8 0.6 0.4 0.2
+0.0 0.2 0.4 0.6 0. 8 1.0
+Selection probability, Π
+1.0 0. 8 0.6 0.4 0.2
+0.0 0.2 0.4 0.6 0. 8 1.0
+0.0 0.2 0.4 0.6 0. 8 1.0
+0.0 0.2 0.4 0.6 0. 8 1.0
+X3 U X4 U X5
+X1 U X2
+X8 
+X7 
+X6 
+X8 X1 
+X7 
+X6 
+X2 
+X3 
+X5 
+X4 
+X2 
+X5 
+X3 
+X8 
+X7 
+X1 X6 
+X4 
+Regularization parameter, λ
+(a)( b)
+(c) (d)
+Regularization parameter, λ
+Selection probability for X2 , Π   
+λ(X2)
+Selection probability, Π
+Selection probability, Π
+Fig. 15. (a) Stability path for a particular realization of the simulation example ( , X1 and X2; /SOH- /SOH- /SOH-,
+X3, X4 and X5; , X6, X7 and X8; ....... , irrelevant variables); (b) for 1000 realizations, selection prob-
+abilities for X1 and X2 at λD 0:25 estimated by using the authors’ subsampling method (the plot illustrates
+the density of these points in the 0–1 square (with lighter squares indicating higher density), showing a clear
+negative relationship); (c) using the same realization as in (a), the stability path when correlated variables are
+grouped together; (d) again using the same realization, a stability path by using the elastic net (with mixing
+parameter set to 0.2)
+
+===== PDF PAGE 42 =====
+458 Discussion on the Paper by Meinshausen and Bühlmann
+in which only one member of each correlated set would have been selected with high probability. Grouping
+them enables us to select the groups as required.
+Solution 2
+The obvious drawback to selection probabilities for groups is that the groups must be deﬁned from the out-
+set. We propose to use the elastic net (Zou and Hastie, 2005), which uses a linear combination of the lasso
+l
+1-penalty and the ridgel2-penalty. Thel2-penalty lets the algorithm include groups of correlated variables,
+whereas the l1-penalty ensures that most regression coefﬁcients are set to 0. We ﬁnd that using marginal
+selection probabilities with the elastic net can give us all members of the correlated groups without deﬁning
+them in advance, as shown in Fig. 15(d).
+J. T . Kent(University of Leeds)
+This has been a fascinating paper dealing, in particular, with the important problem of variable selection
+in regression. I have two simple questions about the methodology in this setting.
+First, if we are willing to assume joint normality of the Y, X data, then all the information in the data
+will be captured by the sufﬁcient statistics, namely the ﬁrst two sample moments, together with the sample
+size n. Presumably there is no need to resample from the data in this situation; in principle, inferences
+could be made analytically from the set of sample correlations between the variables, though in practice a
+version of the parametric bootstrap might be used. More generally, the use of resampling methods seems
+to carry with it an implicit assumption or accommodation of non-normality and leads to the question
+how the methodology of the paper will be affected by different types of non-normality.
+Second, I am not entirely clear what happens under approximate collinearity between the explanatory
+variables. In the conventional forward search algorithm in regression analysis, we are often faced with
+the situation where two variables x
+1 and x2 have similar explanatory power. If x1 is in the model, then
+there is no need to include x2; conversely, if x2 is in the model there is no need to include x1. If I under-
+stand your procedure correctly, you will tend to include x1 half the time and x2 half the time, leading
+to stability probabilities of about 50% each. If so, you might falsely conclude that neither variable is
+needed.
+Axel Gandy (Imperial College London)
+I congratulate the authors on their stimulating paper. The following comments concern the practical
+implementation of selecting stable variables.
+The paper deﬁnes the set of stable variables in expression (7) as those k for which max
+λ∈Λ. ˆΠλ
+k / ⩾πthr
+f o raﬁ x e d0<πthr < 1. In practice, ˆΠλ
+k , and therefore also the set of stable variables, cannot be evaluated
+explicitly.
+One way to evaluate ˆΠλ
+k via Monte Carlo simulation is to generate J independent subsamples Ij of
+{1 ,..., n} of size ⌊n=2⌋ each and to approximate ˆΠλ
+k by
+ΠÅ,λ
+k = 1
+J
+J∑
+j=1
+1{k ∈ ˆSλ.Ij /}
+where 1{·} denotes the indicator function. Owing to the simulation, ˆΠλ
+k and ˆΠÅ,λ
+k can be on different sides
+of the threshold πthr, leading potentially to a different set of stable variables.
+To tackle this problem, the sequential algorithm in Gandy (2009) can be used. This sequential algorithm
+was originally suggested for the implementation of Monte Carlo tests, but it can also be used in the current
+situation for computing ˆΠ
+λ
+k . Applied to the situation of the present paper, the algorithm will produce an
+estimate ˜Πλ
+k of ˆΠλ
+k with a bound on the probability of ˆΠλ
+k being on a different side of πthr from ˆΠλ
+k . More
+precisely, for an (arbitrarily small) "> 0,
+˜P{1. ˆΠλ
+k ⩾πthr /̸= 1. ˆΠλ
+k ⩾πthr /} ⩽ ",
+where ˜P denotes the probability distribution of the simulation conditionally on the observed data.
+Besides this guaranteed performance, the algorithm in Gandy (2009) is a sequential algorithm and will
+come to a decision based on only a small number of samples if ˆΠλ
+k is far from the threshold πthr.
+If Λ is a ﬁnite set with # Λ elements then also the following simultaneous bound on the sampling error
+for all variables can be obtained:
+˜P{∃λ∈ Λ, k ∈ {1 ,..., p} : 1. ˆΠλ
+k ⩾πthr /̸= 1. ˆΠλ
+k ⩾πthr /} ⩽ ":
+This can be accomplished by running the algorithm of Gandy (2009) for eachλ and k with the Bonferroni
+corrected threshold "=.p#Λ/. These can be run in parallel using the same subsamples Ij. The Bonferroni
+
+===== PDF PAGE 43 =====
+Discussion on the Paper by Meinshausen and Bühlmann 459
+correction would be conservative. Devising a less conservative correction could be a topic for further
+research.
+Howell Tong (London School of Economics and Political Science )
+I join the others in congratulating the authors on a thought-provoking paper. It may be constructive to look
+beyond the independent and identically distributed data case and the exchangeable case. I would welcome
+the authors’ reaction to what follows, some of which I have alluded to elsewhere (Tong, 2010). There are
+many examples of ill-posed problems with dependent data. I only need to mention the well-known seasonal
+adjustment, which is as old as time series itself. Akaike (1980) considered the classic decomposition of a
+time series y
+i, i=1 ,..., n, into yi = Ti + Si + Ii where Ti, Si and Ii are respectively the trend, the seasonal and
+the irregular component. He treated the problem as one of smoothing. By incorporating the prior belief
+of some underlying structural stability, e.g. a smooth trend or gradual change of the seasonal component,
+he minimized
+n∑
+i=1
+{.yi − Ti − Si/2 + d2.A2
+i + r2B2
+i + z2C2
+i /},
+where d, r and z are regularization parameters, Ai = Ti − 2Ti−1 + Ti−2, Bi = Si − Si−12 and Ci = Si + Si− i +
+... + Si−11. He estimated the regularization parameters by adopting a Bayesian approach based on what
+he called the ‘ ABIC’, which is minus 2 times the log-likelihood of a Bayesian model. Akaike’s approach
+has three important aspects:
+(a) treating the problem as one of smoothing;
+(b) focusing on structural stability rather than variable selection;
+(c) treating the regularization parameters as some hyperparameters in a Bayesian framework.
+Finally, I have a minor question. Have the authors tried to use their stability selection on model selection
+in time series modelling?
+Chris Holmes (Oxford University)
+The authors are to be congratulated on a ground breaking paper. The following comments are made from
+the perspective of a casual Bayesian observer.
+In applied statistics it is quite rare to encounter problems of hard or crisp variable selection whereby
+the statistician is required to select a single subset of variables on the basis of the output of a computer
+program. When such circumstances arise, there is almost by deﬁnition the notion of an action to be per-
+formed using the variable set and hence a loss functionl{a. ˆS
+k /, Sk′ } occurred in taking actions, a.·/, using
+ˆSk when nature is really in Sk′ . An optimal way to proceed then is according to the principle of maximum
+expected utility, i.e. to choose ˆSk so as to minimize your expected loss,
+ˆSk = arg min
+˜S
+[ ∑
+S
+l{a. ˜Sk /, S} π.S|D/
+]
+where π.S|D/ is the posterior mass assigned to subset S which characterizes all the information about
+the unknown state of nature. Such an approach provides provably coherent decision making in the face of
+uncertainty and is prescriptive in how to take actions by using variable selection; see Lindley (1968) and
+Brown et al. (1999) for instance. It feels to me that crisp variable selection without incorporation of utility
+is a little like breaking the eggs without making the omelette. The job is only half done—with apologies
+to Savage (1954) for the analogy.
+Crisp variable subset selection is rare but much more common is for the statistician to work with the
+owner of the data to determine the relevance of the measured variables and to understand better the
+dependence structures within the data, i.e. as part of a dialogue whereby statistical evidence is combined
+with expert judgement. On the one hand the Bayesian works with the posterior distribution ˆΠ.S|D/=
+F[{y, x}, π.S/], which is a function of the data and a prior distribution which captures any rich domain
+knowledge that may exist; on the other hand stability selection reports ˆΠ.S/= F
+A.{y, x}, A/, which is a
+function of the data and the algorithm. It seems to the casual Bayesian observer that the former is more
+objective while providing a formal mechanism to incorporate any domain knowledge which might exist
+about the problem.
+The following contributions were received in writing after the meeting.
+
+===== PDF PAGE 44 =====
+460 Discussion on the Paper by Meinshausen and Bühlmann
+Ismaïl Ahmed and Sylvia Richardson (Imperial College London)
+The object of this contribution is to discuss further the vitamin example that was provided by the authors.
+This example is given to ‘see how the lasso and the related stability path cope with noise variables’. It
+shows that, on the basis of a graphical analysis of the stability path, we can select ﬁve of the six permuted
+genes whereas, with the lasso path, the situation seems to be much less clear.
+Thanks to the authors, we had the opportunity to reanalyse the vitamin data set that was used in the
+paper. The ﬁrst thing that we would like to remark is that by performing a simple univariate analysis, i.e. by
+using each of the 4088 genes one at a time and then adjusting the correspondingp-values for multiplicities
+at a 5% level for the false discovery rate, we also pick up ﬁve of the six unpermuted covariates. The results
+are illustrated by Fig. 16, which also shows that there is an important discrepancy between the ﬁrst ﬁve
+q-values and the remaining values.
+Furthermore, we also performed a standard multivariate regression analysis restricted to the six un-
+permuted covariates, removing thus all the noise variables. The results, which are illustrated in Table 4,
+show that only one unpermuted gene is associated with a p-value that is less than 0.05 and that three
+unpermuted genes have a p-value that is less than 0.10. Consequently, it seems unclear whether any
+multivariate selection method could or should pick up more than these three variables. And indeed,
+when applying the shotgun stochastic search algorithm of Hans et al. (2007) on the whole data set with
+20000 iterations, no more than these three variables could possibly be selected with regard to their pos-
+terior importance measure (as deﬁned in equation (2) of Hans et al. (2007)) over the 100000 top visited
+models.
+It thus seems to us puzzling that, on this example, stability selection behaves more like a univariate
+approach rather than a multivariate approach.
+*
+0.0 0.2 0.4 0.6 0. 8 1.0
+0.0 0.2 0.4 0.6 0. 8 1.0
+p-values
+q-values
+Fig. 16. Estimated q-values according to thep-values resulting from the 4088 univariate analyses: the esti-
+mated q-values are obtained with the location-based estimator (Dalmasso et al., 2005); for a false discovery
+rate of 0.05 or lower, ﬁve null hypotheses are rejected (Å)
+
+===== PDF PAGE 45 =====
+Discussion on the Paper by Meinshausen and Bühlmann 461
+Table 4. Results of a multivariate regression restricted to
+the six unpermuted covariates
+Parameter Estimate Standard t-value Pr( >|t|)
+error
+(Intercept) −7.7107 0.1782 −43.27 0.0000
+X1407 −0.1221 0.1912 −0.64 0.5246
+X1885 0.6665 0.3888 1.71 0.0894
+X3228 −0.1094 0.2716 −0.40 0.6880
+X3301 0.4697 0.2750 1.71 0.0905
+X3496 0.6183 0.3077 2.01 0.0470
+X3803 −0.1729 0.3271 −0.53 0.5982
+Phil Brown and Jim Grifﬁn (University of Kent, Canterbury)
+We comment on the use of the randomized lasso (equation (13)). This, with subsampling, attempts to
+remedy the seductive appeal of convex penalization, which is a property of the lasso. Demanding a single
+solution when there is inherent uncertainty and interchangeability of predictors leads to the present paper’s
+suggestion of subsampling for inference. In the Bayesian modal analysis of Grifﬁn and Brown (2007) it is
+the multiplicity from a non-convex penalization which allows posterior exploration of alternative models
+without the need for external randomization. Our generalization of the lasso, a hierarchical scale mixture-
+of-normals prior, is the ﬂexible normal–exponential–gamma distribution. The ﬁrst two stages generate a
+double exponential, which is the equivalent of L
+1-penalization. The third stage puts a gamma .α,1 =λ2/
+distribution on the natural parameter of the exponential second-stage mixing. Thus the penalization can
+be written as
+λ
+p∑
+k=1
+√ ak|βk|,
+where a1, a2,..., ap are independently realizedχ2 random variables with 2α degrees of freedom weighting
+each βk in each simulation. This third-stage gamma distribution is somewhat different from the authors’
+advocacy of an inverse truncated uniform distribution, whose implied prior distribution forβk is less natu-
+ral, and we feel needs more justiﬁcation. Combining all three stages, theβ1, β2,..., βp are independent and
+identically distributed a priori where βk follows a normal–exponential–gamma distribution which can be
+explicitly written in terms of a parabolic cylinder function, and is a unimodal spiked distribution with tails
+whose heaviness depends on the shape parameter α. When α= 0:5, it is the quasi-Cauchy distribution of
+Johnstone and Silverman (2005), and the robustness prior of Berger (1985), section 4.7.10. The third-stage
+stochastic generation of the gamma (i.e. χ
+2-) distribution gives a stochastic lasso allowing fast algorithms
+such as LARS, and we thank the authors for that suggestion. We would ask though whether the other
+form of randomization, subsampling of observations, is necessary with such rich stochastic weighting
+possibilities. It is better to generate prior data than to throw away real data.
+We have also given a full Bayesian analysis in Grifﬁn and Brown (2010) illustrating the limitations of
+straight lasso penalization using another robustness prior, the variance gamma prior.
+David Draper (University of California, Santa Cruz )
+I have two comments on this interesting and useful paper.
+(a) I am interested in pursuing connections with Bayesian ideas beyond the authors’ mention of the
+Barbieri and Berger (2004) results. I reinterpret three of the concepts in the present paper in Bayesian
+language.
+(i) Frequentist penalization of the log-likelihood to regularize the problem is often equivalent to
+Bayesian choice of a prior distribution (for example, think of the l
+1-norm penalty term in the
+lasso in the paper’s equation (2) as a log-prior for β; might there be an even better prior to
+achieve the goals of this paper?).
+(ii) Under the assumption that the rows Z.i/ of the data matrix are sampled independently from the
+underlying data-generating distribution, resampling the existing data is like sampling from the
+posterior predictive distribution (given the data seen so far) for future rows in the data matrix
+
+===== PDF PAGE 46 =====
+462 Discussion on the Paper by Meinshausen and Bühlmann
+(and of course, if we already had enough such rows, it would no longer be true that p≫ n and
+the good predictors would be more apparent).
+(iii)When estimated via resampling, stability paths are just Monte Carlo approximations to expec-
+tations of the indicator function, for inclusion of a given variable, with respect to the posterior
+distribution for the unknowns in the model.
+I bring this up because it has often proved useful in the past to ﬁgure out what is the Bayesian
+model (both prior and likelihood) for which an algorithmic procedure, like that described in this
+paper, is approximately a good posterior summary of the quantities of interest, because even better
+procedures can then be found; a good example is the reverse engineering of neural networks from a
+Bayesian viewpoint by Lee (2004). Can the authors suggest the next steps in this algorithm-to-Bayes
+research agenda applied to their procedure?
+(b) The authors have cast their problem in inferential language, but the real goal of structure discovery
+is often decision making (for instance, a drug company trying to maximize production of riboﬂavin
+in the example in Section 2.2 will want to decide in which genes to encourage mutation; money is
+lost both by failing to pursue good genes and by pursuing bad ones); moreover, when the problem is
+posed inferentially there is no straightforward way to see how to trade off false positive against false
+negative selections, whereas this is an inescapable part of a decision-making approach. What does
+the authors’ procedure look like in a real world problem when it is optimized for making decisions,
+via maximization of expected utility?
+Zhou Fang (Oxford University)
+The authors suggest an interesting and novel way of enhancing variable selection methods and should
+be congratulated for their contribution. However, recalculation with subsamples can be computationally
+costly. Here, a heuristic is suggested that may allow some beneﬁts of stability selection with the lasso
+without resampling.
+Consider the weighted lasso, for observation weights W. Differentiation gives then, for ˜X, ˜β being the
+design matrix and coefﬁcient estimates for the selected variables ˆS
+λ,
+˜β= . ˜XTW ˜X/−1. ˜XTWY − λ/:
+Differentiating by W gives, after substitution,
+A := d ˜β
+dW
+⏐⏐
+⏐
+⏐
+⏐
+W=1
+= . ˜XT ˜X/−1 ˜XTdiag.Y − ˜X ˜β/:
+Aδ is a linear approximation to changes in the lasso non-zero estimates under a small perturbation of
+weights δ. This is directly analogous to inﬂuence calculations in normal linear regression. (See for example
+Belsley et al. (1980).) Although this approximation may be inaccurate, the components ofA will all already
+be calculated as part of LARS or similar algorithms, reducing the computational burden.
+Consider a simulation. Using n= 50 and p= 100, generate .Z.1/,..., Z.p/, V/ independently standard
+normal and set X.k/ = Z.k/ + V .W es e t Y = Xβ+ ", with β= .1 ,1 ,1 ,1 ,1 ,0 ,...,0 /T and " independent
+N.0, 1
+4 / noise. Fig. 17 shows results from various variable selection techniques.
+In Fig. 17(a), V creates correlation in the predictors, hence generating false positive selections. For
+high regularization, these spurious ﬁts rival the true ﬁts in magnitude. As suggested in the paper, stability
+selection is more effective at controlling false positive selections.
+For perturbation methods based on the original single lasso path, we may examine the relative norms
+of the rows A
+1,..., A| ˆSλ| of A, as deﬁned by
+∥Ak∥2
+REL =
+n∑
+i=1
+(
+Aki
+˜βk
+) 2
+:
+In our experiments, we see that calculating this also distinguishes the true covariates from the irrelevant
+covariates—with most λ, the true positive selections vary relative to their estimates much less under per-
+turbation. For Fig. 17(d), we naively convert the relative norms into an approximate upper bound on
+selection probability under weight perturbations of variance 1, using the Cantelli inequality:
+P. ˜β
+k = 0/≈ P.− Akδ> ˜βk / ⩽ 1− 1
+˜β
+2
+k =var.Akδ/+ 1
+= 1− 1
+1=∥Ak∥2
+REL + 1 :
+
+===== PDF PAGE 47 =====
+Discussion on the Paper by Meinshausen and Bühlmann 463
+−0.2 0.2 0.6 1.0
+20 96 52 5
+0.0 0.2 0.4
+Selection probability
+0.6 0. 8 1.0
+0.0 0.2 0.4 0.6 0. 8 1.0
+0 246 8 10
+0.0 0.2 0.4 0.6 0. 8 1.0
+(c) (d)
+0.0 0.2 0.4 0.6 0. 8 1.00.0 0.2 0.4 0.6 0. 8 1.0
+(b)(a)
+0.0 0.2
+Cantelli Bound
+1/(Relative Norm)2 Standardized Coefficients
+0.4 0.6 0. 8 1.0
+Fig. 17. (a) Lasso, (b) stability selection, (c) perturbation and (d) perturbation probability paths on a simu-
+lated data set: , true covariates; --- ----, irrelevant covariates
+This approximates the stability selection path, except for low regularization, where failure to consider
+cases of unselected variables being selected under a perturbation means that we overestimate stability.
+However, this calculation, even inefﬁciently implemented, took 0.5 s to compute, compared with 14 s for
+200 resamples of stability selection.
+Torsten Hothorn (Ludwig-Maximilians-Universität München)
+Stability selection brings together statistical error control and model-based variable selection. The method,
+which controls the probability of selecting—and thus potentially interpreting—a model containing at least
+one non-inﬂuential variable, will increase the conﬁdence in scientiﬁc ﬁndings obtained from high dimen-
+sional or otherwise complex models.
+The idea of studying the stability of the variable selection procedure applied to a speciﬁc problem
+by means of resampling is simple and easy to implement. And the authors point out that this straight-
+forward approach has actually been used much earlier. The ﬁrst reference that I could ﬁnd is a paper on
+model selection in Cox regression by Sauerbrei and Schumacher (l992). Today, multiple-testing procedures
+utilizing the joint distribution of the estimated parameters can be applied in such low dimensional models
+for variable and structure selection under control of the familywise error rate (Haufeet al. (2010) present
+a nice application to multivariate time series). With their theorem 1, Nicolai Meinshausen and Peter
+Bühlmann now provide the means for proper error control also in much more complex models.
+Two issues seem worth further attention to me: the exchangeability assumption that is made in theorem
+1 and the prediction error of models ﬁtted by using only the selected variables. One popular approach for
+
+===== PDF PAGE 48 =====
+464 Discussion on the Paper by Meinshausen and Bühlmann
+variable selection in higher dimensions is based on the permutation variable importance measure that is
+used in random forests. Interestingly, it was found by Stroblet al. (2008) that correlated predictor variables
+receive a higher variable importance than is justiﬁed by the data-generating process. The reason is that
+exchangeability is (implicitly) assumed by the permutation scheme that is applied to derive these variable
+importances. The problem can be addressed by applying a conditional permutation scheme and I wonder
+whether a more elaborate resampling technique taking covariate information into account might allow for
+a less strong assumption for stability selection as well.
+Concerning my second point, the simulation results show that stability selection controls the number of
+falsely selected variables. I wonder how the performance (measured by the out-of-sample prediction error)
+of a model that is ﬁtted to only the selected variables compares with the performance of the underlying
+standard procedure (including a cross-validated choice of hyperparameters). If the probability that an
+important variable is missed by stability selection is low, there should not be much difference. However, if
+stability selection is too restrictive, I would expect the prediction error of the underlying standard model
+to be better. This would be another hint that interpretable models and high prediction accuracy might not
+be achievable at the same time.
+Chenlei Leng and David J. Nott (National University of Singapore)
+We congratulate Meinshausen and Bühlmann on an elegant piece of work which shows the usefulness
+of introducing additional elements of randomness into the lasso and other feature selection procedures
+through subsampling and other mechanisms. It is now well understood that certain restrictive assumptions
+(Zhao and Yu, 2006; Wainwright, 2009) must be imposed on the design matrix for the lasso to be a consistent
+model selector although adaptive.versions of the lasso can circumvent the problem (Zou, 2006). How-
+ever, as convincingly pointed out by Meinshausen and Bühlmann, by considering multiple sparse models
+obtained from perturbations of the original feature selection problem the performance of the original
+lasso, which uses just a single ﬁt, can be improved.
+We believe that a Bayesian perspective has much to offer when thinking about randomized versions of
+the lasso. We offer two alternative approaches, where the randomness comes from an appropriate posterior
+distribution.
+(a) Our ﬁrst approach puts a prior on the parameters in the full model. Given a draw of the parameters,
+say βÅ from the posterior distribution, we consider projecting the model that is formed by this real-
+ization onto subspaces deﬁned via some form of l
+1-constraint on the parameters. Deﬁning the loss
+function as the expected Kullback–Leibler divergence between this model and its projection, we use
+any of the following constraints on the subspace
+S.λ/= {β:
+p∑
+k=1
+|βk| ⩽λ},
+S.βÅ, λ/= {β:
+p∑
+k=1
+|βk|=|βÅ
+k | ⩽λ}
+inspired by the lasso and adaptive lasso penalty respectively. Owing to thel1-penalty, in the posterior
+distribution of the projection there is positive probability that some parameters are exactly 0 and
+the posterior distribution on the model space that is induced by the projection allows exploration of
+model uncertainty. This idea is discussed in Nott and Leng (2010) and extends a Bayesian variable
+selection approach of Dupuis and Robert (2003) which considers projections onto subspaces that
+are deﬁned by sets of active covariates.
+(b) In on-going work, we consider the following adaptive lasso (Zou, 2006):
+∥Y − Xβ∥
+2 +
+p∑
+k=1
+λk|βk|:. 35/
+In comparison with the usual methods which determine a single estimate of {λk }p
+k=1 (Zou, 2006;
+Wang et al., 2007),we generalize the Bayesian lasso method in Park and Casella (2008) to produce a
+posterior sample of{λk }p
+k=1, which is denoted as{λÅb
+k }
+p
+k=1, b=1 ,..., B. For eachb, we plug{λÅb
+k }p
+k=1
+into expression (35), which gives a sparse estimateβÅb of β. The estimated parameters{βÅb}B
+b=1 can
+then be used for prediction and assessing model uncertainty. This is very much like the randomized
+lasso of Meinshausen and Bühlmann, but the randomness enters very naturally through a posterior
+distribution on hyperparameters. Our preliminary results show that this approach works competi-
+tively in prediction and model selection compared with the lasso and adaptive lasso.
+
+===== PDF PAGE 49 =====
+Discussion on the Paper by Meinshausen and Bühlmann 465
+Rebecca Nugent, Alessandro Rinaldo, Aarti Singh and Larry Wasserman (Carnegie Mellon University,
+Pittsburgh)
+Meinshausen and Bühlmann argue for using stability-based methods. We suspect that the methods that
+are introduced in the current paper will generate much interest.
+Stability methods have gained popularity lately. See Lange et al. (2004) and Ben-Hur et al. (2002) for
+example. There are cases where stability can lead to poor answers (Ben-Davidet al., 2006). Some caution
+is needed.
+General view of stability
+Let { ˆθ
+h : h∈ H} be some class of procedures indexed by a tuning parameter h. We think of larger h as
+corresponding to larger bias. Our view of the stability approach is to use the least biased procedure subject
+to having an acceptable variability. This has a Neyman–Pearson ﬂavour to it since we optimize what we
+cannot control subject to bounds on what we can control. The advantage is that variance is estimable
+whereas bias, generally, is not. There is no notion of approximating the ‘truth’ so it is not required that
+the model be correct. In contrast, Meinshausen and Bühlmann seem to be more focused on ﬁnding the
+‘true structure’.
+Rinaldo and Wasserman (2010) applied this idea to ﬁnding stable density clusters as follows. Randomly
+split the data into three groupsX= .X
+1,..., Xn/, Y = .Y1,..., Yn/ and Z= .Z1,..., Zn/. Construct a kernel
+density estimator ˆph from X (with bandwidth h) and construct a kernel density estimator ˆqh from Y. Deﬁne
+the instability by
+Ξ.h/= ˆPZ.{ ˆph >λ}Δ{ ˆqh >λ}/
+where ˆPz is the empirical distribution based on Z. Under certain conditions, Rinaldo and Wasserman
+(2010) showed the following theorem.
+Theorem 3. Let hÅ be the diameter of {p> λ} and let d be the dimension of the support of Xi. Then:
+(a) Ξ.0/= 0 and Ξ.h/= 0, for all h ⩾ hÅ;
+(b) sup0<h<hÅ [E{Ξ.h/}] < 1
+2 ;
+(c) As h→ 0, E{Ξ.h/}≍ hd ;
+(d) for each h∈ .0, hÅ/,
+cn
+1 .hÅ − h/d.n+1/ ⩽ E{Ξ.h/} ⩽ 2cn
+2 .hÅ − h/n+1
+for constants c1 and c2.
+We suggest using
+ˆh= inf [h : sup
+t>h
+{Ξ.t/} ⩽α], .36/
+where Ξ.h/ measures the variability and α is a user-deﬁned acceptable amount of variability. Currently,
+we are generalizing the results to hold under weaker conditions and to hold uniformly over cluster trees
+rather than a single level set. The same ideas can be applied to graphs.
+True structure?
+The authors spend time discussing the search for true structure. In general, we feel that there is too much
+emphasis on ﬁnding true structure. Consider the linear model. It is a virtual certainty that the model is
+wrong. Nevertheless, we all use the linear model because it often leads to good predictions. The search
+for good predictors is much different from the search for true structure. The latter is not even well deﬁned
+when the model is wrong, which it always is.
+Adam J. Rothman, Elizaveta Levina and Ji Zhu (University of Michigan, Ann Arbor )
+We congratulate the authors on developing a clever and practical method for improving high dimensional
+variable selection, and establishing an impressive array of theoretical performance guarantees. We are
+particularly interested in stability selection in graphical models, which is illustrated with one brief example
+in the paper. To investigate the performance of stability selection combined with the graphical lasso a little
+further, we performed the following simple simulation. The data are generated from theN
+p.0, Ω−1/ distri-
+bution, whereΩii =1, Ωi, i−1 = Ωi−1, i =0:3 and the rest are 0. We selectedp=30 and n=100, and performed
+50 replications. Stability selection with pointwise control was implemented with bootstrap samples of size
+n=2 drawn 100 times.
+We selected four different values of the tuning parameter λ for the graphical lasso, which correspond
+
+===== PDF PAGE 50 =====
+466 Discussion on the Paper by Meinshausen and Bühlmann
+to the marked points along the receiver operating characteristic (ROC) curves for the graphical lasso in
+Fig. 18. The ROC curve showing false positive and true positive rates of detecting 0s inΩ for the graphical
+lasso was obtained by varying the tuning parameter λ and averaging over replications. For each ﬁxed
+λ, we applied stability selection varying πthr within the recommended range of 0.6–0.9, which resulted
+in an ROC curve for stability selection. The ROC curves show that stability selection reduces the false
+positive rate, as it should, and shifts the graphical lasso result down along the ROC curve; essentially, it
+is equivalent to the graphical lasso with a larger λ. Figs 18(a) and 18(b) have λs which are too small, and
+stability selection mostly improves on the graphical lasso result, but it does appear somewhat sensitive
+to the exact value of λ:i f λ is very small (Fig. 18(a)), stability selection only improves on the graphi-
+cal lasso for large values of π
+thr. In Figs 18(c) and 18(d), λ is just right or too large, and then applying
+stability selection makes the overall result worse. This example conﬁrms that stability selection is a use-
+ful computational tool to improve on the false positive rate of the graphical lasso when tuning over the
+0.0 0.2 0.4 0.6 0. 8 1.0
+0.0 0.2 0.4 0.6 0. 8 1.0
+False positive rate
+True positive rate
+0.0 0.2 0.4 0.6 0. 8 1.0
+0.0 0.2 0.4 0.6 0. 8 1.0
+False positive rate
+(a)( b)
+(c) (d)
+True positive rate
+0.0 0.2 0.4 0.6 0. 8 1.0
+0.0 0.2 0.4 0.6 0. 8 1.0
+False positive rate
+True positive rate
+0.0 0.2 0.4 0.6 0. 8 1.0
+0.0 0.2 0.4 0.6 0. 8 1.0
+False positive rate
+True positive rate
+Fig. 18. Graphical lasso ROC curve (-- -----) and f our different stability selection ROC curves ( )
+obtained by varying πthr from 0.6 to 0.9 for ﬁxed values of λ of (a) 0.01, (b) 0.06, (c) 0.23 and (d) 0.40:
+/STXmarks the point on the graphical lasso ROC curve corresponding to the ﬁxed λ
+
+===== PDF PAGE 51 =====
+Discussion on the Paper by Meinshausen and Bühlmann 467
+full range of λ is more expensive than doing bootstrap replications. However, since it does seem some-
+what sensitive to the choice of a suitable small λ, it seems that combining it with some kind of initial
+crude cross-validation could result in even better performance. It would be interesting to consider whether
+there are particular types of the inverse covariance matrix that beneﬁt from stability selection more than
+others, and whether any theoretical results can be obtained speciﬁcally for such structures; in particular, it
+would be interesting to know whether stability selection can perform better than the graphical lasso with
+oracle λ.
+A. B. Tsybakov(Centre de Recherche en Economie et Statistique, Université Paris 6 and Ecole Polytechnique,
+Paris)
+I congratulate the authors on a thought-provoking paper, which pioneers many interesting ideas. My
+question is about the comparison with other selection methods, such as the adaptive lasso or thresholded
+lasso (TL). In the theory these methods have better selection properties than those stated in theorem 2.
+For example, consider the TL ˜β
+k = ˆβk I{| ˆβk| >cτ√ ∥ ˆβ∥0} where ˆβ is the lasso estimator withλ as in Bickel
+et al. (2009), τ= √ {log.p/=n} and c> 0 is such that ∥ ˆβ− β∥2 ⩽ cs1=2τ with high probability under the
+restricted eigenvalue condition of Bickel et al. (2009). Then a two-line proof using expression (7.9) in
+Bickel et al. (2009) shows that, with the same probability, under the RE condition ˜β selects S correctly
+whenever mink∈S |βk| >C s1=2τ for some C> 0 depending only on σ2 and the eigenvalues of X′X=n. Since
+also c depends only on X and σ2 (see Bickel et al. (2009)), c can be evaluated from the data. The restricted
+eigenvalue condition is substantially weaker than assumption 1 of theorem 2 and mink∈S |βk| need not be
+as large as greater than C′s3=2τ, as required in theorem 2. We may interpret it as the fact that stability
+selection is successful if the relevantβk are very large and the Gram matrix is very nice, whereas for smaller
+βk and less diagonal Gram matrices it is safer to use the TL. Of course, here we compare only the ‘upper
+bound’, but it is not clear why stability selection does not achieve at least similar behaviour to that of the
+TL. Is it only technical or is there an intrinsic reason?
+Cun-Hui Zhang (Rutgers University, Piscataway)
+I congratulate the authors for their correct call for attention to the utility of randomized variable selection
+and great effort in studying its effectiveness.
+In variable selection, a false variable may have a signiﬁcant observed association with the response var-
+iable by representing a part of the realized noise through luck or by correlating with the true variables. A
+fundamental challenge in such structure estimation problems with high dimensional data is to deal with
+the competition of many such false variables for the attention of a statistical learning algorithm.
+The solution proposed here is to simulate the selection probabilities of each variable with a randomized
+learning algorithm and to estimate the structure by choosing the variables with high simulated selection
+probabilities. The success of the proposed method in the numerical experiments is very impressive, espe-
+cially in some cases at a level of difﬁculty that has rarely been touched on earlier. I applaud the authors
+for raising the bar for future numerical experiments in the ﬁeld.
+On the theoretical side, the paper considers two assumptions to guarantee the success of the method
+proposed:
+(a) many false variables compete among themselves at random so each false variable has only a small
+chance of catching the attention of the randomized learning algorithm;
+(b) the original randomized learning algorithm is not worse than random guessing.
+The ﬁrst assumption controls false discoveries whereas the second ensures a certain statistical power of
+detecting the true structure. Under these two assumptions, theorem 1 asserts in a broad context the validity
+of an upper bound for the total number of false discoveries. This result has the potential for an enormous
+inﬂuence, especially in biology, text mining and other areas that are overwhelmed with poorly understood
+large data.
+Because of the potential for great inﬂuence of such a mathematical inequality in the practice of statistics,
+possibly by many non-statisticians, we must proceed with equally great caution. In this spirit, I comment
+on the two assumptions as follows.
+Assumption (a) is the exchangeability condition in theorem 1. As mentioned in the paper, it is a con-
+sequence of the exchangeability of X
+N given XS in linear regression. The stronger condition implies a
+correlation structure for the design as
+( ΣS diag.ρS /1
+1 diag.ρS /. 1− ρN /IN +ρN 1
+)
+,
+
+===== PDF PAGE 52 =====
+468 Discussion on the Paper by Meinshausen and Bühlmann
+where ρS ∈RS , ρN ∈R, IN is the identity and 1 denotes matrices of proper dimensions with 1 for all entries.
+I wonder whether such an assumption could be tested.
+Assumption (b) may not always hold for the lasso. For qΛ <|S|, a counterexample seems to exist with
+XN =ρ′
+S XS 1+√ .1−∥ ρS∥2/ZN , where XS and ZN are independent standard normal vectors and the com-
+ponents of ρS are of the same sign as those of β.
+Hui Zou (University of Minnesota,Minneapolis)
+I congratulate Dr Meinshausen and Professor Bühlmann on developing stability selection for address-
+ing the difﬁcult problem of variable selection with high dimensional data. Stability selection is intuitively
+appealing, general and supported by ﬁnite sample theory.
+Regularization parameter selection in sparse learning is often guided by some model comparison criteria
+such as the Akaike information criterion and Bayes information criterion in which prediction accuracy
+measurement is a crucial component. It is quite intriguing to see that stability selection directly targets
+variable selection without using any prediction measurement. The advantage of stability selection is well
+demonstrated by theorem 1 in which inequality (9) controls the number of false selections. In the context
+of variable selection, inequality (9) is very useful when the number of missed true variables is small. In an
+ideal situation we wish to have ˆS
+stable ⊇ S while controlling the number of false selections. An interesting
+theoretical problem is whether a non-trivial lower bound could be established forE.|S ∩ ˆS
+stable
+|/.
+To see how well stability selection identiﬁes relevant variables, we did some simulations where stability
+selection was applied to sure independence screening (SIS) (Fan and Lv, 2008). In the linear regres-
+sion case, SIS picks the top d ≪ p variables that have the highest correlation with the response variable.
+Denote by ˆS
+d the SIS selector with reduced dimensiond. Then ˆΠd
+k = PÅ.k∈ ˆSd / and ˆSstable
+d = {k : ˆΠd
+k ⩾πthr }.
+We need to consider only pointwise control because ˆΠd
+k is monotonically increasing with increasing d.
+The simulation model is y= Σp
+j=1 xjβj + N.0, 1/ with .x1,..., xp/ independent and identically distributed
+N.0, 1/ and β1 =β2 = ::: =β10 = 1 and βj = 0f o rj> 10. Following Meinshausen and Bühlmann, we let
+d =⌊√ {.2πthr − 1/}p⌋ to guarantee E.V/ ⩽ 1. Moreover, in thep≫ n setting ˆSd discovers all relevant vari-
+ables with very high probability (Fan and Lv, 2008). For the simulation study we considered an asymptotic
+high dimension setting.p=20000; n=800/ and a more realistic high dimension setting (p=4000; n=200).
+Table 5 summarizes the simulation results. First of all, in all four cases the number of false selections
+by stability selection is much smaller than 1, the nominal upper bound. For the case of p= 20000 and
+n = 800, both SIS and stability selection select all true variables. In particular, stability selection using
+π
+thr = 0:9 achieves the perfect variable selection in all 100 replications. When p= 4000 and n= 200, SIS
+still has a reasonably low missing rate (less than 5%), but stability selection usingπthr = 0:6 and πthr = 0:9
+selects about six and three relevant variables respectively. The performance is not very satisfactory. From
+this example we also see that with ﬁnite samples the choice of π
+thr can have a signiﬁcant effect on the
+missing rate of stability selection, although its effect on the false discovery rate is almost ignorable.
+The authors replied later, in writing, as follows.
+We are very grateful to all the discussants for their many insightful and inspiring comments. Although
+we cannot respond in a brief rejoinder to every issue that has been raised, we present some additional
+thoughts relating to the stimulating contributions.
+Table 5. Simulation for SIS plus stability selection based on 100
+replications
+πthr d E(|S ∩ ˆSd|), E(S|∩ ˆSstable
+d |), E(N|∩ ˆSstable
+d |),
+|S|= 10 p= 20000 n= 800
+0.6 63 10 10 0.22
+0.9 126 10 10 0
+p= 4000 n= 200
+0.6 28 9.52 5.91 0.09
+0.9 56 9.68 3.23 0.01
+
+===== PDF PAGE 53 =====
+Discussion on the Paper by Meinshausen and Bühlmann 469
+Connections to Bayesian approaches
+Richardson, Brown and Grifﬁn, Draper, and Leng and Nott discuss interesting possible connections
+between stability selection (or other randomized selection procedures) and Bayesian approaches with
+appropriately chosen priors. The randomized lasso has the most immediate relation, as pointed out by
+Brown and Grifﬁn and connecting with their interesting paper (Grifﬁn and Brown, 2007). They also raise
+the question whether subsampling is then still necessary. Although we do not have a theoretical answer
+here, it seems that subsampling improves in practice a randomized procedure (or the equivalent Bayesian
+counterpart). We are also not ‘throwing away real data’ with subsampling since the ﬁnal selection proba-
+bilities over subsampled data are U-statistics of order⌊n=2⌋ and are using alln samples, not just a random
+subset. Stability selection is closely related to bagging (Breiman, 1996), as pointed out by Richardson.
+Stability selection is aggregating selection outcomes rather than predictions and assigning an error rate
+via our theorem 1. Nott and Leng (2010) seems to be very interesting in the context of Bayesian variable
+selection.
+Bayesian decision theoretic framework
+Draper and Holmes point out that the Bayesian framework is natural for a decision theoretic framework.
+And, indeed, this is one of the advantages of Bayesian statistics. In our examples of biomarker discov-
+ery and, more generally for variable selection (and also for example graphical modelling), the workﬂow
+consists of two steps. The ﬁrst aim is to obtain
+(a) a good ranked list of potentially interesting markers or variables which we
+(b) then need to cut off at some position in the list.
+Although a decision theoretic analysis is mostly helpful in step (b), stability selection is potentially improv-
+ing both (a) and (b). The issue where to cut in the list in step (b) involves in the frequentist set-up a choice
+of an acceptable type I error rate. The choice of a type I error rate is maybe not as satisfying as a full
+decision theoretic treatment but it is often useful in practice. Each ‘discovery’ needs to be validated by
+further experiments which are often very costly and the chosen framework aims to optimize the number
+of true discoveries under a given budget that can be spent on falsely chosen variables or hypotheses.
+Exchangeability assumption
+Shawe-Taylor and Sun, and Zhang raise, very legitimately, the question to what extent the exchangeability
+assumption in theorem 1 is too stringent. We wrote in the paper that results do seem to hold up very well
+for real data sets where the assumption is likely to be violated (and theorem 2 is not making use of the
+strong exchangeability assumption). It is maybe also worthwhile mentioning that the assumptions can be
+weakened considerably for speciﬁc applications. For the special case of high dimensional linear models,
+we worked out a related solution in follow-up work (Meinshausenet al., 2009).
+Tightness of bounds and two-step procedures
+Tsybakov correctly points out that sharper bounds on the l
+2-distance are available for the standard lasso
+and these could be exploited for variable selection by using hard thresholding of coefﬁcients or the adaptive
+lasso. The reasons for having looser results for the randomized lasso are technical in our view, not intrinsic.
+It is much more difﬁcult to analyse the stability selection algorithm which involves subsampling and ran-
+domization of covariates, which opens up maybe interesting areas for further mathematical investigations.
+We thought that it was interesting, nevertheless, that the irrepresentable condition can be considerably
+weakened by using randomization of the covariates instead of using two-step procedures such as hard
+thresholding or the adaptive lasso.
+Power and false positive selections
+Zou, Richardson, Shah and Samworth, and Rothman, Levina and Zhu examined the power of the method
+to detect important variables and compared it with alternative approaches for some examples. Although it
+is obviously true that no method will be universally ‘optimal’, stability selection places a strong emphasis
+on avoiding false positive selections. This is in contrast with say, sure independence screening used by Zou,
+which is a screening method (by name!) and is sitting at the opposite end of the spectrum by placing a large
+emphasis on a large power while accepting many false positive selections. For the simulation results of Zou,
+we suspect that sure independence screening would have a much larger false positive rate forp= 4000 but
+we could not see it being reported. Rothman, Levina and Zhu compare the receiver operating characteristic
+curve for the example of graphical modelling. It does not come entirely unexpected from our point of view
+that the gain of stability selection is very small or, indeed, non-existent since the simulation takes place in
+
+===== PDF PAGE 54 =====
+470 Discussion on the Paper by Meinshausen and Bühlmann
+a Toeplitz design case which is very close to complete independence between all variables. For regression,
+it was shown already in the paper that stability selection cannot be expected to improve performance for
+independent or very weakly correlated variables. And our theorem 2 showed that we can expect major
+improvements only if the irrepresentable condition is violated, which has analogies in Gaussian graphical
+modelling (Meinshausen, 2008; Ravikumar et al., 2008).
+Generalization performance and sparsity
+Richardson, Shawe-Taylor and Sun, Tsybakov and Hothorn discuss the connection between generaliza-
+tion performance and sparsity of the selected set of variables. Hothorn mentions that achieving both
+optimal predictive accuracy and consistent variable selection might be very difﬁcult, as manifested also in
+the Akaike information criterion–Bayes information criterion dilemma for lower dimensional problems.
+Shawe-Taylor and Sun illustrate that stability selection will in general produce rather sparse models, which
+is in agreement with the discussion on false positive selections above. Their example demonstrates though
+also impressively that the predictive performance is sometimes compromised only very marginally when
+using much sparser models than those produced by the lasso under cross-validation. In general, stability
+selection will yield much sparser models than the lasso with cross-validation. How much predictive per-
+formance one is willing to sacriﬁce for higher sparsity of the model, if any, should be application driven.
+If the answer is ‘none’, stability selection might not be appropriate.
+Approximating the true model
+Hennig and Nugent, Rinaldo, Singh and Wasserman rightly question the assumed existence of a true linear
+model and whether coefﬁcients are ever exactly vanishing. Firstly, sometimes it is true that β
+ks are exactly
+zero for somek∈{1 ,..., p}, namely if observed variables contain truly just noise (in astronomy and physics
+this is often so—in biology not so much). Secondly, any study of variable importance or variable relevance
+will necessarily be model based in some form or another, be it in a low or high dimensional linear model
+or a random-forest framework, to name two examples. In general, no low or high dimensional parametric
+or non-parametric model is ever correct in practice. And yet it is legitimate in our view to be interested in
+assessing variable importance or relevance. In this context, it is maybe worthwhile to look instead at some
+sparse approximation of the data-generating distribution (which always exists) and to treat the question of
+variable importance and variable selection in this light. For the lasso, this has been worked out in Bunea
+et al. (2007) and Bickel et al. (2009) for estimation of the approximating regression parameters whereas
+for example van de Geeret al. (2010) deal explicitly with the problem of variable selection when the linear
+model is a sparse linear approximation for a true possibly non-linear regression function. Our theorem 1
+can be extended to such settings where the ‘true structure’S is deﬁned via a sparse approximation: we need
+to replace the true setS by an approximation setS
+approx. For example, in a linear approximating model for
+a general regression function f.·/= E.Y|X=· /, we can deﬁne
+Sapprox = arg min
+M⊆ {1,:::,p}
+.∥fM − f∥2
+2=n+ C2 +| M|/,
+fM = arg min
+f Å=XβÅ
+M
+.∥f Å − f∥2
+2=n/
+.37/
+and βÅ
+M has non-zero components only in the set M ⊆ {1 ,..., p}. Here, C2 is a suitable positive number,
+typically depending onn, and we denote byf , f Å and fM the n× 1 vectors evaluated at the observed cova-
+riates. Clearly, if the true model is linear and sparse with many regression coefﬁcients equal to 0 and where
+the few non-zero regression coefﬁcients are all sufﬁciently large, then the setS
+approx in expression (37) equals
+the set S of the true active variables. Theorem 1 will remain valid under an appropriate exchangeability
+assumption for selection of variables in the complement of Sapprox which might or might not be realistic.
+The mathematical arguments for extending theorem 2 to such a setting seem to be more involved.
+Correlated predictor variables
+Kirk, Lewin and Stumpf, and Kent raise the issue of correlated predictor variables and examine the
+behaviour of stability selection for highly correlated designs. This is a very important discussion point.
+As mentioned already above, stability selection puts a large emphasis on avoiding false positive selections
+and, as a consequence, might miss important variables if they are highly correlated with irrelevant vari-
+ables. This is similar to the behaviour of a classical test for the regression coefﬁcient p≪ n situations. For
+situations where we are more interested in whether there are interesting variables in a certain group of
+variables, the proposal of Kirk, Lewin and Stumpf on testing stability of sets of variables (and ﬁnding
+those sets possibly by the elastic net) seems very interesting and useful.
+
+===== PDF PAGE 55 =====
+Discussion on the Paper by Meinshausen and Bühlmann 471
+Numerical example of vitamin gene expression data
+Ahmed and Richardson analyse our gene expression data set with several competing methods and come
+to the conclusion that at most three genes should be selected. They raise the question whether stability
+selection is selecting too many variables. However, as shown in the initial contribution to the discussion
+by Richardson, stability selection is in fact also selecting only three genes under reasonable type I error
+control. The methods seem to be in agreement here.
+Choice of regularization
+Y en and Y en mention that the numberq of selected variables can grow very large for small regularization
+parameters λ and propose an interesting way to choose a suitable region for the regularization parameter.
+Y et, instead of restricting λ to larger values, a useful alternative in practice is to select only the ﬁrst q
+variables that appear when lowering the regularization. And q can be chosen a priori to yield non-trivial
+bounds in theorem 1.
+Computational improvements
+Gandy and Fang both propose interesting extensions that help to alleviate the computational challenge
+of having to ﬁt a model on many subsamples of the data. An interesting alternative to the procedure that
+was proposed by Gandy is the improved bounds suggested by Shah and Samworth.
+Dependent data
+Tong notes that stability selection makes an inherent assumption of independence between observations.
+We have not yet tried to apply the method to dependent data such as time series. The standard subsampling
+scheme will not be suitable in cases of dependence. A block-based approach with independent subsam-
+pling of blocks (and where dependence is captured within blocks, at least approximately) along the lines
+of Künsch (1989) might be an interesting alternative to explore in this context.
+Connections to clustering and density cluster estimation
+Nugent, Rinaldo, Singh and Wasserman, and Hennig provide fascinating connections to related ideas
+in clustering and density cluster estimation. As described in the paper, Monti et al. (2003) is another
+interesting connection to consensus clustering.
+Related ideas
+Richardson and Hothorn mention numerous related previous references. We tried to point out many con-
+nections to previous work but have missed important ones. It is maybe worthwhile emphasizing again the
+similarity, at the crude level, of the work of Bach (2008) on bolasso which has been developed independently
+and simultaneously.
+We reiterate and thank all the contributors again for their many interesting and thoughtful comments
+which have already opened up and will open up new research in this area. We would like to convey special
+thanks to Rajen Shah and Richard Samworth, who spotted a mistake in the deﬁnition of the assumption
+‘not worse than random guessing’ in an earlier version of the manuscript. Their improved bounds will also
+make stability selection less conservative and address John Shawe-Taylor’s comment regarding the ﬁnite
+amount of random subsampling in practiceversus our theoretical arguments corresponding to all possible
+subsamples. Finally, we thank the Royal Statistical Society and the journal for hosting this discussion.
+References in the discussion
+Akaike, H. (1980) Seasonal adjustment by a Bayesian modeling. J. Time Ser . Anal., 1, 1–13.
+Bach, F . (2008) Bolasso: model consistent Lasso estimation through the bootstrap. InProc. 25th Int. Conf. Machine
+Learning, pp. 33–40. New Y ork: Association for Computing Machinery.
+Barbieri, M. and Berger, J. (2004) Optimal predictive model section. Ann. Statist., 32, 870–897.
+Belsley, D. A., Kuh, E. and Welsch, R. E. (1980)Regression Diagnostics, ch. 2. New Y ork: Wiley.
+Ben-David, S., von Luxburg, U. and Pall, D. (2006) A sober look at clustering stability.Learn. Theor ., no. 4005,
+5–19.
+Ben-Hur, A., Elisseef, A. and Guyon, I. (2002) A stability based method for discovering structure in clustered
+data. Paciﬁc Symp. Biocomputing .
+Berger, J. O. (1985)Statistical Decision Theory and Bayesian Analysis . Berlin: Springer.
+Bickel, P ., Ritov, Y . and Tsybakov, A. (2009) Simultaneous analysis of Lasso and Dantzig selector.Ann. Statist.,
+37, 1705–1732.
+
+===== PDF PAGE 56 =====
+472 Discussion on the Paper by Meinshausen and Bühlmann
+Bottolo, L. and Richardson, S. (2010) Evolutionary Stochastic Search for Bayesian model exploration.Preprint.
+(Available fromhttp://arxiv.org/abs/1002.2706.)
+Breiman, L. (1996) Bagging predictors. Mach. Learn., 24, 123–140.
+Brown, P . J., Fearn, T. and Vannucci, M. (1999) The choice of variables in multivariate regression: a non-conjugate
+Bayesian decision theory approach. Biometrika, 60, 627–641.
+Bunea, F ., Tsybakov, A. and Wegkamp, M. (2007) Sparsity oracle inequalities for the Lasso.Electron. J. Statist.,
+1, 169–194.
+Dalmasso, C., Broët, P . and Moreau, T. (2005) A simple procedure for estimating the false discovery rate. Bio-
+informatics, 21, 660–668.
+Dupuis, J. A. and Robert, C. P . (2003) Variable selection in qualitative models via an entropic explanatory power.
+J. Statist. Planng Inf., 111, 77–94.
+Efron, B., Hastie, T., Johnstone, I. and Tibshirani, R. (2004) Least angle regression.Ann. Statist., 32, 407–499.
+Fan, J. and Lv, J. (2008) Sure independence screening for ultrahigh diemensional feature space (with discussion).
+J. R. Statist. Soc. B, 70, 849–911.
+Fan, J., Samworth, R. and Wu, Y . (2009) Ultrahigh dimensional feature selection: beyond the linear model.
+J. Mach. Learn. Res., 10, 2013–2038.
+Gandy, A. (2009) Sequential implementation of Monte Carlo tests with uniformly bounded resampling risk.
+J. Am. Statist. Ass., 104, 1504–1511.
+van de Geer, S., Zhou, S. and Bühlmann, P . (2010) Prediction and variable selection with the adaptive Lasso.
+Preprint arXiv:1001.5176v1.
+George, E. I. and McCullogh, R. E. (1997) Approaches for Bayesian variable selection. Statist. Sin. , 7, 339–
+373.
+Grifﬁn, J. E. and Brown, P . J. (2007) Bayesian adaptive lassos with non-convex penalisation. Institute of Math-
+ematics and Statistics, University of Kent, Canterbury. (Available from http://www.kent.ac.uk/ims/
+personal/jeg28/.)
+Grifﬁn, J. E. and Brown, P . J. (2010) Inference with normal-gamma prior distributions in regression problems.
+Bayesn Anal., 5, 171–181.
+Hans, C., Dobra, A. and West, M. (2007) Shotgun Stochastic Search for large p regression. J. Am. Statist. Ass.,
+102, 507–517.
+Hastie, T., Tibshirani, R. and Friedman, J. (2008) The Elements of Statistical Learning , 2nd edn. New Y ork:
+Springer.
+Haufe, S., Müller, K.-R., Nolte, G. and Krämer, N. (2010) Sparse casual discovery in multivariate time series.
+In Journal of Machine Learning Research Wrkshp Conf. Proc. , vol. 6, Causality: Objectives and Assessment ,
+pp. 97–106. (Availabe from http://www.JMLR.org.)
+Hennig, C. (2010) Methods for merging Gaussian mixture components. InAdv. Data Anal. Classiﬁcn , 4, 3–34.
+Johnstone, I. M. and Silverman, B. W . (2005) Empirical Bayes selection of wavelet thresholds.Ann. Statist., 33,
+1700–1752.
+Künsch, H.-R. (1989) The jackknife and the bootstrap for general stationary observations. Ann. Statist. , 17,
+1217–1241.
+Lange, T., Roth, V ., Braun, M. and Buhmann, J. (2004) Stability-based validation of clustering solutions.Neur .
+Computn, 16, 1299–1323.
+Lee, H. K. H. (2004) Bayesian Nonparametrics via Neural Networks . Philadelphia: Society for Industrial and
+Applied Mathematics.
+Lindley, D. V . (1968) The choice of variables in multiple regression (with discussion). J. R. Statist. Soc. B, 30,
+31–66.
+Meinshausen, N. (2008) A note on the Lasso for graphical Gaussian model selection. Statist. Probab. Lett., 78,
+880–884.
+Meinshausen, N., Meier, L. and Bühlmann, P . (2009) P-values for high-dimensional regression. J. Am. Statist.
+Ass., 104, 1671–1681.
+Monti, S., Tamayo, P ., Mesirov, J. and Golub, T. (2003) Consensus clustering: a resampling-based method for
+class discovery and visualization of gene expression microarray data.Mach. Learn., 52, 91–118.
+Nott, D. J. and Leng, C. (2010) Bayesian projection approaches to variable selection in generalized linear models.
+Computnl Statist. Data Anal. , to be published.
+Park, T. and Casella, G. (2008) The Bayesian Lasso.J. Am. Statist. Ass., 103, 681–686.
+Ravikumar, P ., Wainwright, M., Raskutti, G. and Yu, B. (2008) High-dimensional covariance estimation by
+minimizing l1-penalized log-determinant divergence. Preprint arXiv:0811.3628.
+Rinaldo, A. and Wasserman, L. (2010) Generalized density clustering. Ann. Statist., to be published. (Available
+from http://arxiv.org/abs/0907.3454.)
+Sauerbrei, W . and Schumacher, M. (1992) A bootstrap resampling procedure for model-building—application to
+the Cox regression-model. Statist. Med., 11, 2093–2109.
+Savage, L. J. (1954)The Foundations of Statistics. New Y ork: Wiley.
+Strobl, C., Boulesteix, A.-L., Kneib, T., Augustin, T. and Zeileis, A. (2008) Conditional variable importance for
+random forests. BMC Bioinform., 9.
+
+===== PDF PAGE 57 =====
+Discussion on the Paper by Meinshausen and Bühlmann 473
+Tibshirani, R. and Walther, G. (2005) Cluster validation by prediction strength.J. Computnl Graph. Statist., 14,
+511–528.
+Tong, H. (2010) Obituary of Hirotugu Akaike.J. R. Statist. Soc. A, 173, 451–454.
+Wainwright, M. (2009) Sharp thresholds for high-dimensional and noisy recovery of sparsity.IEEE Trans. Inform.
+Theor ., 55, 2183–2202.
+Wang, H., Li, G. and Tsai, C. L. (2007) Regression coefﬁcient and autoregressive order shrinkage and selection
+via the lasso. J. R. Statist. Soc. B, 69, 63–78.
+Zhao, P . and Yu, B. (2006) On model selection consistency of lasso.J. Mach. Learn. Res., 7, 2541–2563.
+Zou, H. (2006) The adaptive lasso and its oracle properties.J. Am. Statist. Ass., 101, 1418–1429.
+Zou, H. and Hastie, T. (2005) Regularization and variable selection via the elastic net. J. R. Statist. Soc. B, 67,
+301–320.
+Zou, H., Hastie, T. and Tibshirani, R. (2007) On the degrees of freedom of the LASSO. Ann. Statist., 35, 2173–
+2192.
+Zucknick, M., Richardson, S. and Stronach, E. A. (2008) Comparing the characteristics of gene expression pro-
+ﬁles derived by univariate and multivariate classiﬁcation methods. Statist. Applic. Genet. Molec. Biol., 7,n o .1 ,
+article 7.

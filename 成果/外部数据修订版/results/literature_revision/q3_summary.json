@@ -1,0 +1,31 @@
+{
+  "heldout_rank_gaussian_w1": {
+    "ConditionalRankGaussian": 0.5379591211067002,
+    "StyleResampling": 0.512828442094629,
+    "UnconditionalRankGaussian": 0.6627320477422389
+  },
+  "sampler_averages": {
+    "posterior_mean_noise": {
+      "classifier_agreement": 0.8871212121212121,
+      "mean_rank_variance": 1.0491416459973653,
+      "nearest_real_rms": 0.9063698382663442,
+      "near_duplicate_fraction": 0.0
+    },
+    "posterior_reparameterized": {
+      "classifier_agreement": 0.9030303030303031,
+      "mean_rank_variance": 0.9675430344789089,
+      "nearest_real_rms": 0.8529915070178223,
+      "near_duplicate_fraction": 0.0
+    },
+    "standard_normal_prior": {
+      "classifier_agreement": 0.21060606060606057,
+      "mean_rank_variance": 1.0865535003416953,
+      "nearest_real_rms": 1.2622684155943626,
+      "near_duplicate_fraction": 0.0
+    }
+  },
+  "saved_cvae_full_data_reconstruction_mse": 0.09432706437263452,
+  "cvae_scope": "fixed pretrained full-data cVAE, no new heldout cVAE claim; NumPy dense float32 inference",
+  "rank_gaussian_scope": "fixed shrinkage controls kappa=3, covariance=shared LedoitWolf; not U1 full hyperparameter selection",
+  "seconds": 6.865669012069702
+}

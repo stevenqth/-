@@ -1,0 +1,299 @@
+[
+  {
+    "seed": 42,
+    "outer_fold": 0,
+    "selected": "RankPLS8",
+    "outer_train_n": 166,
+    "outer_test_n": 84,
+    "inner_scores": [
+      {
+        "model": "Mean",
+        "inner_mse": 0.3278309871292084
+      },
+      {
+        "model": "RankPLS3",
+        "inner_mse": 0.2710260150589359
+      },
+      {
+        "model": "RankPLS8",
+        "inner_mse": 0.252182134102145
+      },
+      {
+        "model": "RankRidge",
+        "inner_mse": 0.25527127795912513
+      },
+      {
+        "model": "RandomForest",
+        "inner_mse": 0.2576200869138317
+      },
+      {
+        "model": "ExtraTrees",
+        "inner_mse": 0.2583974142826921
+      }
+    ]
+  },
+  {
+    "seed": 42,
+    "outer_fold": 1,
+    "selected": "RankPLS8",
+    "outer_train_n": 167,
+    "outer_test_n": 83,
+    "inner_scores": [
+      {
+        "model": "Mean",
+        "inner_mse": 0.3384510520728759
+      },
+      {
+        "model": "RankPLS3",
+        "inner_mse": 0.27892966845555855
+      },
+      {
+        "model": "RankPLS8",
+        "inner_mse": 0.2601941116204827
+      },
+      {
+        "model": "RankRidge",
+        "inner_mse": 0.26180870308666576
+      },
+      {
+        "model": "RandomForest",
+        "inner_mse": 0.26903938341880546
+      },
+      {
+        "model": "ExtraTrees",
+        "inner_mse": 0.26717611281632697
+      }
+    ]
+  },
+  {
+    "seed": 42,
+    "outer_fold": 2,
+    "selected": "RankRidge",
+    "outer_train_n": 167,
+    "outer_test_n": 83,
+    "inner_scores": [
+      {
+        "model": "Mean",
+        "inner_mse": 0.3460236081073261
+      },
+      {
+        "model": "RankPLS3",
+        "inner_mse": 0.27591638678531694
+      },
+      {
+        "model": "RankPLS8",
+        "inner_mse": 0.2604431651848929
+      },
+      {
+        "model": "RankRidge",
+        "inner_mse": 0.25839215675378435
+      },
+      {
+        "model": "RandomForest",
+        "inner_mse": 0.26337318383398417
+      },
+      {
+        "model": "ExtraTrees",
+        "inner_mse": 0.26759578234274645
+      }
+    ]
+  },
+  {
+    "seed": 1024,
+    "outer_fold": 0,
+    "selected": "RankPLS8",
+    "outer_train_n": 166,
+    "outer_test_n": 84,
+    "inner_scores": [
+      {
+        "model": "Mean",
+        "inner_mse": 0.33634588809771854
+      },
+      {
+        "model": "RankPLS3",
+        "inner_mse": 0.27358045387717894
+      },
+      {
+        "model": "RankPLS8",
+        "inner_mse": 0.24797989302723109
+      },
+      {
+        "model": "RankRidge",
+        "inner_mse": 0.2516540667182492
+      },
+      {
+        "model": "RandomForest",
+        "inner_mse": 0.2607649674674623
+      },
+      {
+        "model": "ExtraTrees",
+        "inner_mse": 0.2615394539735328
+      }
+    ]
+  },
+  {
+    "seed": 1024,
+    "outer_fold": 1,
+    "selected": "RankPLS8",
+    "outer_train_n": 167,
+    "outer_test_n": 83,
+    "inner_scores": [
+      {
+        "model": "Mean",
+        "inner_mse": 0.3380627463754702
+      },
+      {
+        "model": "RankPLS3",
+        "inner_mse": 0.2655580603634467
+      },
+      {
+        "model": "RankPLS8",
+        "inner_mse": 0.24597712082034642
+      },
+      {
+        "model": "RankRidge",
+        "inner_mse": 0.2500502924975235
+      },
+      {
+        "model": "RandomForest",
+        "inner_mse": 0.25623934431684364
+      },
+      {
+        "model": "ExtraTrees",
+        "inner_mse": 0.25444564940542935
+      }
+    ]
+  },
+  {
+    "seed": 1024,
+    "outer_fold": 2,
+    "selected": "RankRidge",
+    "outer_train_n": 167,
+    "outer_test_n": 83,
+    "inner_scores": [
+      {
+        "model": "Mean",
+        "inner_mse": 0.3379947050430105
+      },
+      {
+        "model": "RankPLS3",
+        "inner_mse": 0.2794228547509499
+      },
+      {
+        "model": "RankPLS8",
+        "inner_mse": 0.2664271855475891
+      },
+      {
+        "model": "RankRidge",
+        "inner_mse": 0.26247585517172456
+      },
+      {
+        "model": "RandomForest",
+        "inner_mse": 0.265131039363468
+      },
+      {
+        "model": "ExtraTrees",
+        "inner_mse": 0.27116773588156456
+      }
+    ]
+  },
+  {
+    "seed": 2024,
+    "outer_fold": 0,
+    "selected": "RankPLS8",
+    "outer_train_n": 166,
+    "outer_test_n": 84,
+    "inner_scores": [
+      {
+        "model": "Mean",
+        "inner_mse": 0.3298764841175444
+      },
+      {
+        "model": "RankPLS3",
+        "inner_mse": 0.2747421445678812
+      },
+      {
+        "model": "RankPLS8",
+        "inner_mse": 0.25192971349745963
+      },
+      {
+        "model": "RankRidge",
+        "inner_mse": 0.25385942796302263
+      },
+      {
+        "model": "RandomForest",
+        "inner_mse": 0.2620586077635733
+      },
+      {
+        "model": "ExtraTrees",
+        "inner_mse": 0.2633715237795718
+      }
+    ]
+  },
+  {
+    "seed": 2024,
+    "outer_fold": 1,
+    "selected": "RankRidge",
+    "outer_train_n": 167,
+    "outer_test_n": 83,
+    "inner_scores": [
+      {
+        "model": "Mean",
+        "inner_mse": 0.33545234113338385
+      },
+      {
+        "model": "RankPLS3",
+        "inner_mse": 0.2781326058104471
+      },
+      {
+        "model": "RankPLS8",
+        "inner_mse": 0.2618874686409663
+      },
+      {
+        "model": "RankRidge",
+        "inner_mse": 0.26067744725262815
+      },
+      {
+        "model": "RandomForest",
+        "inner_mse": 0.26081807325772444
+      },
+      {
+        "model": "ExtraTrees",
+        "inner_mse": 0.27097212197188053
+      }
+    ]
+  },
+  {
+    "seed": 2024,
+    "outer_fold": 2,
+    "selected": "RankRidge",
+    "outer_train_n": 167,
+    "outer_test_n": 83,
+    "inner_scores": [
+      {
+        "model": "Mean",
+        "inner_mse": 0.3475611911521806
+      },
+      {
+        "model": "RankPLS3",
+        "inner_mse": 0.2793772372014101
+      },
+      {
+        "model": "RankPLS8",
+        "inner_mse": 0.26382288872794757
+      },
+      {
+        "model": "RankRidge",
+        "inner_mse": 0.26280418331008254
+      },
+      {
+        "model": "RandomForest",
+        "inner_mse": 0.26600623345851765
+      },
+      {
+        "model": "ExtraTrees",
+        "inner_mse": 0.26564805559580656
+      }
+    ]
+  }
+]
