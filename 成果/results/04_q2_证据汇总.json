@@ -1,0 +1,100 @@
+{
+  "config": {
+    "topk": 3,
+    "graph_threshold": 0.5,
+    "n_folds": 5,
+    "repeats": [
+      42,
+      1024,
+      2024,
+      7,
+      99
+    ],
+    "stability_runs": 25,
+    "evidence": [
+      "partial (style-controlled)",
+      "ridge",
+      "rf",
+      "official 6.csv"
+    ],
+    "selection": "各证据百分位平均 → 模块多样性约束（同一模块最多 1 个）",
+    "rf_trees": {
+      "full": 300,
+      "fold": 150
+    }
+  },
+  "graph": {
+    "n_nodes": 231,
+    "n_edges": 641,
+    "n_communities": 60,
+    "community_sizes": [
+      45,
+      37,
+      27,
+      22,
+      20,
+      18,
+      4,
+      3,
+      3,
+      2
+    ],
+    "mean_degree": 3.3749695431227718,
+    "max_degree": 17.875179634978025
+  },
+  "stability": {
+    "mean_top3_cv_frequency": 0.556,
+    "min_target_mean_frequency": 0.18666666666666668,
+    "mean_target_min_frequency": 0.3232,
+    "mean_top3_cv_frequency_plain": 0.5760000000000001,
+    "targets_all3_stable_ge0p8": 0,
+    "targets_min_freq_ge0p6": 3,
+    "targets_min_freq_ge0p5": 10,
+    "mean_top1_cv_frequency": 0.7439999999999999,
+    "targets_top1_ge0p8": 25,
+    "mean_stable_core_size_ge0p5": 1.76,
+    "mean_module_cv_frequency": 0.7085333333333333,
+    "n_targets": 50,
+    "mean_method_jaccard": 0.1668,
+    "mean_module_diversity": 3.0,
+    "selection_note": "最终 Top-3 由 bagged 得分（全量+25 折）排序；频率为 25 次折内重估的入选频率"
+  },
+  "chemical_plausibility": {
+    "top3_with_known_source": 146,
+    "top3_with_threshold": 57,
+    "n_top3_entries": 150,
+    "official_sign_consistent_share": 1.0,
+    "official_sign_checked": 77
+  },
+  "top_compounds_overall": {
+    "pH": 9,
+    "GFS": 7,
+    "color.EBC.": 6,
+    "X1.10.di.epi.cubenol": 6,
+    "iron": 6,
+    "isopentyl_acetate": 5,
+    "protein.g.L.": 5,
+    "kcalperc": 5,
+    "ethyl_octanoate": 4,
+    "X2.methyltetrahydrofuran.3.one": 4,
+    "eugenol": 3,
+    "ethyl_decanoate": 3,
+    "X.E..ortho.methoxy.cinnamaldehyde": 3,
+    "methyl.geranate": 3,
+    "acetaldehyde": 3
+  },
+  "official_coverage": {
+    "compounds": 44,
+    "targets": 50
+  },
+  "runtime_seconds": 232.5,
+  "env": {
+    "python": "3.11.13",
+    "numpy": "2.3.2",
+    "pandas": "2.3.1"
+  },
+  "consistency": {
+    "n_pairs": 2200,
+    "pearson_official_vs_partial": 0.5600397786525975
+  }
+}

@@ -1,0 +1,23 @@
+﻿official_style,external_styles,official_n,external_n,confidence,reason
+Amber,,12,0,unmapped,no sufficiently specific correspondence
+Blond,Blonde Ale - Belgian,31,50,closer,explicit stylistic grouping; not sample identity
+Brett/cofermented,,6,0,unmapped,no sufficiently specific correspondence
+Brown,Brown Ale - Belgian Dark | Brown Ale - English | Brown Ale - American,12,150,approximate,explicit stylistic grouping; not sample identity
+Brut,Bière de Champagne / Bière Brut,4,50,closer,explicit stylistic grouping; not sample identity
+Christmas,,9,0,unmapped,no sufficiently specific correspondence
+Dubbel,Dubbel,10,50,closer,explicit stylistic grouping; not sample identity
+Faro,Lambic - Faro,3,16,closer,explicit stylistic grouping; not sample identity
+Flanders old brown,Sour - Flanders Oud Bruin,5,49,closer,explicit stylistic grouping; not sample identity
+Fruitbeer,Fruit and Field Beer,8,50,approximate,explicit stylistic grouping; not sample identity
+Hoppy,,17,0,unmapped,no sufficiently specific correspondence
+Kriek,,10,0,unmapped,no sufficiently specific correspondence
+Lambic,Lambic - Traditional | Lambic - Gueuze,11,98,closer,explicit stylistic grouping; not sample identity
+Low/No alcohol,Low Alcohol Beer,8,50,approximate,explicit stylistic grouping; not sample identity
+Pils/Lager,Pilsner - Bohemian / Czech | Pilsner - German | Lager - European Pale | Lager - Helles | Lager - American,11,250,approximate,explicit stylistic grouping; not sample identity
+Saison,Farmhouse Ale - Saison,10,50,closer,explicit stylistic grouping; not sample identity
+Scotch,Scotch Ale / Wee Heavy | Scottish Ale,5,100,approximate,explicit stylistic grouping; not sample identity
+Stout/Porter,Stout - American | Stout - English | Stout - Irish Dry | Stout - Sweet / Milk | Porter - American | Porter - English | Porter - Robust,13,350,approximate,explicit stylistic grouping; not sample identity
+Strong ale,Strong Ale - Belgian Dark | Strong Ale - Belgian Pale,18,100,approximate,explicit stylistic grouping; not sample identity
+Tripel,Tripel,28,50,closer,explicit stylistic grouping; not sample identity
+West Flanders ale,,7,0,unmapped,no sufficiently specific correspondence
+Wheat,Wheat Beer - Witbier | Wheat Beer - Hefeweizen,12,100,approximate,explicit stylistic grouping; not sample identity

@@ -1,0 +1,22 @@
+{
+  "scale_status_counts": {
+    "verified_positive_rows": 38,
+    "mixed_or_unresolved": 32
+  },
+  "verified_transforms": {
+    "log10": 37,
+    "raw": 1
+  },
+  "complete_cases": 187,
+  "input_sha256": {
+    "data\\official\\1.csv": "419849227a02e0c792cd405e6865035b7f58af1a92efa362dbb68a7ca2882f69",
+    "data\\official\\4.csv": "43a7b38682ed81ce64d97ebc1874c09dffac023ade4877f34e3c83ef7d42dc1c",
+    "data\\official\\8.xlsx": "f2316766792111d98281bd35c8403682be8c8069d166a7a7d5887ffbb227700a",
+    "results\\q3_cvae.pt": "d5eec9f3583a2c038e9db33e09fb9f14b22c9113b1c25d17834480180e4fb173"
+  },
+  "baseline_commit": "05a3216b568d1c3665710b5801711898259d606a",
+  "source_ids": [
+    "U1",
+    "U2"
+  ]
+}

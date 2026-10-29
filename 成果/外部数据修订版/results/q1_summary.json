@@ -1,0 +1,29 @@
+{
+  "selected_model": "RandomForest",
+  "selection_note": "fixed candidate comparison; CV is not nested and selected score may be optimistic",
+  "cv": "3 repeats x 3 stratified folds",
+  "scores": {
+    "ExtraTrees": {
+      "r2": 0.201514114404623,
+      "mae": 0.35294415700686627
+    },
+    "Mean": {
+      "r2": -0.017935440131620167,
+      "mae": 0.41730971454124494
+    },
+    "RandomForest": {
+      "r2": 0.2024412106159882,
+      "mae": 0.3525136203932537
+    },
+    "Ridge": {
+      "r2": -15.507001078373403,
+      "mae": 0.473785439544891
+    }
+  },
+  "grade_note": "0-6 grades are assumed monotone mappings, not recovered original ratings",
+  "missing_sensitivity": {
+    "0.0": 0.21163548490568063,
+    "0.05": 0.20506027682537722,
+    "0.1": 0.195048543690486
+  }
+}

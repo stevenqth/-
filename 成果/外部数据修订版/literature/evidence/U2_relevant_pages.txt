@@ -1,0 +1,274 @@
+PDF PAGE 8 =====
+Apart from directly contributing to beerﬂavor and mouthfeel, ethanol
+drastically inﬂuences the physical properties of beer, dictating how
+easily volatile compounds escape the beer matrix to contribute to beer
+aroma
+69. Importantly, it should also be noted that the importance of
+ethanol for appreciation is likely inﬂated by the very low appreciation
+scores of non-alcoholic beers (Supplementary Fig. S4). Despite not
+often being considered a driver of beer appreciation, protein level also
+ranks highly in both approaches, possibly due to its effect on mouth-
+feel and body
+70. Lactic acid, which contributes to the tart taste of sour
+beers, is the fourth most important parameter identi ﬁed by SHAP,
+possibly due to the generally high appreciation of sour beers in our
+dataset.
+Interestingly, some of the most important predictive parameters
+for our model are not well-established as beer ﬂavors or are even
+commonly regarded as being negative for beer quality. For example,
+our models identify methanethiol and ethyl phenyl acetate, an ester
+commonly linked to beer staling
+71, as a key factor contributing to beer
+appreciation. Although there is no doubt that high concentrations of
+these compounds are considered unpleasant, the positive effects of
+modest concentrations are not yet known
+72,73.
+To compare our approach to conventional statistics, we evaluated
+how well the 15 most important SHAP-derived parameters correlate
+with consumer appreciation (Fig. 4C). Interestingly, only 6 of the
+properties derived by SHAP rank amongst the top 15 most correlated
+parameters. For some chemical compounds, the correlations are so
+low that they would have likely been considered unimportant. For
+example, lactic acid, the fourth most important parameter, shows a
+bimodal distribution for appreciation, with sour beers forming a
+separate cluster, that is missed entirely by the Spearman correlation.
+Additionally, the correlation plots reveal outliers, emphasizing the
+need for robust analysis tools. Together, this highlights the need for
+alternative models, like the Gradient Boosting model, that better grasp
+the complexity of (beer) ﬂavor.
+Finally, to observe the relationships between these chemical
+properties and their predicted targets, partial dependence plots were
+constructed for the six most important predictors of consumer
+appreciation
+74–76 (Supplementary Fig. S7). One-way partial dependence
+plots show how a change in concentration affects the predicted
+appreciation. These plots reveal an important limitation of our models:
+appreciation predictions remain constant at ever-increasing con-
+centrations. This implies that once a threshold concentration is
+reached, further increasing the concentration does not affect appre-
+ciation. This is false, as it is well-documented that certain compounds
+become unpleasant at high concentrations, including ethyl acetate
+(‘nail polish’)
+77 and methanethiol (‘sulfury’ and ‘rotten cabbage’)78.T h e
+inability of our models to grasp that ﬂavor compounds have optimal
+levels, above which they become negative, is a consequence of work-
+ing with commercial beer brands where (off-)ﬂavors are rarely too high
+to negatively impact the product. The two-way partial dependence
+plots show how changing the concentration of two compounds inﬂu-
+ences predicted appreciation, visualizing their interactions (Supple-
+mentary Fig. S7). In our case, the top 5 parameters are dominated by
+additive or synergistic interactions, with high concentrations for both
+compounds resulting in the highest predicted appreciation.
+To assess the robustness of our best-performing models and
+model predictions, we performed 100 iterations of the GBR, RF and ET
+models. In general, all iterations of the models yielded similar perfor-
+mance (Supplementary Fig. S8). Moreover, the main predictors
+(including the top predictors ethanol and ethyl acetate) remained
+virtually the same, especially for GBR and RF. For the iterations of the
+ET model, we did observe more variation in the top predictors, which is
+likely a consequence of the model ’s inherent random architecture in
+combination with co-correlations between certain predictors. How-
+ever, even in this case, several of the top predictors (ethanol and ethyl
+acetate) remain unchanged, although their rank in importance chan-
+ges (Supplementary Fig. S8).
+Next, we investigated if a combination of RateBeer and trained
+panel data into one consolidated dataset would lead to stronger
+models, under the hypothesis that such a model would suffer less from
+bias in the datasets. A GBR model was trained to predict appreciation
+on the combined dataset. This model underperformed compared to
+the RateBeer model, both in the native case and when including a
+dataset identiﬁer (R
+2 = 0.67, 0.26 and 0.42 respectively). For the latter,
+the dataset identiﬁer is the most important feature (Supplementary
+Fig. S9), while most of the feature importance remains unchanged,
+with ethyl acetate and ethanol ranking highest, like in the original
+model trained only on RateBeer data. It seems that the large variation
+in the panel dataset introduces noise, weakening the models’ perfor-
+mances and reliability. In addition, it seems reasonable to assume that
+both datasets are fundamentally different, with the panel dataset
+obtained by blind tastings by a trained professional panel.
+Lastly, we evaluated whether beer style identiﬁers would further
+enhance the model ’s performance. A GBR model was trained with
+parameters that explicitly encoded the styles of the samples. This did
+not improve model performance (R2 = 0.66 with style information vs
+R2 = 0.67). The most important chemical features are consistent with
+the model trained without style information (eg. ethanol and ethyl
+acetate), and with the exception of the most preferred (strong ale) and
+least preferred (low/no-alcohol) styles, none of the styles were among
+the most important features (Supplementary Fig. S9, Supplementary
+Table S5 and S6). This is likely due to a combination of style-speci ﬁc
+chemical signatures, such as iso-alpha acids and lactic acid, that
+implicitly convey style information to the original models, as well as
+the low number of samples belonging to some styles, making it dif ﬁ-
+cult for the model to learn style-speci ﬁc patterns. Moreover, beer
+styles are not rigorously de ﬁned, with some styles overlapping in
+features and some beers being misattributed to a speciﬁcs t y l e ,a l lo f
+which leads to more noise in models that use style parameters.
+Model validation
+To test if our predictive models give insight into beer appreciation, we
+set up experiments aimed at improving existing commercial beers. We
+speciﬁcally selected overall appreciation as the trait to be examined
+because of its complexity and commercial relevance. Beer ﬂavor
+comprises a complex bouquet rather than single aromas and tastes53.
+Hence, adding a single compound to the extent that a difference is
+noticeable may lead to an unbalanced, arti ﬁcial ﬂavor. Therefore, we
+evaluated the effect of combinations of compounds. Because Blond
+beers represent the most extensive style in our dataset, we selected a
+beer from this style as the starting material for these experiments (Beer
+64 in Supplementary Data 1).
+In the ﬁrst set of experiments, we adjusted the concentrations of
+compounds that made up the most important predictors of overall
+appreciation (ethyl acetate, ethanol, lactic acid, ethyl phenyl acetate)
+together with correlated compounds (ethyl hexanoate, isoamyl acet-
+ate, glycerol), bringing them up to 95
+th percentile ethanol-normalized
+concentrations (Methods) within the Blond group ( ‘Spiked’ con-
+centration in Fig. 5A). Compared to controls, the spiked beers were
+found to have signi ﬁcantly improved overall appreciation among
+trained panelists, with panelist noting increased intensity of esterﬂa-
+vors, sweetness, alcohol, and body fullness (Fig.5B). To disentangle the
+contribution of ethanol to these results, a second experiment was
+performed without the addition of ethanol. This resulted in a similar
+outcome, including increased perception of alcohol and overall
+appreciation.
+In a last experiment, we tested whether using the model ’s pre-
+dictions can boost the appreciation of a non-alcoholic beer (beer 223 in
+Supplementary Data 1). Again, the addition of a mixture of predicted
+Article https://doi.org/10.1038/s41467-024-46346-0
+Nature Communications|         (2024) 15:2368 8
+
+
+PDF PAGE 12 =====
+between 10–12 a.m. The beers were served in black-colored glasses. Per
+session, between 5 and 12 beers of the same style were tasted at 12 °C to
+16 °C. Two reference beers were added to each set and indicated as
+‘Reference 1 & 2’, allowing panel members to calibrate their ratings. Not
+all panelists were present at every tasting. Scores were scaled by
+standard deviation and mean-centered per taster. Values are repre-
+sented as z-scores and clustered by Euclidean distance. Pairwise
+Spearman correlations were calculated between taste and aroma
+sensory attributes. Panel consistency was evaluated by repeating
+samples on different sessions and performing ANOVA to identify dif-
+ferences, using the ‘stats’ package (v4.2.2) in R (for package informa-
+tion, see Supplementary Table S8).
+Online reviews from a public database .T h e ‘scrapy’ package in
+Python (v3.6) (for package information, see Supplementary Table S8).
+was used to collect 232,288 online reviews (mean=922, min=6,
+max=5343) from RateBeer, an online beer review database. Each review
+entry comprised 5 numerical scores (appearance, aroma, taste, palate
+and overall quality) and an optional review text. The total number of
+reviews per reviewer was collected separately. Numerical scores were
+scaled and centered per rater, and mean scores were calculated per beer.
+For the review texts, the language was estimated using the
+packages ‘langdetect’ and ‘langid’ in Python. Reviews that were clas-
+siﬁed as English by both packages were kept. Reviewers with fewer
+than 100 entries overall were discarded. 181,025 reviews from >6000
+reviewers from >40 countries remained. Text processing was done
+using the ‘nltk’ package in Python. Texts were corrected for slang and
+misspellings; proper nouns and rare words that are relevant to the beer
+context were speciﬁed and kept as-is ( ‘Chimay’,’Lambic’,e t c . ) .Ad i c -
+tionary of semantically similar sensorial terms, for example‘ﬂoral’ and
+‘ﬂower’, was created and collapsed together into one term. Words were
+stemmed and lemmatized to avoid identifying words such as‘acid’ and
+‘acidity’ as separate terms. Numbers and punctuation were removed.
+Sentences from up to 50 randomly chosen reviews per beer were
+manually categorized according to the aspect of beer they describe
+(appearance, aroma, taste, palate, overall quality—not to be confused
+with the 5 numerical scores described above) orﬂagged as irrelevant if
+they contained no useful information. If a beer contained fewer than
+50 reviews, all reviews were manually classiﬁed. This labeled data set
+was used to train a model that classiﬁed the rest of the sentences for all
+beers
+91. Sentences describing taste and aroma were extracted, and
+term frequency –inverse document frequency (TFIDF) was imple-
+mented to calculate enrichment scores for sensorial words per beer.
+The sex of the tasting subject was not considered when building
+our sensory database. Instead, results from different panelists were
+averaged, both for our trained panel (56% male, 44% female) and the
+RateBeer reviews (70% male, 30% female for RateBeer as a whole).
+Beer price collection and processing . Beer prices were collected
+from the following stores: Colruyt, Delhaize, Total Wine, BeerHawk,
+The Belgian Beer Shop, The Belgian Shop, and Beer of Belgium. Where
+applicable, prices were converted to Euros and normalized per liter.
+Spearman correlations were calculated between these prices and mean
+overall appreciation scores from RateBeer and the taste panel,
+respectively.
+Correlation calculations. Pairwise Spearman Rank correlations were
+calculated between all sensory properties.
+Machine learning models
+Predictive modeling of sensory pro ﬁles from chemical data .
+Regression models were constructed to predict (a) trained panel
+scores for beer ﬂavors and quality from beer chemical proﬁles and (b)
+public reviews ’ appreciation scores from beer chemical pro ﬁles.
+Z-scores were used to represent sensory attributes in both data sets.
+Chemical properties with log-normal distributions (Shapiro-Wilk test,
+p < 0.05) were log-transformed. Missing chemical measurements (0.1%
+of all data) were replaced with mean values per attribute. Observations
+from 250 beers were randomly separated into a training set (70%, 175
+beers) and a test set (30%, 75 beers), stratiﬁed per beer style. Chemical
+measurements (p = 231) were normalized based on the training set
+average and standard deviation. In total, three linear regression-based
+models: linear regression withﬁrst-order interaction terms (LR), lasso
+regression with ﬁrst-order interaction terms (Lasso) and partial least
+squares regression (PLSR); ﬁve decision tree models, Adaboost
+regressor (ABR), Extra Trees (ET), Gradient Boosting regressor (GBR),
+Random Forest (RF) and XGBoost regressor (XGBR); one support
+vector machine model (SVR) and one arti ﬁcial neural network model
+(ANN) were trained. The models were implemented using the ‘scikit-
+learn’ package (v1.2.2) and ‘xgboost’ package (v1.7.3) in Python
+(v3.9.16). Models were trained, and hyperparameters optimized, using
+ﬁve-fold cross-validated grid search with the coef ﬁcient of determi-
+nation (R
+2) as the evaluation metric. The ANN (scikit-learn ’s MLPRe-
+gressor) was optimized using Bayesian Tree-Structured Parzen
+Estimator optimization with the ‘Optuna’ Python package (v3.2.0).
+Individual models were trained per attribute, and a multi-output model
+was trained on all attributes simultaneously.
+Model dissection. GBR was found to outperform other methods,
+r e s u l t i n gi nm o d e l sw i t ht h eh i g h e s ta v e r a g eR
+2 values in both trained
+panel and public review data sets. Impurity-based rankings of the most
+important predictors for each predicted sensorial trait were obtained
+using the ‘scikit-learn’ package. To observe the relationships between
+these chemical properties and their predicted targets, partial depen-
+dence plots (PDP) were constructed for the six most important pre-
+dictors of consumer appreciation
+74,75.
+The ‘SHAP’ package in Python (v0.41.0) was implemented to
+provide an alternative ranking of predictor importance and to visualize
+the predictors’ effects as a function of their concentration
+68.
+Validation of causal chemical properties. To validate the effects of
+the most important model features on predicted sensory attributes,
+beers were spiked with the chemical compounds identi ﬁed by the
+models and descriptive sensory analyses were carried out according to
+the American Society of Brewing Chemists (ASBC) protocol
+90.
+Compound spiking was done 30 min before tasting. Compounds
+were spiked into fresh beer bottles, that were immediately resealed
+and inverted three times. Fresh bottles of beer were opened for the
+same duration, resealed, and inverted thrice, to serve as controls. Pairs
+of spiked samples and controls were served simultaneously, chilled
+and in dark glasses as outlined in the Trained panel section above.
+Tasters were instructed to select the glass with the higher ﬂavor
+intensity for each attribute (directional difference test
+92) and to select
+the glass they prefer.
+The ﬁnal concentration after spiking was equal to the within-style
+average, after normalizing by ethanol concentration. This was done to
+ensure balanced ﬂavor pro ﬁles in the ﬁnal spiked beer. The same
+methods were applied to improve a non-alcoholic beer. Compounds
+were the following: ethyl acetate (Merck KGaA, W241415), ethyl hex-
+anoate (Merck KGaA, W243906), isoamyl acetate (Merck KGaA,
+W205508), phenethyl acetate (Merck KGaA, W285706), ethanol (96%,
+Colruyt), glycerol (Merck KGaA, W252506), lactic acid (Merck KGaA,
+261106).
+Signiﬁcant differences in preference or perceived intensity were
+determined by performing the two-sided binomial test on each
+attribute.
+Reporting summary
+Further information on research design is available in the Nature
+Portfolio Reporting Summary linked to this article.
+Article https://doi.org/10.1038/s41467-024-46346-0
+Nature Communications|         (2024) 15:2368 12
+

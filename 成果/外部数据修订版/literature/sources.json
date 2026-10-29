@@ -1,0 +1,140 @@
+[
+  {
+    "id": "U1",
+    "provided": true,
+    "title": "啤酒风味预测与约束迁移",
+    "authors": "作者未在所提供稿件首页标明",
+    "year": 2026,
+    "location": "用户提供本地 PDF，共44页；不视作已同行评审发表论文",
+    "evidence": "PDF第5页公式2-4：显式缺失与重复底值分开，训练经验中秩变换；第8-9页嵌套选型；第16页局部条件置换；第21-23页条件收缩生成、留出分布和重采样基线。 第6、14页及附录AGG/MACRO清单区分231项预测协变量与218项单项化学候选。",
+    "change": "折内底值状态与秩正态PLS候选；逐元素尺度账本；排除13项理化和派生汇总，在218项单项化学候选内诊断Top-3；条件收缩高斯与重采样基线。不是完整复现RB-PLS-Gate或SC-Copula超参数选择。",
+    "code": [
+      "code/literature_models.py",
+      "code/literature_revision.py",
+      "code/literature_generation.py"
+    ],
+    "paper_sections": [
+      "二 数据尺度与证据",
+      "三 问题一",
+      "五 问题三"
+    ]
+  },
+  {
+    "id": "U2",
+    "provided": true,
+    "title": "Predicting and improving complex beer flavor through machine learning",
+    "authors": "Schreurs M, Piampongsant S, Roncoroni M, et al.",
+    "year": 2024,
+    "publication": "Nature Communications 15, 2368",
+    "doi": "10.1038/s41467-024-46346-0",
+    "url": "https://doi.org/10.1038/s41467-024-46346-0",
+    "evidence": "PDF第12页Methods：175/75分层训练测试，训练集尺度归一化、五折选参、逐属性与联合预测；同页加标实验用新开封对照、暗色杯、方向差异和偏好比较。第8页讨论高浓度平台与缺陷惩罚不足。",
+    "change": "保留真实50维折外指标、明确本地验证与原文划分不同；把已验证浓度和分析尺度约束分开；增加真实盲评验证方案，删除将计算机约束当作真实风味或工艺保证的表达。",
+    "code": [
+      "code/literature_revision.py",
+      "code/literature_generation.py"
+    ],
+    "paper_sections": [
+      "二 数据尺度与证据",
+      "三 问题一",
+      "六 多目标决策",
+      "八 局限与验证方案"
+    ]
+  },
+  {
+    "id": "L1",
+    "provided": false,
+    "title": "On Over-fitting in Model Selection and Subsequent Selection Bias in Performance Evaluation",
+    "authors": "Cawley G C, Talbot N L C",
+    "year": 2010,
+    "publication": "Journal of Machine Learning Research 11, 2079-2107",
+    "url": "https://jmlr.org/papers/v11/cawley10a.html",
+    "pdf_url": "https://jmlr.org/papers/volume11/cawley10a/cawley10a.pdf",
+    "evidence": "PDF第2页及第5节：模型选择须视为训练流程的一部分，在每个外层训练集重新进行；共用CV选型和报告可能产生选择偏差。",
+    "change": "第一问改为外层3折×3重复评价整个选型程序，内层3折选择预先列出的6个候选；导出每个外层折的内层分数和选择结果。",
+    "code": [
+      "code/literature_revision.py:inner_choice",
+      "code/literature_revision.py:q1"
+    ],
+    "paper_sections": [
+      "三 问题一"
+    ]
+  },
+  {
+    "id": "L2",
+    "provided": false,
+    "title": "Conditional variable importance for random forests",
+    "authors": "Strobl C, Boulesteix A L, Kneib T, Augustin T, Zeileis A",
+    "year": 2008,
+    "publication": "BMC Bioinformatics 9, 307",
+    "doi": "10.1186/1471-2105-9-307",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2491635/",
+    "evidence": "正文2.5节四步条件置换：在相关变量的条件分组内置换；第3-5节说明无条件置换可能偏爱相关预测变量。",
+    "change": "增加验证集普通置换与近邻条件置换的损失差异；条件变量只用训练相关性选取，供体来自未使用标签的验证特征，保留负重要性。不是原文按树切点分组算法的精确复现。",
+    "code": [
+      "code/literature_models.py:conditional_donors",
+      "code/literature_revision.py:q2"
+    ],
+    "paper_sections": [
+      "四 问题二"
+    ]
+  },
+  {
+    "id": "L3",
+    "provided": false,
+    "title": "Stability selection",
+    "authors": "Meinshausen N, Bühlmann P",
+    "year": 2010,
+    "publication": "Journal of the Royal Statistical Society Series B 72(4), 417-473",
+    "doi": "10.1111/j.1467-9868.2010.00740.x",
+    "url": "https://arxiv.org/abs/0809.2932",
+    "pdf_url": "https://arxiv.org/pdf/0809.2932",
+    "evidence": "作者预印本第3-7页：通过子抽样估计选择概率；定理1的错误控制依赖噪声变量可交换性及选择器假设。",
+    "change": "增加100次无放回近似分层半样本选择，报告频率、Monte Carlo标准误和0.8阈值稳定项；本项目不满足原理论全部条件，不报告FDR/PFER保证。",
+    "code": [
+      "code/literature_revision.py:q2"
+    ],
+    "paper_sections": [
+      "四 问题二"
+    ]
+  },
+  {
+    "id": "L4",
+    "provided": false,
+    "title": "Learning Structured Output Representation using Deep Conditional Generative Models",
+    "authors": "Sohn K, Lee H, Yan X",
+    "year": 2015,
+    "publication": "Advances in Neural Information Processing Systems 28, 3483-3491",
+    "url": "https://papers.nips.cc/paper_files/paper/2015/hash/8d55a249e6baa5c06772297520da2051-Abstract.html",
+    "pdf_url": "https://papers.nips.cc/paper_files/paper/2015/file/8d55a249e6baa5c06772297520da2051-Paper.pdf",
+    "evidence": "PDF第3页公式4-5：条件生成的变分下界、后验和条件先验；讨论条件先验可特化为与输入独立的标准先验。",
+    "change": "复用已保存cVAE，新增mu+sigma*epsilon后验重参数化采样，并与固定0.2噪声和标准正态先验比较；记录组内方差、最近真实样品距离和近重复率。没有声称原模型已有学习到的条件先验。",
+    "code": [
+      "code/literature_inference.py",
+      "code/literature_generation.py:run"
+    ],
+    "paper_sections": [
+      "五 问题三"
+    ]
+  },
+  {
+    "id": "L5",
+    "provided": false,
+    "title": "A Fast and Elitist Multiobjective Genetic Algorithm: NSGA-II",
+    "authors": "Deb K, Pratap A, Agarwal S, Meyarivan T",
+    "year": 2002,
+    "publication": "IEEE Transactions on Evolutionary Computation 6(2), 182-197",
+    "doi": "10.1109/4235.996017",
+    "url": "https://doi.org/10.1109/4235.996017",
+    "pdf_url": "https://dynamics.org/~altenber/UH_ICS/EC_REFS/MULTI_OBJ/DebPratapAgarwalMeyarivan.pdf",
+    "evidence": "原文第182-185页非支配排序、拥挤距离与父子代精英保留；第192页约束支配：可行解优于不可行解，不可行者按违例比较。",
+    "change": "在已训练cVAE的8维潜空间实际运行Python NSGA-II，权衡感官偏差、化学改动和相对缺陷指标；三种种子、约束后验核验及四种偏好TOPSIS。MATLAB未安装，不能称本次为MATLAB结果。",
+    "code": [
+      "code/literature_nsga2.py",
+      "code/literature_generation.py:run"
+    ],
+    "paper_sections": [
+      "六 多目标决策"
+    ]
+  }
+]

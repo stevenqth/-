@@ -1,0 +1,37 @@
+[
+  {
+    "id": "L1",
+    "url": "https://jmlr.org/papers/volume11/cawley10a/cawley10a.pdf",
+    "pages": 29,
+    "sha256": "db01ac8fabef3064a0297bfcf64fb9791bf35c4d03be7a51f5862260adfca206",
+    "status": "downloaded"
+  },
+  {
+    "id": "L2",
+    "url": "https://research.wu.ac.at/ws/files/19799967/Strobl_etal_2008_BMC-Bioinformatics_Conditional-variable-importance-for-random-forests.pdf",
+    "pages": 12,
+    "sha256": "ce8478d7ac441bca096ee1e901b1604865b94f9b09bcd1ccbe181e987245d0f3",
+    "status": "downloaded"
+  },
+  {
+    "id": "L4",
+    "url": "https://papers.nips.cc/paper_files/paper/2015/file/8d55a249e6baa5c06772297520da2051-Paper.pdf",
+    "pages": 9,
+    "sha256": "2fd4ebcd13c660db723e69681e6389c66170c05ae05afebd6d5b41112dc817e1",
+    "status": "downloaded"
+  },
+  {
+    "id": "L5",
+    "url": "https://dynamics.org/~altenber/UH_ICS/EC_REFS/MULTI_OBJ/DebPratapAgarwalMeyarivan.pdf",
+    "pages": 16,
+    "sha256": "fcb165df1a275f353c36047b97823cbdd099d08dafdf4e944df67001114c84b7",
+    "status": "downloaded"
+  },
+  {
+    "id": "L3",
+    "url": "https://stat.ethz.ch/Manuscripts/buhlmann/stabilityselection.pdf",
+    "pages": 57,
+    "sha256": "2f0aae28d88886284add963fe39f37ba8adfc898b92e1c274cfad4c87d0eccd1",
+    "status": "downloaded author-hosted published version"
+  }
+]

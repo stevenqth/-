@@ -1,0 +1,38 @@
+{
+  "epochs": 1200,
+  "generated_n": 1320,
+  "generated_classifier_agreement": 0.8962121212121212,
+  "real_classifier_oof_accuracy": 0.572,
+  "heldout_reconstruction": {
+    "PCA8": {
+      "standardized_mse": 62.134895586348655,
+      "r2": -85.29833748104573
+    },
+    "StyleMean": {
+      "standardized_mse": 67.29699989287475,
+      "r2": -31.61523862353218
+    },
+    "cVAE": {
+      "standardized_mse": 63.4390879348334,
+      "r2": -75.19217833140902
+    }
+  },
+  "transfer_n": 95,
+  "identity_fallback_n": 52,
+  "transfer_classifier_success_rate": 0.09473684210526316,
+  "nonworsening_violations": 0,
+  "external": {
+    "mapped_style_count": 16,
+    "dimensions": 9,
+    "mean_official_rho": 0.5071895424836601,
+    "mean_generated_rho": 0.5447712418300653,
+    "note": "exploratory ecological trend comparison, not chemical validation; external data unused in generation or tuning"
+  },
+  "limitations": [
+    "unknown transformations retained in supplied units then standardized",
+    "classification is internal consistency, not independent chemical validation",
+    "identity fallbacks are failures of style transfer",
+    "stale_hops constraint is only proxy-based",
+    "unknown trans-2-nonenal absolute threshold not invented"
+  ]
+}

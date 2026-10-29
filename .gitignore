@@ -1,0 +1,23 @@
+# 本地工作目录（探索脚本与离线依赖，不纳入版本控制）
+.work/
+
+# 旧仓库副本（内容已迁移到工作区根目录，保留作只读备份）
+-/
+
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# 临时文件
+*.tmp
+*.log
+
+# 可重建的大文件（模型工件可由脚本重生成，避免仓库膨胀）
+成果/results/*.joblib
+
+# 段睿手工 Q1 交付包（嵌套 Git 仓库，不纳入主仓库）
+Q1交付包-dr/
+
+# Literature-revision plotting cache
+成果/外部数据修订版/.cache/
