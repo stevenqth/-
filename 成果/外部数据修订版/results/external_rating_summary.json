@@ -1,0 +1,18 @@
+{
+  "Style_ABV": {
+    "r2": 0.578960624957735,
+    "mae": 0.20982607027948463,
+    "spearman": 0.685988936695034
+  },
+  "Style_ABV_Flavors": {
+    "r2": 0.6361099553079486,
+    "mae": 0.1957863653999548,
+    "spearman": 0.7309683679158656
+  },
+  "equal_brewery_mae_gain": {
+    "estimate": 0.014204811596729103,
+    "ci_low": 0.009382695935616834,
+    "ci_high": 0.019398348836316276
+  },
+  "caveat": "same review corpus generates rating and text; associations are not causal or prospective predictions"
+}

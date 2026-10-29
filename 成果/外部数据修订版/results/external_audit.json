@@ -1,0 +1,41 @@
+{
+  "rows": 5558,
+  "columns": 21,
+  "styles": 112,
+  "breweries": 1498,
+  "missing": {
+    "Name": 2,
+    "key": 0,
+    "Style": 0,
+    "Style Key": 0,
+    "Brewery": 0,
+    "Description": 0,
+    "ABV": 0,
+    "Ave Rating": 0,
+    "Min IBU": 0,
+    "Max IBU": 0,
+    "Astringency": 0,
+    "Body": 0,
+    "Alcohol": 0,
+    "Bitter": 0,
+    "Sweet": 0,
+    "Sour": 0,
+    "Salty": 0,
+    "Fruits": 0,
+    "Hoppy": 0,
+    "Spices": 0,
+    "Malty": 0
+  },
+  "zero_flavor_totals": 132,
+  "duplicate_keys": 0,
+  "mapped_styles": 16,
+  "closer_styles": 8,
+  "source": "https://www.kaggle.com/datasets/stephenpolozoff/top-beer-information",
+  "vocabulary": {
+    "vocabulary_entries": 1218,
+    "mapped_original_columns": 120,
+    "original_descriptor_columns": 186,
+    "mapping_pairs": 171,
+    "overlapping_dictionary_categories": true
+  }
+}

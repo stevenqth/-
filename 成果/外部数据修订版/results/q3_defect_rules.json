@@ -1,0 +1,26 @@
+{
+  "DMS": {
+    "index": 3,
+    "threshold": 17.25,
+    "transform": "log10",
+    "unit": "ug/L"
+  },
+  "X2.3.butanedione": {
+    "index": 38,
+    "threshold": 0.29925,
+    "transform": "raw",
+    "unit": "mg/L"
+  },
+  "X4VG": {
+    "index": 20,
+    "threshold": 0.206333333,
+    "transform": "log10",
+    "unit": "mg/L"
+  },
+  "X.E..2.nonenal": {
+    "index": 108,
+    "threshold": null,
+    "transform": "raw",
+    "unit": "mg/L"
+  }
+}

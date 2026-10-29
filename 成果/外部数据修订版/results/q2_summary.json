@@ -1,0 +1,13 @@
+{
+  "bootstrap_repeats": 30,
+  "nodes": 231,
+  "edges": 641,
+  "modules": 60,
+  "top1_frequency": 0.5373333333333333,
+  "top3_frequency": 0.39466666666666667,
+  "all3_frequency_at_least_0_8": 0,
+  "mean_method_jaccard": 0.212,
+  "source_annotated": 148,
+  "maximum_mc_se": 0.09128709291752768,
+  "note": "fixed full-data graph; bootstrap conditional stability; no causal identification"
+}

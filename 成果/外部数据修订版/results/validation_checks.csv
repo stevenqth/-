@@ -1,0 +1,29 @@
+﻿check,pass
+250 samples and 50 grade targets,True
+all grades finite integers in 0..6,True
+fold-local OOF outputs aligned,True
+exactly 3 distinct factors per target,True
+distinct graph modules per target,True
+"bootstrap frequencies within [0,1]",True
+22 styles with 60 generated samples,True
+generated values finite,True
+no reported non-worsening violations,True
+observed-source transfer non-worsening independently: DMS,True
+imputed-source transfer non-worsening independently: DMS,True
+generated threshold independently: DMS,True
+observed-source transfer non-worsening independently: X2.3.butanedione,True
+imputed-source transfer non-worsening independently: X2.3.butanedione,True
+generated threshold independently: X2.3.butanedione,True
+observed-source transfer non-worsening independently: X4VG,True
+imputed-source transfer non-worsening independently: X4VG,True
+generated threshold independently: X4VG,True
+observed-source transfer non-worsening independently: X.E..2.nonenal,True
+imputed-source transfer non-worsening independently: X.E..2.nonenal,True
+stale-hop proxy non-worsening independently,True
+identity fallback not counted successful,True
+unmapped styles retained explicitly,True
+all three vocabulary sheets parsed,True
+both broad and conservative external comparisons,True
+paper has all three model chapters,True
+paper has external analysis and limitations,True
+no obsolete drive paths in paper,True

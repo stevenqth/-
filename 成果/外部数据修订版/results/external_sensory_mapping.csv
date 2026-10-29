@@ -1,0 +1,12 @@
+external_dimension,official_sensory_columns,status
+Body,body,"coarse semantic correspondence, scales differ"
+Alcohol,alcohol,"coarse semantic correspondence, scales differ"
+Bitter,bitternes,"coarse semantic correspondence, scales differ"
+Sweet,sweetness,"coarse semantic correspondence, scales differ"
+Sour,acidity,"coarse semantic correspondence, scales differ"
+Fruits,A_esters_fruity | F_esters_fruity | A_hops_citrus | F_hops_citrus | A_hops_tropical | F_hops_tropical,"coarse semantic correspondence, scales differ"
+Hoppy,A_hops_all | F_hops_all,"coarse semantic correspondence, scales differ"
+Spices,clove | coriander,"coarse semantic correspondence, scales differ"
+Malty,A_malt_all | F_malt_all,"coarse semantic correspondence, scales differ"
+Astringency,,not aligned
+Salty,,not aligned

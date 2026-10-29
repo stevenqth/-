@@ -1,0 +1,7 @@
+variant,jaccard_vs_main
+graph_0.4,0.7119999999999999
+graph_0.5,1.0
+graph_0.6,0.858
+without_partial,0.69
+without_ridge,0.5599999999999999
+without_tree,0.524
