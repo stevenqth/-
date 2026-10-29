@@ -1,0 +1,29 @@
+{
+  "case": "Stout_Porter_beer52_to_Dubbel",
+  "elapsed_seconds": 4.255114555358887,
+  "variants": [
+    {
+      "case": "Stout_Porter_beer52_to_Dubbel",
+      "variant": "four_objective",
+      "pareto_points": 114,
+      "status": "feasible",
+      "best_expert_error": 0.0672844563775711,
+      "best_external_error": 0.0658372448934979,
+      "best_heldout_external_error": 0.053334611365807,
+      "max_stale_delta": -8.840295736195403e-05,
+      "max_support_ratio": 0.4250984296488298,
+      "common_box_mc_hypervolume": NaN
+    },
+    {
+      "case": "Stout_Porter_beer52_to_Dubbel",
+      "variant": "shared_defect_knob",
+      "pareto_points": 123,
+      "status": "feasible",
+      "best_expert_error": 0.06736219811101467,
+      "best_external_error": 0.06594477379612822,
+      "best_heldout_external_error": 0.05344095052470265,
+      "max_stale_delta": -3.165718843170042e-05,
+      "max_support_ratio": 0.42736161665231964
+    }
+  ]
+}

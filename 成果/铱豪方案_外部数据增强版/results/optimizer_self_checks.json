@@ -1,0 +1,7 @@
+{
+  "dominance_fixture": true,
+  "feasibility_priority": true,
+  "zdt1_mean_front_error": 0.0002744131519609152,
+  "zdt1_nondominated": 80,
+  "evaluations": 9680
+}

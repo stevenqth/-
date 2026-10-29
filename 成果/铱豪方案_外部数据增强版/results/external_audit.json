@@ -1,0 +1,89 @@
+{
+  "rows": 5558,
+  "styles": 112,
+  "optimization_rows": 3509,
+  "heldout_rows": 2049,
+  "zero_word_count_rows": 132,
+  "disjoint_breweries": true,
+  "dimensions": [
+    "Astringency",
+    "Body",
+    "Alcohol",
+    "Bitter",
+    "Sweet",
+    "Sour",
+    "Fruits",
+    "Hoppy",
+    "Spices",
+    "Malty"
+  ],
+  "vocabulary_entries": 1218,
+  "mapped_original_columns": 120,
+  "style_mapping": {
+    "Tripel": [
+      "Tripel"
+    ],
+    "Dubbel": [
+      "Dubbel"
+    ],
+    "Faro": [
+      "Lambic - Faro"
+    ],
+    "Lambic": [
+      "Lambic - Traditional",
+      "Lambic - Gueuze"
+    ],
+    "Saison": [
+      "Farmhouse Ale - Saison"
+    ],
+    "Blond": [
+      "Blonde Ale - Belgian"
+    ],
+    "Flanders old brown": [
+      "Sour - Flanders Oud Bruin"
+    ],
+    "Brut": [
+      "Bière de Champagne / Bière Brut"
+    ],
+    "Low/No alcohol": [
+      "Low Alcohol Beer"
+    ],
+    "Scotch": [
+      "Scotch Ale / Wee Heavy",
+      "Scottish Ale"
+    ],
+    "Pils/Lager": [
+      "Pilsner - Bohemian / Czech",
+      "Pilsner - German",
+      "Lager - European Pale",
+      "Lager - Helles",
+      "Lager - American"
+    ],
+    "Stout/Porter": [
+      "Stout - American",
+      "Stout - English",
+      "Stout - Irish Dry",
+      "Stout - Sweet / Milk",
+      "Porter - American",
+      "Porter - English",
+      "Porter - Robust"
+    ],
+    "Wheat": [
+      "Wheat Beer - Witbier",
+      "Wheat Beer - Hefeweizen"
+    ],
+    "Brown": [
+      "Brown Ale - Belgian Dark",
+      "Brown Ale - English",
+      "Brown Ale - American"
+    ],
+    "Fruitbeer": [
+      "Fruit and Field Beer"
+    ],
+    "Strong ale": [
+      "Strong Ale - Belgian Dark",
+      "Strong Ale - Belgian Pale"
+    ]
+  },
+  "scope": "external split is independent across breweries; cross-domain semantic matching remains an assumption; selection-biased high-rated beer sample"
+}
