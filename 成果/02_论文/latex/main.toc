@@ -1,0 +1,108 @@
+\contentsline {section}{\numberline {1}问题重述}{1}{section.1}%
+\contentsline {subsection}{\numberline {1.1}问题背景}{1}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}问题提出}{1}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}附件数据说明}{1}{subsection.1.3}%
+\contentsline {section}{\numberline {2}问题分析}{2}{section.2}%
+\contentsline {subsection}{\numberline {2.1}三个问题的递进关系}{2}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}问题一的分析}{2}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}问题二的分析}{2}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}问题三的分析}{3}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}三个问题的衔接}{3}{subsection.2.5}%
+\contentsline {section}{\numberline {3}模型假设与符号说明}{4}{section.3}%
+\contentsline {subsection}{\numberline {3.1}模型假设}{4}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}符号说明}{5}{subsection.3.2}%
+\contentsline {section}{\numberline {4}数据预处理}{6}{section.4}%
+\contentsline {subsection}{\numberline {4.1}附件清点与字段说明}{6}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}逐列数值变换核验}{7}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}缺失值}{7}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}目标变量与 0–6 分级口径}{8}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}相关矩阵核验与使用边界}{8}{subsection.4.5}%
+\contentsline {subsection}{\numberline {4.6}训练/\allowbreak {}验证协议}{8}{subsection.4.6}%
+\contentsline {subsection}{\numberline {4.7}缺陷阈值与生成约束参数}{9}{subsection.4.7}%
+\contentsline {section}{\numberline {5}模型建立与求解}{9}{section.5}%
+\contentsline {subsection}{\numberline {5.1}问题一模型建立与求解}{9}{subsection.5.1}%
+\contentsline {subsubsection}{\numberline {5.1.1}求解思路}{10}{subsubsection.5.1.1}%
+\contentsline {subsubsection}{\numberline {5.1.2}模型建立}{10}{subsubsection.5.1.2}%
+\contentsline {paragraph}{数据预处理与目标口径}{10}{paragraph*.1}%
+\contentsline {paragraph}{输入特征与缺失}{10}{paragraph*.2}%
+\contentsline {paragraph}{目标与 0–6 分级口径}{11}{paragraph*.3}%
+\contentsline {paragraph}{评价指标}{11}{paragraph*.4}%
+\contentsline {paragraph}{模型建立}{11}{paragraph*.5}%
+\contentsline {paragraph}{基线模型（论文口径）}{12}{paragraph*.6}%
+\contentsline {paragraph}{改进模型与评估流程}{12}{paragraph*.7}%
+\contentsline {paragraph}{解释方法}{12}{paragraph*.8}%
+\contentsline {subsubsection}{\numberline {5.1.3}模型求解与分析}{12}{subsubsection.5.1.3}%
+\contentsline {paragraph}{论文 10 模型基线复现}{12}{paragraph*.9}%
+\contentsline {paragraph}{重复分层交叉验证（改进评估）}{13}{paragraph*.11}%
+\contentsline {paragraph}{缺失处理策略敏感性}{15}{paragraph*.13}%
+\contentsline {paragraph}{0–6 分级结果}{15}{paragraph*.15}%
+\contentsline {paragraph}{逐目标与逐风格误差}{16}{paragraph*.17}%
+\contentsline {paragraph}{预测不确定性与特征解释}{19}{paragraph*.20}%
+\contentsline {paragraph}{与论文模型的比较与改进总结}{20}{paragraph*.25}%
+\contentsline {paragraph}{结果小结与衔接}{21}{paragraph*.26}%
+\contentsline {paragraph}{附：问题一结果文件清单}{21}{paragraph*.27}%
+\contentsline {subsection}{\numberline {5.2}问题二模型建立与求解}{25}{subsection.5.2}%
+\contentsline {subsubsection}{\numberline {5.2.1}求解思路}{25}{subsubsection.5.2.1}%
+\contentsline {subsubsection}{\numberline {5.2.2}模型建立}{25}{subsubsection.5.2.2}%
+\contentsline {paragraph}{结构先验与证据构造}{25}{paragraph*.28}%
+\contentsline {paragraph}{共表达图与模块}{26}{paragraph*.29}%
+\contentsline {paragraph}{四类证据}{26}{paragraph*.30}%
+\contentsline {paragraph}{模型建立}{26}{paragraph*.31}%
+\contentsline {paragraph}{多样性约束的 Top-3 选择}{26}{paragraph*.32}%
+\contentsline {paragraph}{稳定性量化}{27}{paragraph*.33}%
+\contentsline {paragraph}{化学合理性核验}{27}{paragraph*.34}%
+\contentsline {subsubsection}{\numberline {5.2.3}模型求解与分析}{27}{subsubsection.5.2.3}%
+\contentsline {paragraph}{共表达图结构}{27}{paragraph*.35}%
+\contentsline {paragraph}{各维度 Top-3 结果（节选）}{27}{paragraph*.37}%
+\contentsline {paragraph}{稳定性结果}{29}{paragraph*.38}%
+\contentsline {paragraph}{化学合理性}{32}{paragraph*.41}%
+\contentsline {paragraph}{与参考论文的对比}{32}{paragraph*.43}%
+\contentsline {paragraph}{结果小结与衔接}{33}{paragraph*.44}%
+\contentsline {paragraph}{附：问题二结果文件清单}{33}{paragraph*.45}%
+\contentsline {subsection}{\numberline {5.3}问题三模型建立与求解}{35}{subsection.5.3}%
+\contentsline {subsubsection}{\numberline {5.3.1}求解思路}{35}{subsubsection.5.3.1}%
+\contentsline {subsubsection}{\numberline {5.3.2}模型建立}{35}{subsubsection.5.3.2}%
+\contentsline {paragraph}{数据与生成空间}{35}{paragraph*.46}%
+\contentsline {paragraph}{逐列变换与缺失}{36}{paragraph*.47}%
+\contentsline {paragraph}{缺陷化合物与阈值}{36}{paragraph*.48}%
+\contentsline {paragraph}{模型建立}{36}{paragraph*.49}%
+\contentsline {paragraph}{条件 VAE（cVAE）}{36}{paragraph*.50}%
+\contentsline {paragraph}{风格条件生成}{37}{paragraph*.51}%
+\contentsline {paragraph}{跨风格迁移}{37}{paragraph*.52}%
+\contentsline {paragraph}{评价指标}{37}{paragraph*.53}%
+\contentsline {subsubsection}{\numberline {5.3.3}模型求解与分析}{38}{subsubsection.5.3.3}%
+\contentsline {paragraph}{生成质量}{38}{paragraph*.54}%
+\contentsline {paragraph}{跨风格迁移}{38}{paragraph*.57}%
+\contentsline {paragraph}{消费者描述符辅助验证（决策 4B）}{40}{paragraph*.60}%
+\contentsline {paragraph}{in-silico 验证（决策 5A）}{42}{paragraph*.61}%
+\contentsline {paragraph}{局限与改进方向}{42}{paragraph*.62}%
+\contentsline {paragraph}{结果小结与衔接}{42}{paragraph*.63}%
+\contentsline {paragraph}{附：问题三结果文件清单}{42}{paragraph*.64}%
+\contentsline {section}{\numberline {6}模型分析与检验：灵敏度与稳健性}{43}{section.6}%
+\contentsline {subsection}{\numberline {6.1}检验设计}{43}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}问题一：缺失比例与模型容量}{44}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}问题二：证据消融}{44}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}问题三：cVAE 与迁移的超参数灵敏度}{45}{subsection.6.4}%
+\contentsline {subsubsection}{\numberline {6.4.1}生成质量}{45}{subsubsection.6.4.1}%
+\contentsline {subsubsection}{\numberline {6.4.2}迁移质量}{46}{subsubsection.6.4.2}%
+\contentsline {subsection}{\numberline {6.5}误差分析汇总}{46}{subsection.6.5}%
+\contentsline {subsection}{\numberline {6.6}稳健性结论}{47}{subsection.6.6}%
+\contentsline {subsubsection}{\numberline {6.6.1}附：灵敏度结果文件}{47}{subsubsection.6.6.1}%
+\contentsline {section}{\numberline {7}模型评价与推广}{48}{section.7}%
+\contentsline {subsection}{\numberline {7.1}模型优点}{48}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}模型不足}{49}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}模型推广}{49}{subsection.7.3}%
+\contentsline {section}{\numberline {8}结论}{50}{section.8}%
+\contentsline {section}{参考文献}{51}{section*.66}%
+\contentsline {section}{\numberline {A}附录}{52}{appendix.A}%
+\contentsline {subsection}{\numberline {A.1}附录 1 代码清单及运行说明}{52}{subsection.A.1}%
+\contentsline {subsubsection}{\numberline {A.1.1}环境与依赖}{52}{subsubsection.A.1.1}%
+\contentsline {subsubsection}{\numberline {A.1.2}代码清单}{52}{subsubsection.A.1.2}%
+\contentsline {subsubsection}{\numberline {A.1.3}复现步骤}{53}{subsubsection.A.1.3}%
+\contentsline {subsection}{\numberline {A.2}附录 2 数据字典要点及审计证据}{53}{subsection.A.2}%
+\contentsline {subsection}{\numberline {A.3}附录 3 主要结果文件与图表索引}{53}{subsection.A.3}%
+\contentsline {subsection}{\numberline {A.4}附录 4 核心代码节选}{54}{subsection.A.4}%
+\contentsline {subsubsection}{\numberline {A.4.1}问题一：折内插补 + Extra Trees 多输出回归（节选）}{54}{subsubsection.A.4.1}%
+\contentsline {subsubsection}{\numberline {A.4.2}问题二：模块多样性约束的 Top-3（节选）}{54}{subsubsection.A.4.2}%
+\contentsline {subsubsection}{\numberline {A.4.3}问题三：缺陷阈值投影（节选）}{55}{subsubsection.A.4.3}%
+\contentsline {subsection}{\numberline {A.5}附录 5 图表目录}{55}{subsection.A.5}%

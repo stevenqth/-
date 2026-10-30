@@ -1,0 +1,83 @@
+\begin{thebibliography}{12}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{#1}
+\expandafter\ifx\csname urlstyle\endcsname\relax\else
+  \urlstyle{same}\fi
+\expandafter\ifx\csname href\endcsname\relax
+  \DeclareUrlCommand\doi{\urlstyle{rm}}
+  \def\eprint#1#2{#2}
+\else
+  \def\doi#1{\href{https://doi.org/#1}{\nolinkurl{#1}}}
+  \let\eprint\href
+\fi
+
+\bibitem[Schreurs et~al.(2024)Schreurs, Piampongsant, Roncoroni, et~al.]{ref1}
+SCHREURS M, PIAMPONGSANT S, RONCORONI M, et~al.
+\newblock {Predicting and improving complex beer flavor through machine
+  learning}\allowbreak[J/OL].
+\newblock Nature Communications, 2024, 15: 2368.
+\newblock DOI: \doi{10.1038/s41467-024-46346-0}.
+
+\bibitem[Schreurs et~al.(2024)]{ref2}
+SCHREURS M, et~al.
+\newblock {Data and code for ``Predicting and improving complex beer flavor
+  through machine learning''}\allowbreak[EB/OL].
+\newblock 2024.
+\newblock DOI: \doi{10.5281/zenodo.10653704}.
+
+\bibitem[Breiman(2001)]{ref3}
+BREIMAN L.
+\newblock {Random Forests}\allowbreak[J].
+\newblock Machine Learning, 2001, 45\allowbreak (1): 5-32.
+
+\bibitem[Geurts et~al.(2006)Geurts, Ernst, and Wehenkel]{ref4}
+GEURTS P, ERNST D, WEHENKEL L.
+\newblock {Extremely randomized trees}\allowbreak[J].
+\newblock Machine Learning, 2006, 63\allowbreak (1): 3-42.
+
+\bibitem[Pedregosa et~al.(2011)Pedregosa, Varoquaux, Gramfort, et~al.]{ref5}
+PEDREGOSA F, VAROQUAUX G, GRAMFORT A, et~al.
+\newblock {Scikit-learn: Machine Learning in Python}\allowbreak[J].
+\newblock Journal of Machine Learning Research, 2011, 12: 2825-2830.
+
+\bibitem[Kingma et~al.(2014)Kingma and Welling]{ref6}
+KINGMA D~P, WELLING M.
+\newblock {Auto-Encoding Variational Bayes}\allowbreak[C]//\allowbreak
+Proceedings of the 2nd International Conference on Learning Representations
+  (ICLR).
+\newblock 2014.
+
+\bibitem[Sohn et~al.(2015)Sohn, Lee, and Yan]{ref7}
+SOHN K, LEE H, YAN X.
+\newblock {Learning Structured Output Representation using Deep Conditional
+  Generative Models}\allowbreak[C]//\allowbreak
+Advances in Neural Information Processing Systems (NIPS): volume~28.
+\newblock 2015: 3483-3491.
+
+\bibitem[Lundberg et~al.(2017)Lundberg and Lee]{ref8}
+LUNDBERG S~M, LEE S~I.
+\newblock {A Unified Approach to Interpreting Model
+  Predictions}\allowbreak[C]//\allowbreak
+Advances in Neural Information Processing Systems (NIPS): volume~30.
+\newblock 2017: 4765-4774.
+
+\bibitem[Virtanen et~al.(2020)Virtanen, Gommers, Oliphant, et~al.]{ref9}
+VIRTANEN P, GOMMERS R, OLIPHANT T~E, et~al.
+\newblock {SciPy 1.0: fundamental algorithms for scientific computing in
+  Python}\allowbreak[J].
+\newblock Nature Methods, 2020, 17: 261-272.
+
+\bibitem[Harris et~al.(2020)Harris, Millman, van~der Walt, et~al.]{ref10}
+HARRIS C~R, MILLMAN K~J, VAN~DER WALT S~J, et~al.
+\newblock {Array programming with NumPy}\allowbreak[J].
+\newblock Nature, 2020, 585: 357-362.
+
+\bibitem[Hunter(2007)]{ref11}
+HUNTER J~D.
+\newblock {Matplotlib: A 2D graphics environment}\allowbreak[J].
+\newblock Computing in Science and Engineering, 2007, 9\allowbreak (3): 90-95.
+
+\bibitem[ref()]{ref12}
+{2026年MathorCup数学应用挑战赛大数据竞赛赛道A初赛赛题}\allowbreak[Z].
+
+\end{thebibliography}
